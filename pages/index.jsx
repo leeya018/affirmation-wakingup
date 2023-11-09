@@ -62,15 +62,17 @@ export default function index() {
       </div>
       <ul className="mt-20 w-[30%] overflow-scroll h-[50%]">
         {affirmations?.length > 0 &&
-          affirmations.reverse().map((affirmation, key) => (
-            <li
-              key={key}
-              className="border-2 border-black flex justify-between items-center py-2 px-3"
-            >
-              <div>{affirmation.name}</div>
-              <div>{getTime(affirmation.date)}</div>
-            </li>
-          ))}
+          affirmations
+            .sort((a, b) => new Date(b.date) - new Date(a.date))
+            .map((affirmation, key) => (
+              <li
+                key={key}
+                className="border-2 border-black flex justify-between items-center py-2 px-3"
+              >
+                <div>{affirmation.name}</div>
+                <div>{getTime(affirmation.date)}</div>
+              </li>
+            ))}
       </ul>
     </div>
   );

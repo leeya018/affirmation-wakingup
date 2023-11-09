@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import { formatSeconds } from "../util";
 
 function Timer({ time, setTime }) {
   useEffect(() => {
@@ -9,7 +10,7 @@ function Timer({ time, setTime }) {
     return () => clearTimeout(timerId); // Cleanup the timer
   }, [time, setTime]);
 
-  return <div>Time Remaining: {time} seconds</div>;
+  return <div className="font-semibold">{formatSeconds(time)}</div>;
 }
 
 export default Timer;

@@ -15,6 +15,12 @@ import moment from "moment";
 //   } while (!isValid(thrill));
 //   return thrill;
 // };
+export const formatSeconds = (second) => {
+  const date = new Date(null);
+  date.setSeconds(second); // specify value for SECONDS here
+  const result = date.toISOString().slice(11, 19);
+  return result;
+};
 export const getTime = (date) => {
   return moment(date).format("hh:mm:ss a");
 };
