@@ -12,7 +12,7 @@ const LeftNav = observer(() => {
 
   console.log("selectedName", selectedName);
   return (
-    <div className="flex-1/10 bg-white flex flex-col gap-2 h-[80vh] p-3 rounded-md">
+    <div className="flex-1/10 bg-white flex flex-col gap-2  p-3 rounded-md">
       {/*  */}
 
       <HiOutlineHome

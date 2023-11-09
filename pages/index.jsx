@@ -1,6 +1,7 @@
 import React from "react";
 import Nav from "components/Nav";
 import LeftNav from "components/LeftNav";
+import MiddleAffirmations from "components/MiddleAffirmations";
 
 export default function index() {
   return (
@@ -8,14 +9,14 @@ export default function index() {
       {/* nav  */}
       <Nav />
       {/* all other */}
-      <div className="w-full flex justify-around ">
+      <div className="w-full flex justify-around h-[80vh] gap-5 mx-6">
         {/* left */}
         <LeftNav />
         {/* middle */}
+        <MiddleAffirmations />
 
-        <div className="flex-5/10 bg-white">2</div>
         {/* right */}
-        <div className="flex-4/10 bg-white">3</div>
+        <div className="flex-4/10 bg-white w-full">3</div>
       </div>
     </div>
   );
