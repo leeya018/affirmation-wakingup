@@ -10,7 +10,7 @@ import {
 } from "chart.js";
 import { Bar } from "react-chartjs-2";
 import faker from "faker";
-import { getDayArr } from "util";
+import { getDayArr } from "/util";
 
 ChartJS.register(
   CategoryScale,
@@ -60,7 +60,7 @@ export const data = {
   ],
 };
 
-function Graph() {
-  return <Bar options={options} data={data} />;
+function StackChart() {
+  return <Bar options={options} data={data} width={200} height={200} />;
 }
-export default Graph;
+export default StackChart;
