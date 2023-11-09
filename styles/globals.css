@@ -1,0 +1,13 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url("https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@10..48,700&family=Caprasimo&family=Roboto:wght@300&display=swap");
+div,
+button,
+ul,
+li,
+table p {
+  /* @apply select-none; */
+  /* @apply border-2; */
+}

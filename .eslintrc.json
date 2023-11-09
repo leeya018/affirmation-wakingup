@@ -1,0 +1,79 @@
+// {
+//   "env": {
+//     "browser": true, // This enables browser global variables like `window` and `document`.
+//     "es6": true, // This enables ES6-specific syntax and global variables like `Set`.
+//     "node": true
+//   },
+//   // "extends": "next/core-web-vitals",
+//   "extends": ["eslint:recommended", "plugin:react/recommended"],
+
+//   "parser": "babel-eslint",
+//   // "plugins": ["import", "unused-imports", "autofix"],
+//   "parserOptions": {
+//     "ecmaFeatures": {
+//       "jsx": true
+//     }
+//   },
+//   "settings": {
+//     "react": {
+//       "version": "detect" // Automatically detect the React version
+//     }
+//   },
+//   "plugins": ["react"],
+//   "rules": {
+//     // "react/jsx-uses-vars": "error"
+//     // "react/jsx-uses-react": "error"
+//     // "@next/next/no-img-element": "off",
+//     // "react-hooks/rules-of-hooks": "off",
+//     // "react/jsx-key": "off",
+//     // "react-hooks/exhaustive-deps": "off",
+//     // "unused-imports/no-unused-imports": "error",
+//     // "indent": ["error", 4],
+//     // "linebreak-style": ["error", "unix"],
+//     // "quotes": ["error", "double"],
+//     // "semi": ["error", "always"],
+//     // "react-native/no-unused-styles": 2,
+//     // "react-native/split-platform-components": 2,
+//     // "react-native/no-inline-styles": 2,
+//     // "react-native/no-color-literals": 2,
+//     // "react-native/no-raw-text": 2
+//   }
+// }
+
+{
+  "env": {
+    "browser": true,
+    "es2021": true,
+    "node": true
+  },
+  "extends": [
+    "eslint-config-next",
+    "eslint:recommended",
+    "plugin:react/recommended"
+  ],
+  // "parser": "@babel/eslint-parser",
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "ecmaVersion": 12,
+    "sourceType": "module"
+  },
+  "plugins": ["react"],
+  "rules": {
+    "react/prop-types": "off",
+    "react/react-in-jsx-scope": "off",
+    "no-unused-vars": "off",
+    "react-hooks/exhaustive-deps": "off",
+    "react-hooks/rules-of-hooks": "off"
+    // "indent": ["error", 4]
+    // "linebreak-style": ["error", "unix"],
+    // "quotes": ["error", "double"],
+    // "semi": ["error", "always"],
+    // "react-native/no-unused-styles": 2,
+    // "react-native/split-platform-components": 2,
+    // "react-native/no-inline-styles": 2,
+    // "react-native/no-color-literals": 2,
+    // "react-native/no-raw-text": 2
+  }
+}
