@@ -2,6 +2,8 @@ import React, { use, useState } from "react";
 import Nav from "components/Nav";
 import LeftNav from "components/LeftNav";
 import MiddleAffirmations from "components/MiddleAffirmations";
+import Image from "next/image";
+import RightNav from "components/RightNav";
 
 export default function index() {
   const [affirmations, setAffirmations] = useState([
@@ -9,7 +11,10 @@ export default function index() {
   ]);
 
   return (
-    <div className="w-full border-2 h-[100vh] flex  items-center overflow-hidden bg-[#F3F3F7]">
+    <div
+      className="w-full border-2 h-[100vh] flex  items-center
+     overflow-hidden bg-[#F3F3F7]"
+    >
       {/* nav  */}
       <Nav />
       {/* all other */}
@@ -20,7 +25,7 @@ export default function index() {
         <MiddleAffirmations affirmations={affirmations} />
 
         {/* right */}
-        <div className="flex-4/10 bg-white w-full">3</div>
+        <RightNav />
       </div>
     </div>
   );

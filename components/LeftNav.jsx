@@ -14,7 +14,7 @@ const LeftNav = observer(() => {
   return (
     <div
       className="flex-1/10 shadow-md bg-white flex flex-col gap-2  p-3
-     rounded-xl"
+     rounded-xl h-[85vh]"
     >
       {/*  */}
 

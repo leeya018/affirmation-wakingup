@@ -3,7 +3,7 @@ import Image from "next/image";
 export default function MiddleAffirmations({ affirmations }) {
   return (
     <div className="flex-5/10  w-full shadow-rl h-[80vh] ">
-      <div className="w-full flex flex-col gap-4 ">
+      <div className="w-full flex flex-col gap-2 ">
         {/* first block */}
         <div
           className="flex-1/4 bg-white rounded-xl flex 
@@ -53,7 +53,7 @@ export default function MiddleAffirmations({ affirmations }) {
             <ul
               className="flex flex-col gap-2 pt-2 overflow-y-scroll 
             scrollbar scrollbar-thumb-[#d4d6db] scrollbar-track-white 
-            scrollbar-thumb-rounded h-[35rem]"
+            scrollbar-thumb-rounded h-[36rem]"
             >
               {affirmations.length > 0 &&
                 affirmations.map((affirmation, key) => (
