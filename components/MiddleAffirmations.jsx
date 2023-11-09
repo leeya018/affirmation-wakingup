@@ -1,9 +1,12 @@
 import React from "react";
 import Image from "next/image";
+import { BiTime } from "react-icons/bi";
+import { SiCounterstrike } from "react-icons/si";
+
 export default function MiddleAffirmations({ affirmations }) {
   return (
     <div className="flex-5/10  w-full shadow-rl h-[80vh] ">
-      <div className="w-full flex flex-col gap-2 ">
+      <div className="w-full flex flex-col gap-4 ">
         {/* first block */}
         <div
           className="flex-1/4 bg-white rounded-xl flex 
@@ -11,38 +14,33 @@ export default function MiddleAffirmations({ affirmations }) {
         >
           <div className="text-lg font-bold">Live report</div>
           <div className="flex justify-end items-center gap-3">
-            {/* first item */}
-            <div className="flex justify-center items-center h-16 gap-2">
-              <div className="h-full">
-                <Image
-                  alt="clicks"
-                  width={40}
-                  height={40}
-                  className="rounded-full "
-                  src={"/me.jpg"}
-                />
-              </div>
-              <div className="flex flex-col justify-between h-full">
-                <div className="font-bold text-xl">69</div>
-                <div>clicks</div>
-              </div>
+            <div className="h-full mr-auto">
+              <input
+                type="text"
+                placeholder="Type your short suggestion"
+                className="border-2 border-[#d4d6db] rounded-md w-[30rem] h-10 pl-2"
+              />
             </div>
-            {/* second item */}
-            <div className="flex justify-center items-center rounded-md h-16 gap-2">
-              <div className="h-full">
-                <Image
-                  alt="clicks"
-                  width={40}
-                  height={40}
-                  className="rounded-full "
-                  src={"/me.jpg"}
-                />
-              </div>
-              <div className="flex flex-col justify-between h-full">
-                <div className="font-bold text-xl">
-                  69 <span className="text-md ">sec</span>{" "}
+            <div className="flex justify-end items-center gap-6">
+              {/* first item */}
+              <div className="flex justify-center items-center h-16 gap-3">
+                <div className="h-full">
+                  <SiCounterstrike size={30} />
                 </div>
-                <div>clicks</div>
+                <div className="flex flex-col justify-between h-full">
+                  <div className="font-bold text-xl">69</div>
+                  <div>Strikes</div>
+                </div>
+              </div>
+              {/* second item */}
+              <div className="flex justify-center items-center rounded-md h-16 gap-3">
+                <div className="h-full">
+                  <BiTime size={30} />
+                </div>
+                <div className="flex flex-col justify-between h-full">
+                  <div className="font-bold text-xl">69</div>
+                  <div>Time</div>
+                </div>
               </div>
             </div>
           </div>
