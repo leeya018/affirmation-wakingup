@@ -1,16 +1,26 @@
 import Timer from "components/Timer";
+import useSound from "hooks/useSound";
 import React from "react";
 import { useRef } from "react";
 import { useEffect } from "react";
 import { useState } from "react";
 import { getTime } from "util";
 
+const timeLimAudio = 5;
 const myAffirmations = "שיניים ישרות יפות ונוח בפה";
 export default function index() {
   const [affirmations, setAffirmations] = useState([]);
   const [txt, setTxt] = useState("");
   const [time, setTime] = useState(0);
+  const [timeAudio, setTimeAudio] = useState(0);
   const ref = useRef(null);
+  const { stopSound, playSound } = useSound("./Teeth_suggestion.mp3");
+
+  useEffect(() => {
+    if (timeAudio >= 5) {
+      stopSound();
+    }
+  }, [timeAudio]);
 
   useEffect(() => {
     ref.current.focus();
@@ -35,6 +45,10 @@ export default function index() {
     setAffirmations([]);
     setTime(0);
   };
+  const playSuggestion = () => {
+    playSound();
+    setTimeAudio(1);
+  };
   return (
     <div className="w-full border-2 h-[100vh] flex flex-col items-center overflow-hidden">
       <button
@@ -43,6 +57,19 @@ export default function index() {
       >
         reset
       </button>
+
+      <div className=" absolute top-1 right-1">
+        <button
+          onClick={playSuggestion}
+          className="border-2 rounded-md font-semibold 
+          text-xl px-3 py-2"
+        >
+          {timeAudio > 0 && timeAudio < timeLimAudio
+            ? "stop suggestion"
+            : "play suggestion"}
+        </button>
+        <Timer time={timeAudio} setTime={setTimeAudio} timeLim={timeLimAudio} />
+      </div>
       <Timer time={time} setTime={setTime} />
       <div className="mt-10 text-xl font-bold text-center">affirmations</div>
       <div className="flex justify-center items-center gap-5 text-xl font-bold">
