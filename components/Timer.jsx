@@ -1,9 +1,9 @@
 import React, { useEffect } from "react";
 import { formatSeconds } from "../util";
-function Timer({ time, setTime, timeLim = 1800 }) {
+function Timer({ time, setTime, stop = false }) {
   let timerId;
   useEffect(() => {
-    if (time > 0 && time < timeLim) {
+    if (time > 0 && !stop) {
       timerId = setTimeout(() => {
         setTime(time + 1);
         localStorage.setItem("time", time);

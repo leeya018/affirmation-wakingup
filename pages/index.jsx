@@ -6,6 +6,7 @@ import { useEffect } from "react";
 import { useState } from "react";
 import { getTime } from "util";
 
+const affirmationsLim = 100;
 const timeLimAudio = 5;
 const myAffirmations = "שיניים ישרות יפות ונוח בפה";
 export default function index() {
@@ -17,7 +18,7 @@ export default function index() {
   const { stopSound, playSound } = useSound("./Teeth_suggestion.mp3");
 
   useEffect(() => {
-    if (timeAudio >= 5) {
+    if (timeAudio >= timeLimAudio) {
       stopSound();
     }
   }, [timeAudio]);
@@ -68,9 +69,17 @@ export default function index() {
             ? "stop suggestion"
             : "play suggestion"}
         </button>
-        <Timer time={timeAudio} setTime={setTimeAudio} timeLim={timeLimAudio} />
+        <Timer
+          time={timeAudio}
+          setTime={setTimeAudio}
+          stop={timeAudio >= timeLimAudio}
+        />
       </div>
-      <Timer time={time} setTime={setTime} />
+      <Timer
+        time={time}
+        setTime={setTime}
+        stop={affirmations.length >= affirmationsLim}
+      />
       <div className="mt-10 text-xl font-bold text-center">affirmations</div>
       <div className="flex justify-center items-center gap-5 text-xl font-bold">
         <div className="">{myAffirmations}</div>
