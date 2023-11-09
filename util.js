@@ -146,3 +146,10 @@ export const getUrl = () => {
     : process.env.NEXT_PUBLIC_BASIC_URL_PRODUCTION;
 };
 export const daysToExpired = 7;
+
+export const navNames = {
+  home: "home",
+  insights: "insights",
+  calender: "calender",
+  settings: "settings",
+};
