@@ -5,7 +5,7 @@ import { SiCounterstrike } from "react-icons/si";
 
 export default function MiddleAffirmations({ affirmations }) {
   return (
-    <div className="flex-5/10  w-full shadow-rl h-[80vh] ">
+    <div className=" w-[45vw] shadow-rl h-[80vh] ">
       <div className="w-full flex flex-col gap-4 ">
         {/* first block */}
         <div

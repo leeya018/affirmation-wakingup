@@ -4,11 +4,16 @@ import LeftNav from "components/LeftNav";
 import MiddleAffirmations from "components/MiddleAffirmations";
 import Image from "next/image";
 import RightNav from "components/RightNav";
+import Graphs from "components/Graphs";
+import { navStore } from "mobx/navStore";
+import { navNames } from "/util";
+import { observer } from "mobx-react-lite";
 
-export default function index() {
+const index = observer(() => {
   const [affirmations, setAffirmations] = useState([
     1, 2, 1, 2, 1, 2, 1, 2, 1, 2,
   ]);
+  const { selectedName } = navStore;
 
   return (
     <div
@@ -22,11 +27,15 @@ export default function index() {
         {/* left */}
         <LeftNav />
         {/* middle */}
-        <MiddleAffirmations affirmations={affirmations} />
+        {selectedName === navNames.home && (
+          <MiddleAffirmations affirmations={affirmations} />
+        )}
+        {selectedName === navNames.insights && <Graphs />}
 
         {/* right */}
         <RightNav />
       </div>
     </div>
   );
-}
+});
+export default index;

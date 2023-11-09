@@ -147,6 +147,18 @@ export const getUrl = () => {
 };
 export const daysToExpired = 7;
 
+export const getDayArr = (month, year) => {
+  const date = new Date(year, month, 1);
+  const days = [];
+
+  while (date.getMonth() === month) {
+    days.push(new Date(date));
+    date.setDate(date.getDate() + 1);
+  }
+
+  return days;
+};
+
 export const navNames = {
   home: "home",
   insights: "insights",

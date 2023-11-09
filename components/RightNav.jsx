@@ -6,7 +6,7 @@ import { BiTime } from "react-icons/bi";
 
 export default function RightNav() {
   return (
-    <div className="flex-4/10  w-full rounded-xl h-[85vh] flex flex-col items-center gap-4">
+    <div className="  w-[45vw] rounded-xl h-[85vh] flex flex-col items-center gap-4">
       <div className="p-6 bg-white w-full rounded-xl h-[10rem] flex items-center justify-around text-lg font-bold">
         <div className="flex justify-center items-center gap-2">
           <BiTime size={30} />
