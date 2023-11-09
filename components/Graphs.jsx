@@ -5,7 +5,7 @@ import PieChart from "./PieChart";
 
 export default function Graphs() {
   return (
-    <div className=" w-[45vw] shadow-rl h-[80vh] flex flex-col justify-center items-center ">
+    <div className=" w-[45vw] shadow-rl h-[80vh] flex flex-col justify-center items-center bg-white  rounded-xl ">
       <StackChart />
       <PieChart />
     </div>

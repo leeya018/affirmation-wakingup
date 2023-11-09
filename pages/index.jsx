@@ -8,6 +8,8 @@ import Graphs from "components/Graphs";
 import { navStore } from "mobx/navStore";
 import { navNames } from "/util";
 import { observer } from "mobx-react-lite";
+import Calender from "components/Calender";
+import PieChart from "components/PieChart";
 
 const index = observer(() => {
   const [affirmations, setAffirmations] = useState([
@@ -31,9 +33,12 @@ const index = observer(() => {
           <MiddleAffirmations affirmations={affirmations} />
         )}
         {selectedName === navNames.insights && <Graphs />}
+        {selectedName === navNames.calender && <Calender />}
 
         {/* right */}
-        <RightNav />
+        {selectedName === navNames.home && <RightNav />}
+        {selectedName === navNames.insights && <RightNav />}
+        {selectedName === navNames.calender && <PieChart />}
       </div>
     </div>
   );
