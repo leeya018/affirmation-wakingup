@@ -8,7 +8,7 @@ import { getTime } from "util";
 
 const affirmationsLim = 100;
 const timeLimAudio = 5;
-const myAffirmations = "שיניים ישרות יפות ונוח בפה";
+const myAffirmations = "נוח לי בפה ויש לי שיניים ישרות ויפותויפות";
 export default function index() {
   const [affirmations, setAffirmations] = useState([]);
   const [txt, setTxt] = useState("");

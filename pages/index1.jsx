@@ -1,4 +1,4 @@
-import React, { use, useState } from "react";
+import React, { use, useEffect, useRef, useState } from "react";
 import Nav from "components/Nav";
 import LeftNav from "components/LeftNav";
 import MiddleAffirmations from "components/MiddleAffirmations";
@@ -12,11 +12,31 @@ import Calender from "components/Calender";
 import PieChart from "components/PieChart";
 
 const index = observer(() => {
-  const [affirmations, setAffirmations] = useState([
-    1, 2, 1, 2, 1, 2, 1, 2, 1, 2,
-  ]);
+  const [affirmations, setAffirmations] = useState([]);
   const { selectedName } = navStore;
+  const [txt, setTxt] = useState("");
+  const [time, setTime] = useState(0);
+  const inputRef = useRef(null);
 
+  useEffect(() => {
+    inputRef.current.focus();
+    const localAffirmations = localStorage.getItem("affirmations") || "[]";
+    const localTime = localStorage.getItem("time") || 0;
+    console.log(parseInt(localTime));
+    setTime(parseInt(localTime));
+    setAffirmations(JSON.parse(localAffirmations));
+  }, []);
+
+  const handleKeyDown = (e) => {
+    console.log("handleKeyDown");
+    console.log(e.code === "Enter");
+    if (e.code === "Enter") {
+      if (txt.length < 20) return null;
+      setAffirmations((prev) => [...prev, { name: txt, date: new Date() }]);
+      setTxt("");
+      localStorage.setItem("affirmations", JSON.stringify(affirmations));
+    }
+  };
   return (
     <div
       className="w-full border-2 h-[100vh] flex  items-center
@@ -30,7 +50,15 @@ const index = observer(() => {
         <LeftNav />
         {/* middle */}
         {selectedName === navNames.home && (
-          <MiddleAffirmations affirmations={affirmations} />
+          <MiddleAffirmations
+            handleKeyDown={handleKeyDown}
+            setTxt={setTxt}
+            affirmations={affirmations}
+            setTime={setTime}
+            time={time}
+            txt={txt}
+            inputRef={inputRef}
+          />
         )}
         {selectedName === navNames.insights && <Graphs />}
         {selectedName === navNames.calender && <Calender />}
