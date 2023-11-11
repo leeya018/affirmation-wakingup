@@ -31,6 +31,7 @@ module.exports = {
       backgroundImage: {
         zebra: "url('/zebra.png')",
         my_affirmations: "url('/my_affirmations.png')",
+        google: "url('/google.png')",
       },
     },
   },

@@ -4,40 +4,16 @@ import { useRouter } from "next/router";
 import StandardButton from "ui/button/standard";
 import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import { auth } from "../firebase";
-import { loginApi } from "api";
-import { messageStore } from "mobx/messageStore";
-import Alerts from "components/Alerts";
-import Image from "next/image";
 
-export default function login() {
+export default function signup() {
   const router = useRouter();
   const inputRef = useRef(null);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
-  const { setSuccess, setError } = messageStore;
 
   useEffect(() => {
     inputRef.current.focus();
   }, []);
-
-  const login = async () => {
-    setIsLoading(true);
-
-    const data = await loginApi({
-      email,
-      password,
-    });
-    if (data.isSuccess) {
-      setSuccess(data.message);
-
-      router.push("/");
-    } else {
-      setError(data.message);
-    }
-    console.log(data);
-    setIsLoading(false);
-  };
 
   const googleLogin = () => {
     const provider = new GoogleAuthProvider();
@@ -86,8 +62,10 @@ export default function login() {
           </div>
           {/* signin */}
           <div className="w-[80%]">
-            <div className="text-4xl font-bold mb-2">Sign in</div>
-            <div className="mb-10 font-semibold">Enter email and password </div>
+            <div className="text-4xl font-bold mb-2">Sign up</div>
+            <div className="mb-10 font-semibold">
+              Choose email and password{" "}
+            </div>
             <input
               ref={inputRef}
               type="text"
@@ -103,41 +81,15 @@ export default function login() {
               placeholder="Type Password"
               className="mb-4 border-2 border-[#4B6DCF] text-semibold rounded-md h-9 pl-2  w-full focus:border-[#4B6DCF]"
             />
-            <button
-              onClick={login}
-              disabled={isLoading}
-              className={`${
-                isLoading ? "bg-gray" : "bg-[#4B6DCF]"
-              } mb-2  border-2  rounded-xl w-full py-2 text-white font-semibold flex justify-center items-center`}
-            >
-              Sign in
+            <button className="  border-2 bg-[#4B6DCF] rounded-xl w-full py-2 text-white font-semibold flex justify-center items-center">
+              Sign up
             </button>
-            <button
-              onClick={googleLogin}
-              className="bg-[##4284F3]
-            mb-2  border-2 border-black  rounded-xl
-             w-full py-2 text-white
-              font-semibold flex justify-center items-center gap-2"
-            >
-              <Image
-                alt="google image"
-                width={32}
-                height={32}
-                className="rounded-lg "
-                src={"/google.png"}
-              />
-              <div className="text-black">Sign in with Google</div>
-            </button>
-            <Alerts />
           </div>
           {/* end */}
           <div className="flex flex-col items-center text-sm ">
-            <div className="text-gray_dark">Dont have an account? </div>
-            <div
-              className="text-[#4B6DCF] underline cursor-pointer"
-              onClick={() => router.push("/signup")}
-            >
-              Sign up{" "}
+            <div className="text-gray_dark">Already have an account? </div>
+            <div className="text-[#4B6DCF] underline cursor-pointer">
+              Sign in{" "}
             </div>
           </div>
         </div>
