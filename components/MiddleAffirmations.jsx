@@ -42,7 +42,7 @@ export default function MiddleAffirmations({
                 onChange={(e) => setTxt(e.target.value)}
                 onKeyDown={handleKeyDown}
                 placeholder="Type your short suggestion"
-                className="border-2 border-[#d4d6db] rounded-md w-[30rem] h-10 pr-2"
+                className="border-2 border-[#d4d6db] rounded-md w-[20rem] h-10 pr-2"
               />
             </div>
             <div className="flex justify-end items-center gap-6">

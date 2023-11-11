@@ -4,27 +4,11 @@ import { useRouter } from "next/router";
 import StandardButton from "ui/button/standard";
 import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import { auth } from "../firebase";
-import { userStore } from "mobx/userStore";
+
 import { initUserRecordsApi } from "api";
 
 export default function loginOption() {
   const router = useRouter();
-  const { setLoginUser, setToken, getToken } = userStore;
-
-  // useEffect(() => {
-  //   const newToken = getToken()
-  //   if (newToken) {
-  //     setToken(newToken)
-  //     const user = parseJwt(newToken)
-  //     const newUser = {
-  //       photoURL: user.picture,
-  //       displayName: user.name,
-  //       uid: user.user_id,
-  //     }
-  //     setLoginUser(newUser)
-  //     console.log({ user })
-  //   }
-  // }, [getToken, setLoginUser])
 
   const login = () => {
     const provider = new GoogleAuthProvider();
@@ -38,11 +22,11 @@ export default function loginOption() {
         // The signed-in user info.
         const user = result.user;
         console.log(user);
-        setToken(user.accessToken);
+
         console.log(user.photoURL);
         console.log(user.displayName);
         console.log(user.uid);
-        setLoginUser(user);
+
         initUserRecordsApi(user.displayName);
         // debtStore.addUser(user.uid, user.displayName)
         router.push("/");

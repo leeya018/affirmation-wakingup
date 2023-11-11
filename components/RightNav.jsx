@@ -48,6 +48,7 @@ export default function RightNav() {
           />
         )}
       </div>
+
       <div className="p-6 bg-white w-full rounded-xl h-full flex justify-center items-center">
         <Image
           alt="profile image"

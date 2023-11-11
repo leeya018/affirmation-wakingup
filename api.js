@@ -1,16 +1,38 @@
-import { userStore } from "mobx/userStore";
-import { db, storage } from "./firebase";
+import { db, storage, auth } from "./firebase";
 import {
   addDoc,
+  arrayUnion,
   collection,
   doc,
   getDoc,
   getDocs,
   setDoc,
+  updateDoc,
 } from "firebase/firestore";
+import { getResponse } from "util";
+import {
+  createUserWithEmailAndPassword,
+  getAuth,
+  signInWithEmailAndPassword,
+} from "firebase/auth";
+// data in fire
+// affirmation
+// currencAffirmation,
+// voiceFile
+// practices:[
+// affirmation
+//   date:
+//   score:{
+//     voice:1,
+//     type:2
+//   }
+// ]
+// }
+// }
+export const getUserApi = async () => {
+  const uid = auth.currentUser.uid;
 
-const getRecordsApi = async () => {
-  const userRef = doc(db, "users", userStore.uid);
+  const userRef = doc(db, "users", uid);
 
   // Fetch the document
   const userSnap = await getDoc(userRef);
@@ -19,7 +41,7 @@ const getRecordsApi = async () => {
     // User document data
     const userData = userSnap.data();
 
-    return userData.records;
+    return userData;
   } else {
     // Handle the case where the document does not exist
     console.error("User does not exist");
@@ -27,53 +49,78 @@ const getRecordsApi = async () => {
   }
 };
 
-const addRecordApi = async (record) => {
-  const userRef = doc(db, "users", userStore.uid);
-  if (!userRef) return;
-  // First, get the current balance
-  const userSnap = await getDoc(userRef);
-  const userData = userSnap.data();
+export const changeAffirmationApi = async (affirmationName) => {
+  try {
+    const uid = auth.currentUser.uid;
+    const userRef = doc(db, "users", uid); // Replace 'groups' with your actual collection name
 
-  if (userData.records[record.level] < record.score) {
-    let tmpRecs = { ...userData.records };
-    tmpRecs[record.level] = record.score;
-    // Finally, update the balance in the database
-    await setDoc(
-      userRef,
-      {
-        records: tmpRecs,
-      },
-      { merge: true }
-    );
-  }
-};
-const initUserRecordsApi = async (name) => {
-  const userRef = doc(db, "users", userStore.uid);
-  const docSnap = await getDoc(userRef);
-
-  if (!docSnap.exists()) {
-    await setDoc(userRef, {
-      name: name,
-      records: {
-        1: 0,
-        2: 0,
-        3: 0,
-        4: 0,
-        5: 0,
-      },
+    await updateDoc(userRef, {
+      affirmation: affirmationName,
     });
+    return getResponse("Affirmation has changed").SUCCESS;
+  } catch (error) {
+    return getResponse(error.message).GENERAL_ERROR;
   }
 };
 
-const getAllUsersRecordsApi = async () => {
-  const querySnapshot = await getDocs(collection(db, "users"));
-  const usersDocs = querySnapshot.docs.map((doc) => doc.data());
-  return usersDocs;
+export const addPracticeApi = async (practice) => {
+  try {
+    const uid = auth.currentUser.uid;
+    const userRef = doc(db, "users", uid); // Replace 'groups' with your actual collection name
+
+    await updateDoc(userRef, {
+      practices: arrayUnion(practice),
+    });
+    return getResponse("Practice added ").SUCCESS;
+  } catch (error) {
+    return getResponse(error.message).GENERAL_ERROR;
+  }
 };
 
-export {
-  getRecordsApi,
-  addRecordApi,
-  initUserRecordsApi,
-  getAllUsersRecordsApi,
+const addUser = async (user, id) => {
+  const userRef = doc(db, "users", id);
+  if (!userRef) return;
+  await setDoc(
+    userRef,
+    {
+      ...user,
+    },
+    { merge: true }
+  );
+};
+
+export const signupApi = async (user) => {
+  const { email, password, name } = user;
+  try {
+    const userCredential = await createUserWithEmailAndPassword(
+      auth,
+      email,
+      password
+    );
+
+    const uid = userCredential.user.uid;
+
+    const newUser = { email, name };
+
+    await addUser(newUser, uid);
+
+    return getResponse("signup success").SUCCESS;
+  } catch (error) {
+    return getResponse(error.message).GENERAL_ERROR;
+  }
+};
+
+export const loginApi = async ({ email, password }) => {
+  try {
+    const userCredential = await signInWithEmailAndPassword(
+      auth,
+      email,
+      password
+    );
+    const user = userCredential.user;
+
+    return getResponse("user logged in successfully").SUCCESS;
+  } catch (error) {
+    return getResponse(error.message).GENERAL_ERROR;
+  }
 };
