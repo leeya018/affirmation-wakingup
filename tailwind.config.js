@@ -24,7 +24,15 @@ module.exports = {
       yellow: "#e8ef23",
       blueL_bank: "#2697FF",
     },
-    extend: {},
+    borderColor: {
+      "custom-blue": "#4B6DCF",
+    },
+    extend: {
+      backgroundImage: {
+        zebra: "url('/zebra.png')",
+        my_affirmations: "url('/my_affirmations.png')",
+      },
+    },
   },
   plugins: [require("tailwind-scrollbar")({ nocompatible: true })],
 };

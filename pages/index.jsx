@@ -10,6 +10,9 @@ import { navNames } from "/util";
 import { observer } from "mobx-react-lite";
 import Calender from "components/Calender";
 import PieChart from "components/PieChart";
+import { auth } from "../firebase";
+
+import { useRouter } from "next/router";
 
 const index = observer(() => {
   const [affirmations, setAffirmations] = useState([]);
@@ -17,8 +20,12 @@ const index = observer(() => {
   const [txt, setTxt] = useState("");
   const [time, setTime] = useState(0);
   const inputRef = useRef(null);
+  const router = useRouter();
 
   useEffect(() => {
+    // if (!auth?.currentUser?.uid) {
+    //   router.push("/login");
+    // }
     inputRef.current.focus();
     const localAffirmations = localStorage.getItem("affirmations") || "[]";
     const localTime = localStorage.getItem("time") || 0;
@@ -37,6 +44,9 @@ const index = observer(() => {
       localStorage.setItem("affirmations", JSON.stringify(affirmations));
     }
   };
+  // if (!auth?.currentUser?.uid) {
+  //   return null;
+  // }
   return (
     <div
       className="w-full border-2 h-[100vh] flex  items-center
