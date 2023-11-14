@@ -29,6 +29,7 @@
     "firebase-admin": "^11.10.1",
     "howler": "^2.2.4",
     "mobx": "^6.10.0",
+    "mobx-persist": "^0.4.1",
     "mobx-react-lite": "^4.0.3",
     "moment": "^2.29.4",
     "mongoose": "^7.0.3",

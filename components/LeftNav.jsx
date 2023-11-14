@@ -10,7 +10,7 @@ import { observer } from "mobx-react-lite";
 const LeftNav = observer(() => {
   const { setSelectedName, selectedName } = navStore;
 
-  console.log("selectedName", selectedName);
+  // console.log("selectedName", selectedName);
   return (
     <div
       className="flex-1/10 shadow-md bg-white flex flex-col gap-2  p-3

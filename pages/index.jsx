@@ -10,9 +10,12 @@ import { navNames } from "/util";
 import { observer } from "mobx-react-lite";
 import Calender from "components/Calender";
 import PieChart from "components/PieChart";
-import { auth } from "../firebase";
 
 import { useRouter } from "next/router";
+
+import { getUserApi } from "api";
+import { create } from "mobx-persist";
+import { UserStore } from "mobx/userStore";
 
 const index = observer(() => {
   const [affirmations, setAffirmations] = useState([]);
@@ -23,10 +26,10 @@ const index = observer(() => {
   const router = useRouter();
 
   useEffect(() => {
-    // if (!auth?.currentUser?.uid) {
-    //   router.push("/login");
-    // }
-    // inputRef.current.focus();
+    setTimeout(() => {
+      getUser();
+    }, 1000);
+
     const localAffirmations = localStorage.getItem("affirmations") || "[]";
     const localTime = localStorage.getItem("time") || 0;
     console.log(parseInt(localTime));
@@ -34,6 +37,21 @@ const index = observer(() => {
     setAffirmations(JSON.parse(localAffirmations));
   }, []);
 
+  // useEffect(() => {
+  //   if (!UserStore?.user) {
+  //   }
+  // }, [UserStore?.user]);
+
+  const getUser = async () => {
+    const data = await getUserApi();
+    console.log(data);
+    if (data.isSuccess) {
+      UserStore.setUser(data.data);
+    }
+  };
+  const getCalenderGraph = () => {
+    return <PieChart />;
+  };
   const handleKeyDown = (e) => {
     console.log("handleKeyDown");
     console.log(e.code === "Enter");
@@ -80,7 +98,9 @@ const index = observer(() => {
         {selectedName === navNames.insights && (
           <RightNav affirmations={affirmations} />
         )}
-        {selectedName === navNames.calender && <PieChart />}
+        {selectedName === navNames.calender &&
+          // <div className="text-black">esitnienei</div>
+          getCalenderGraph()}
       </div>
     </div>
   );

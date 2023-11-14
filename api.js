@@ -32,22 +32,23 @@ import { formatDate } from "@/util";
 // }
 // }
 export const getUserApi = async () => {
-  const uid = auth.currentUser.uid;
+  try {
+    const uid = auth.currentUser.uid;
 
-  const userRef = doc(db, "users", uid);
+    const userRef = doc(db, "users", uid);
 
-  // Fetch the document
-  const userSnap = await getDoc(userRef);
+    // Fetch the document
+    const userSnap = await getDoc(userRef);
 
-  if (userSnap.exists()) {
+    if (!userSnap.exists()) {
+      return getResponse("user not found").NOT_FOUND;
+    }
     // User document data
     const userData = userSnap.data();
 
-    return userData;
-  } else {
-    // Handle the case where the document does not exist
-    console.error("User does not exist");
-    throw new Error("User does not exist");
+    return getResponse("Get the user", { ...userData, id: uid }).SUCCESS;
+  } catch (error) {
+    return getResponse(error.message).GENERAL_ERROR;
   }
 };
 
