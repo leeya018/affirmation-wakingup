@@ -67,10 +67,17 @@ export const addPracticeApi = async (practice) => {
   try {
     const uid = auth.currentUser.uid;
     const userRef = doc(db, "users", uid); // Replace 'groups' with your actual collection name
-
-    await updateDoc(userRef, {
-      practices: arrayUnion(practice),
-    });
+    const userSnap = await getDoc(userRef);
+    const user = userSnap.doc();
+    if ((user.practices, length === 0)) {
+      await updateDoc(userRef, {
+        practices: arrayUnion(practice),
+      });
+    }
+    // }else{
+    //   const len = user.practices.length
+    //   user.practices[len-1].
+    // }
     return getResponse("Practice added ").SUCCESS;
   } catch (error) {
     return getResponse(error.message).GENERAL_ERROR;

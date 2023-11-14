@@ -74,7 +74,9 @@ const index = observer(() => {
         {selectedName === navNames.calender && <Calender />}
 
         {/* right */}
-        {selectedName === navNames.home && <RightNav />}
+        {selectedName === navNames.home && (
+          <RightNav affirmations={affirmations} />
+        )}
         {selectedName === navNames.insights && <RightNav />}
         {selectedName === navNames.calender && <PieChart />}
       </div>

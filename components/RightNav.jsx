@@ -8,9 +8,10 @@ import useSound from "hooks/useSound";
 import Timer from "./Timer";
 const timeLimAudio = 1800;
 
-export default function RightNav() {
+export default function RightNav({ affirmations }) {
   const { stopSound, playSound, sound } = useSound("./Teeth_suggestion.mp3");
   const [timeAudio, setTimeAudio] = useState(0);
+
   useEffect(() => {
     if (timeAudio >= timeLimAudio) {
       stopSound();
@@ -21,7 +22,7 @@ export default function RightNav() {
     playSound();
     setTimeAudio(1);
   };
-  console.log("sound.playing", sound.playing);
+  console.log(affirmations.length - (affirmations.length % 10) || 10);
   return (
     <div className="  w-[45vw] rounded-xl h-[85vh] flex flex-col items-center gap-4">
       <div className="p-6 bg-white w-full rounded-xl h-[10rem] flex items-center justify-around text-lg font-bold">
@@ -54,7 +55,11 @@ export default function RightNav() {
           alt="profile image"
           width={500}
           height={500}
-          className="rounded-lg  "
+          className={`rounded-lg opacity-${
+            affirmations.length - (affirmations.length % 10) || 10
+          } 
+     
+           `}
           src={"/smile.png"}
         />
       </div>
