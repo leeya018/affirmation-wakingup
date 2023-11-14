@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-import { ModalStore } from "mobx/modalStore";
+import ModalStore from "mobx/modalStore";
 import { observer } from "mobx-react-lite";
 
 import { MessageStore } from "mobx/messageStore";

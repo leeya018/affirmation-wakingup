@@ -51,9 +51,10 @@
     "eslint:recommended",
     "plugin:react/recommended"
   ],
-  // "parser": "@babel/eslint-parser",
+  "parser": "@babel/eslint-parser",
   "parserOptions": {
     "ecmaFeatures": {
+      "legacyDecorators": true,
       "jsx": true
     },
     "ecmaVersion": 12,

@@ -9,7 +9,7 @@ import Timer from "./Timer";
 import SuccessModal from "./modal/message/success";
 import { addPracticeApi } from "api";
 import SuccessButton from "ui/button/modal/success";
-import { ModalStore } from "mobx/modalStore";
+import ModalStore from "mobx/modalStore";
 import { modals } from "@/util";
 const timeLimAudio = 1800;
 
