@@ -4,7 +4,7 @@ import React from "react";
 import { useRef } from "react";
 import { useEffect } from "react";
 import { useState } from "react";
-import { getTime } from "util";
+import { getTime } from "@/util";
 
 const affirmationsLim = 100;
 const timeLimAudio = 5;

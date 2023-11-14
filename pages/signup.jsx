@@ -5,7 +5,7 @@ import StandardButton from "ui/button/standard";
 import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import { auth } from "../firebase";
 import { signupApi } from "api";
-import { messageStore } from "mobx/messageStore";
+import { MessageStore } from "mobx/messageStore";
 import Alerts from "components/Alerts";
 
 export default function signup() {
@@ -15,7 +15,7 @@ export default function signup() {
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const { setSuccess, setError } = messageStore;
+  const { setSuccess, setError } = MessageStore;
   useEffect(() => {
     inputRef.current.focus();
   }, []);

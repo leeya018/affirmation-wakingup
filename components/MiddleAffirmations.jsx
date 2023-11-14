@@ -2,8 +2,8 @@ import React, { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { BiTime } from "react-icons/bi";
 import { SiCounterstrike } from "react-icons/si";
-import { getTime } from "util";
-import { formatSeconds } from "util";
+import { getTime } from "@/util";
+import { formatSeconds } from "@/util";
 import Timer from "./Timer";
 import useSound from "hooks/useSound";
 

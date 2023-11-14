@@ -1,20 +1,5 @@
-// const isValid = (thrill) => {
-//   return eval(thrill) !== NaN && eval(thrill) >= 0 && eval(thrill) !== Infinity;
-// };
-
 import moment from "moment";
 
-// export const createThrill = () => {
-//   let thrill;
-//   const actions = ["+", "-", "*"];
-//   do {
-//     const randAction = actions[Math.floor(Math.random() * actions.length)];
-//     const randNumber1 = Math.floor(Math.random() * 10);
-//     const randNumber2 = Math.floor(Math.random() * 10);
-//     thrill = `${randNumber1} ${randAction} ${randNumber2} `;
-//   } while (!isValid(thrill));
-//   return thrill;
-// };
 export const formatSeconds = (second) => {
   const date = new Date(null);
   date.setSeconds(second); // specify value for SECONDS here
@@ -159,6 +144,9 @@ export const getDayArr = (month, year) => {
   return days;
 };
 
+export const formatDate = (date) => {
+  return moment(date).format("DD-MM-YYYY");
+};
 export const navNames = {
   home: "home",
   insights: "insights",
@@ -194,4 +182,8 @@ export const getResponse = (message) => {
       isSuccess: false,
     },
   };
+};
+
+export const modals = {
+  success_message: "success_message",
 };

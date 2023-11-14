@@ -1,9 +1,9 @@
 import { observer } from "mobx-react-lite";
-import { messageStore } from "mobx/messageStore";
+import { MessageStore } from "mobx/messageStore";
 import React, { useEffect } from "react";
 
 const Alerts = observer(({ className }) => {
-  const { error, success, setError, setSuccess } = messageStore;
+  const { error, success, setError, setSuccess } = MessageStore;
   useEffect(() => {
     setError("");
     setSuccess("");

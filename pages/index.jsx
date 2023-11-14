@@ -26,7 +26,7 @@ const index = observer(() => {
     // if (!auth?.currentUser?.uid) {
     //   router.push("/login");
     // }
-    inputRef.current.focus();
+    // inputRef.current.focus();
     const localAffirmations = localStorage.getItem("affirmations") || "[]";
     const localTime = localStorage.getItem("time") || 0;
     console.log(parseInt(localTime));
@@ -77,7 +77,9 @@ const index = observer(() => {
         {selectedName === navNames.home && (
           <RightNav affirmations={affirmations} />
         )}
-        {selectedName === navNames.insights && <RightNav />}
+        {selectedName === navNames.insights && (
+          <RightNav affirmations={affirmations} />
+        )}
         {selectedName === navNames.calender && <PieChart />}
       </div>
     </div>

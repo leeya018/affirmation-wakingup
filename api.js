@@ -9,12 +9,14 @@ import {
   setDoc,
   updateDoc,
 } from "firebase/firestore";
-import { getResponse } from "util";
+import { getResponse } from "@/util";
 import {
   createUserWithEmailAndPassword,
   getAuth,
   signInWithEmailAndPassword,
 } from "firebase/auth";
+import { formatSeconds } from "@/util";
+import { formatDate } from "@/util";
 // data in fire
 // affirmation
 // currencAffirmation,
@@ -66,18 +68,25 @@ export const changeAffirmationApi = async (affirmationName) => {
 export const addPracticeApi = async (practice) => {
   try {
     const uid = auth.currentUser.uid;
+    console.log("addPracticeApi", practice, uid);
     const userRef = doc(db, "users", uid); // Replace 'groups' with your actual collection name
     const userSnap = await getDoc(userRef);
-    const user = userSnap.doc();
-    if ((user.practices, length === 0)) {
-      await updateDoc(userRef, {
-        practices: arrayUnion(practice),
-      });
+    if (!userSnap.exists()) {
+      return getResponse("User " + uid + " does not exist").NOT_FOUND;
     }
-    // }else{
-    //   const len = user.practices.length
-    //   user.practices[len-1].
-    // }
+    const user = userSnap.data();
+    let practices = user.practices;
+    const dateFrame = formatDate(new Date());
+    if (practices[dateFrame]) {
+      practices[dateFrame].voice += practice.voice;
+      practices[dateFrame].type += practice.type;
+    } else {
+      practices[dateFrame] = practice;
+    }
+    await updateDoc(userRef, {
+      practices,
+    });
+
     return getResponse("Practice added ").SUCCESS;
   } catch (error) {
     return getResponse(error.message).GENERAL_ERROR;
@@ -107,7 +116,7 @@ export const signupApi = async (user) => {
 
     const uid = userCredential.user.uid;
 
-    const newUser = { email, name };
+    const newUser = { email, name, practices: {} };
 
     await addUser(newUser, uid);
 

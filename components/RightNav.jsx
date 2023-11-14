@@ -6,6 +6,11 @@ import { BiTime } from "react-icons/bi";
 import { LiaStopCircle } from "react-icons/lia";
 import useSound from "hooks/useSound";
 import Timer from "./Timer";
+import SuccessModal from "./modal/message/success";
+import { addPracticeApi } from "api";
+import SuccessButton from "ui/button/modal/success";
+import { ModalStore } from "mobx/modalStore";
+import { modals } from "@/util";
 const timeLimAudio = 1800;
 
 export default function RightNav({ affirmations }) {
@@ -22,9 +27,20 @@ export default function RightNav({ affirmations }) {
     playSound();
     setTimeAudio(1);
   };
-  console.log(affirmations.length - (affirmations.length % 10) || 10);
+  // console.log(affirmations.length - (affirmations.length % 10) || 10);
   return (
     <div className="  w-[45vw] rounded-xl h-[85vh] flex flex-col items-center gap-4">
+      <SuccessButton
+        onClick={async () => {
+          ModalStore.openModal(modals.success_message);
+        }}
+      >
+        Done
+      </SuccessButton>
+      <SuccessModal
+        message={"You finish the voice"}
+        onClick={() => addPracticeApi({ voice: 0, type: 1 })}
+      />
       <div className="p-6 bg-white w-full rounded-xl h-[10rem] flex items-center justify-around text-lg font-bold">
         <div className="flex justify-center items-center gap-2">
           <BiTime size={30} onClick={playSuggestion} />
