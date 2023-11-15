@@ -25,21 +25,23 @@ export default function login() {
     onSubmit: (values) => {
       console.log("onSubmit", values)
     },
-    validate: (values) => {
-      const errors = {}
-      if (!values.email) errors.email = "email is required"
-      else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email))
-        errors.email = "Invalid email address"
-      if (!values.password) errors.password = "password is required"
-      if (values.password.length < 6)
-        errors.password = "password has to be at least 6 characters"
-      return errors
-    },
+    // validate: (values) => {
+    //   const errors = {}
+    //   if (!values.email) errors.email = "email is required"
+    //   else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email))
+    //     errors.email = "Invalid email address"
+    //   if (!values.password) errors.password = "password is required"
+    //   if (values.password.length < 6)
+    //     errors.password = "password has to be at least 6 characters"
+    //   return errors
+    // },
     validationSchema: Yup.object({
       email: Yup.string()
         .required("Email is required")
         .email("Invalid email address"),
-      password: Yup.string().required("Password is required"),
+      password: Yup.string()
+        .required("Password is required")
+        .min(6, "Password is too short"),
     }),
   })
 
@@ -178,7 +180,7 @@ export default function login() {
                 <div className="text-black">Sign in with Google</div>
               </button>
             </form>
-            {/* <Alerts /> */}
+            <Alerts />
           </div>
           {/* end */}
           <div className="flex flex-col items-center text-sm ">

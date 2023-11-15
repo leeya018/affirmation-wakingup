@@ -8,6 +8,7 @@ import { signupApi } from "api"
 import { MessageStore } from "mobx/messageStore"
 import Alerts from "components/Alerts"
 import { useFormik } from "formik"
+import * as Yup from "yup"
 
 export default function signup() {
   const router = useRouter()
@@ -27,18 +28,27 @@ export default function signup() {
     onSubmit: (values) => {
       console.log("onSubmit", values)
     },
-    validate: (values) => {
-      const errors = {}
-      if (!values.name) errors.name = "name is required"
-      if (!values.email) errors.email = "email is required"
-      else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email))
-        errors.email = "Invalid email address"
-      if (!values.password) errors.password = "password is required"
-      if (values.password.length < 6)
-        errors.password = "password has to be at least 6 characters"
+    // validate: (values) => {
+    //   const errors = {}
+    //   if (!values.name) errors.name = "name is required"
+    //   if (!values.email) errors.email = "email is required"
+    //   else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email))
+    //     errors.email = "Invalid email address"
+    //   if (!values.password) errors.password = "password is required"
+    //   if (values.password.length < 6)
+    //     errors.password = "password has to be at least 6 characters"
 
-      return errors
-    },
+    //   return errors
+    // },
+    validationSchema: Yup.object({
+      email: Yup.string()
+        .required("Email is required")
+        .email("Invalid email address"),
+      password: Yup.string()
+        .required("Password is required")
+        .min(6, "Password is too short"),
+      name: Yup.string().required("Name is required"),
+    }),
   })
 
   useEffect(() => {
