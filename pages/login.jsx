@@ -1,77 +1,97 @@
-import React, { useEffect, useRef, useState } from "react";
-import Title from "ui/Title";
-import { useRouter } from "next/router";
-import StandardButton from "ui/button/standard";
-import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
-import { auth } from "../firebase";
-import { loginApi } from "api";
-import { MessageStore } from "mobx/messageStore";
-import Alerts from "components/Alerts";
-import Image from "next/image";
+import React, { useEffect, useRef, useState } from "react"
+import Title from "ui/Title"
+import { useRouter } from "next/router"
+import StandardButton from "ui/button/standard"
+import { signInWithPopup, GoogleAuthProvider } from "firebase/auth"
+import { auth } from "../firebase"
+import { loginApi } from "api"
+import { MessageStore } from "mobx/messageStore"
+import Alerts from "components/Alerts"
+import Image from "next/image"
+import { useFormik } from "formik"
 
 export default function login() {
-  const router = useRouter();
-  const inputRef = useRef(null);
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
-  const { setSuccess, setError } = MessageStore;
+  const router = useRouter()
+  const inputRef = useRef(null)
+  const [isLoading, setIsLoading] = useState(false)
+  const { setSuccess, setError } = MessageStore
+
+  const formik = useFormik({
+    initialValues: {
+      email: "",
+      password: "",
+    },
+    onSubmit: (values) => {
+      console.log("onSubmit", values)
+    },
+    validate: (values) => {
+      const errors = {}
+      if (!values.email) errors.email = "email is required"
+      else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email))
+        errors.email = "Invalid email address"
+      if (!values.password) errors.password = "password is required"
+      if (values.password.length < 6)
+        errors.password = "password has to be at least 6 characters"
+      return errors
+    },
+  })
 
   useEffect(() => {
-    inputRef.current.focus();
-  }, []);
+    inputRef.current.focus()
+  }, [])
 
   const login = async () => {
-    setIsLoading(true);
+    const { email, password } = formik.values
+    setIsLoading(true)
 
     const data = await loginApi({
       email,
       password,
-    });
+    })
     if (data.isSuccess) {
-      setSuccess(data.message);
+      setSuccess(data.message)
 
-      router.push("/");
+      router.push("/")
     } else {
-      setError(data.message);
+      setError(data.message)
     }
-    console.log(data);
-    setIsLoading(false);
-  };
+    console.log(data)
+    setIsLoading(false)
+  }
 
   const googleLogin = () => {
-    const provider = new GoogleAuthProvider();
+    const provider = new GoogleAuthProvider()
     signInWithPopup(auth, provider)
       .then((result) => {
         // This gives you a Google Access Token. You can use it to access the Google API.
-        const credential = GoogleAuthProvider.credentialFromResult(result);
-        const someToken = credential.accessToken;
+        const credential = GoogleAuthProvider.credentialFromResult(result)
+        const someToken = credential.accessToken
         // console.log(token)
 
         // The signed-in user info.
-        const user = result.user;
-        console.log(user);
+        const user = result.user
+        console.log(user)
 
-        console.log(user.photoURL);
-        console.log(user.displayName);
-        console.log(user.uid);
+        console.log(user.photoURL)
+        console.log(user.displayName)
+        console.log(user.uid)
 
         // debtStore.addUser(user.uid, user.displayName)
-        router.push("/");
+        router.push("/")
         // IdP data available using getAdditionalUserInfo(result)
         // ...
       })
       .catch((error) => {
         // Handle Errors here.
-        const errorCode = error.code;
-        const errorMessage = error.message;
+        const errorCode = error.code
+        const errorMessage = error.message
         // The email of the user's account used.
         // const email = error.customData.email
         // The AuthCredential type that was used.
-        const credential = GoogleAuthProvider.credentialFromError(error);
+        const credential = GoogleAuthProvider.credentialFromError(error)
         // ...
-      });
-  };
+      })
+  }
 
   return (
     <div
@@ -88,47 +108,70 @@ export default function login() {
           <div className="w-[80%]">
             <div className="text-4xl font-bold mb-2">Sign in</div>
             <div className="mb-10 font-semibold">Enter email and password </div>
-            <input
-              ref={inputRef}
-              type="text"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="Enter Email"
-              className="mb-2 border-2 border-[#4B6DCF] text-semibold rounded-md h-9 pl-2 w-full focus:border-custom-blue"
-            />
-            <input
-              type="text"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              placeholder="Type Password"
-              className="mb-4 border-2 border-[#4B6DCF] text-semibold rounded-md h-9 pl-2  w-full focus:border-[#4B6DCF]"
-            />
-            <button
-              onClick={login}
-              disabled={isLoading}
-              className={`${
-                isLoading ? "bg-gray" : "bg-[#4B6DCF]"
-              } mb-2  border-2  rounded-xl w-full py-2 text-white font-semibold flex justify-center items-center`}
-            >
-              Sign in
-            </button>
-            <button
-              onClick={googleLogin}
-              className="bg-[##4284F3]
-            mb-2  border-2 border-black  rounded-xl
-             w-full py-2 text-white
+            {/* form */}
+            <form onSubmit={formik.handleSubmit}>
+              <div>
+                <input
+                  ref={inputRef}
+                  type="text"
+                  name="email"
+                  value={formik.values.email}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  placeholder="Enter Email"
+                  className="mb-2 border-2 border-[#4B6DCF] text-semibold rounded-md h-9 pl-2 w-full focus:border-custom-blue"
+                />
+                <div className="error text-red">
+                  {formik.errors.email &&
+                    formik.touched.email &&
+                    formik.errors.email}
+                </div>
+              </div>
+
+              <div>
+                <input
+                  type="text"
+                  name="password"
+                  value={formik.values.password}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  placeholder="Type Password"
+                  className="mb-4 border-2 border-[#4B6DCF] text-semibold rounded-md h-9 pl-2  w-full focus:border-[#4B6DCF]"
+                />
+                <div className="error text-red">
+                  {formik.errors.password &&
+                    formik.touched.password &&
+                    formik.errors.password}
+                </div>
+              </div>
+              <button
+                type="submit"
+                onClick={login}
+                disabled={isLoading}
+                className={`${
+                  isLoading ? "bg-gray" : "bg-[#4B6DCF]"
+                } mb-2  border-2  rounded-xl w-full py-2 text-white font-semibold flex justify-center items-center`}
+              >
+                Sign in
+              </button>
+              <button
+                onClick={googleLogin}
+                className="bg-[##4284F3]
+              mb-2  border-2 border-black  rounded-xl
+              w-full py-2 text-white
               font-semibold flex justify-center items-center gap-2"
-            >
-              <Image
-                alt="google image"
-                width={32}
-                height={32}
-                className="rounded-lg "
-                src={"/google.png"}
-              />
-              <div className="text-black">Sign in with Google</div>
-            </button>
-            <Alerts />
+              >
+                <Image
+                  alt="google image"
+                  width={32}
+                  height={32}
+                  className="rounded-lg "
+                  src={"/google.png"}
+                />
+                <div className="text-black">Sign in with Google</div>
+              </button>
+            </form>
+            {/* <Alerts /> */}
           </div>
           {/* end */}
           <div className="flex flex-col items-center text-sm ">
@@ -148,12 +191,5 @@ export default function login() {
         </div>
       </div>
     </div>
-  );
+  )
 }
-// {/* left */}
-// <div className="h-full border-r-2 border-gray w-[50%] flex justify-center">
-//   <div className="text-4xl font-bold ">Google Account</div>
-//   <button onClick={googleLogin}>Sign in</button>
-// </div>
-// {/* right */}
-// <div className="h-full border-gray w-[50%]">1</div>

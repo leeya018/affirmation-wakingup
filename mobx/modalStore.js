@@ -1,24 +1,38 @@
-import { action, autorun, makeAutoObservable, observable } from "mobx";
+import {
+  action,
+  autorun,
+  computed,
+  makeAutoObservable,
+  observable,
+} from "mobx";
 import { modals } from "@/util";
 
 class ModalStore {
-  @observable modalName = modals.success_message;
+  modalName = modals.success_message;
+
   // modalName = "";
 
   constructor() {
-    makeAutoObservable(this);
+    makeAutoObservable(this, {
+      closeModal: action,
+      openModal: action,
+      total: computed,
+    });
   }
 
-  @action closeModal = () => {
+  closeModal = () => {
     this.modalName = "";
   };
-  @action openModal = (name) => {
+  openModal = (name) => {
     this.modalName = name;
   };
 }
-const store = typeof window !== 'undefined' ? window.store = new ModalStore() : new ModalStore();
-export default store;
+export const modalStore =
+  typeof window !== "undefined"
+    ? (window.store = new ModalStore())
+    : new ModalStore();
+
 // this run when there is a change in the store
 autorun(() => {
-  console.log("modalName", store.modalName);
+  console.log("modalName", modalStore.modalName);
 });

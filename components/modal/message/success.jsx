@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-import ModalStore from "mobx/modalStore";
+import { modalStore } from "mobx/modalStore";
 import { observer } from "mobx-react-lite";
 
 import { MessageStore } from "mobx/messageStore";
@@ -12,14 +12,14 @@ const SuccessModal = observer(({ message, onClick }) => {
   const [name, setName] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
-  const { modalName, closeModal } = ModalStore;
+  // const { modalName, closeModal } = ModalStore;
 
   return (
     <div
       className={`absolute h-screen top-0 left-0 
      right-0 bottom-0 bg-black shadow-md  
      flex justify-center items-center z-10 bg-opacity-70 ${
-       modalName === modals.success_message ? "visible" : "invisible"
+       modalStore.modalName === modals.success_message ? "visible" : "invisible"
      } `}
     >
       <div
@@ -37,7 +37,7 @@ const SuccessModal = observer(({ message, onClick }) => {
         <div className="w-full flex justify-center items-center gap-5 py-4 bg-[#F2F2F2] ">
           <SuccessButton
             onClick={async () => {
-              closeModal();
+              modalStore.closeModal();
               const data = await onClick();
               console.log("data", data);
               MessageStore.setSuccess("");

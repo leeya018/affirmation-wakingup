@@ -1,42 +1,68 @@
-import React, { useEffect, useRef, useState } from "react";
-import Title from "ui/Title";
-import { useRouter } from "next/router";
-import StandardButton from "ui/button/standard";
-import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
-import { auth } from "../firebase";
-import { signupApi } from "api";
-import { MessageStore } from "mobx/messageStore";
-import Alerts from "components/Alerts";
+import React, { useEffect, useRef, useState } from "react"
+import Title from "ui/Title"
+import { useRouter } from "next/router"
+import StandardButton from "ui/button/standard"
+import { signInWithPopup, GoogleAuthProvider } from "firebase/auth"
+import { auth } from "../firebase"
+import { signupApi } from "api"
+import { MessageStore } from "mobx/messageStore"
+import Alerts from "components/Alerts"
+import { useFormik } from "formik"
 
 export default function signup() {
-  const router = useRouter();
-  const inputRef = useRef(null);
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [name, setName] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
-  const { setSuccess, setError } = MessageStore;
+  const router = useRouter()
+  const inputRef = useRef(null)
+  // const [email, setEmail] = useState("");
+  // const [password, setPassword] = useState("");
+  // const [name, setName] = useState("");
+  const [isLoading, setIsLoading] = useState(false)
+  const { setSuccess, setError } = MessageStore
+
+  const formik = useFormik({
+    initialValues: {
+      name: "",
+      email: "",
+      password: "",
+    },
+    onSubmit: (values) => {
+      console.log("onSubmit", values)
+    },
+    validate: (values) => {
+      const errors = {}
+      if (!values.name) errors.name = "name is required"
+      if (!values.email) errors.email = "email is required"
+      else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email))
+        errors.email = "Invalid email address"
+      if (!values.password) errors.password = "password is required"
+      if (values.password.length < 6)
+        errors.password = "password has to be at least 6 characters"
+
+      return errors
+    },
+  })
+
   useEffect(() => {
-    inputRef.current.focus();
-  }, []);
+    inputRef.current.focus()
+  }, [])
 
   const signup = async () => {
-    setIsLoading(true);
+    const { name, email, password } = formik.values
+    setIsLoading(true)
     const data = await signupApi({
       email,
       name,
       password,
-    });
+    })
 
-    console.log(data);
+    console.log(data)
     if (data.isSuccess) {
-      setSuccess(data.message);
-      router.push("/login");
+      setSuccess(data.message)
+      router.push("/login")
     } else {
-      setError(data.message);
+      setError(data.message)
     }
-    setIsLoading(false);
-  };
+    setIsLoading(false)
+  }
 
   return (
     <div
@@ -55,38 +81,68 @@ export default function signup() {
             <div className="mb-10 font-semibold">
               Fill your name, email and password{" "}
             </div>
-            <input
-              type="text"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              placeholder="Enter Full Name"
-              className="mb-2 border-2 border-[#4B6DCF] text-semibold rounded-md h-9 pl-2 w-full focus:border-custom-blue"
-            />
-            <input
-              ref={inputRef}
-              type="text"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="Enter Email"
-              className="mb-2 border-2 border-[#4B6DCF] text-semibold rounded-md h-9 pl-2 w-full focus:border-custom-blue"
-            />
 
-            <input
-              type="text"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              placeholder="Type Password"
-              className="mb-4 border-2 border-[#4B6DCF] text-semibold rounded-md h-9 pl-2  w-full focus:border-[#4B6DCF]"
-            />
-            <button
-              onClick={signup}
-              disabled={isLoading}
-              className={`${
-                isLoading ? "bg-gray" : "bg-[#4B6DCF]"
-              } mb-2  border-2  rounded-xl w-full py-2 text-white font-semibold flex justify-center items-center`}
-            >
-              Sign up
-            </button>
+            {/*  form  */}
+            <form onSubmit={formik.handleSubmit}>
+              <div>
+                <input
+                  type="text"
+                  name="name"
+                  value={formik.values.name}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  placeholder="Enter Full Name"
+                  className="mb-2 border-2 border-[#4B6DCF] text-semibold rounded-md h-9 pl-2 w-full focus:border-custom-blue"
+                />
+                <div className="error text-red">
+                  {formik.errors.name &&
+                    formik.touched.name &&
+                    formik.errors.name}
+                </div>
+              </div>
+              <div>
+                <input
+                  ref={inputRef}
+                  name="email"
+                  value={formik.values.email}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  placeholder="Enter Email"
+                  className="mb-2 border-2 border-[#4B6DCF] text-semibold rounded-md h-9 pl-2 w-full focus:border-custom-blue"
+                />
+                <div className="error text-red">
+                  {formik.errors.email &&
+                    formik.touched.email &&
+                    formik.errors.email}
+                </div>
+              </div>
+              <div>
+                <input
+                  type="text"
+                  name="password"
+                  value={formik.values.password}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  placeholder="Type Password"
+                  className="mb-4 border-2 border-[#4B6DCF] text-semibold rounded-md h-9 pl-2  w-full focus:border-[#4B6DCF]"
+                />
+                <div className="error text-red">
+                  {formik.errors.password &&
+                    formik.touched.password &&
+                    formik.errors.password}
+                </div>
+              </div>
+              <button
+                type="submit"
+                onClick={signup}
+                disabled={isLoading}
+                className={`${
+                  isLoading ? "bg-gray" : "bg-[#4B6DCF]"
+                } mb-2  border-2  rounded-xl w-full py-2 text-white font-semibold flex justify-center items-center`}
+              >
+                Sign up
+              </button>
+            </form>
             <Alerts />
           </div>
           {/* end */}
@@ -107,7 +163,7 @@ export default function signup() {
         </div>
       </div>
     </div>
-  );
+  )
 }
 // {/* left */}
 // <div className="h-full border-r-2 border-gray w-[50%] flex justify-center">

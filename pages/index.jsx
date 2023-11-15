@@ -1,4 +1,4 @@
-import React, { use, useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Nav from "components/Nav";
 import LeftNav from "components/LeftNav";
 import MiddleAffirmations from "components/MiddleAffirmations";
@@ -16,8 +16,10 @@ import { useRouter } from "next/router";
 import { getUserApi } from "api";
 import { create } from "mobx-persist";
 import { UserStore } from "mobx/userStore";
+import { modalStore } from "mobx/modalStore";
+import { modals } from "@/util";
 
-const index = observer(() => {
+const index = () => {
   const [affirmations, setAffirmations] = useState([]);
   const { selectedName } = navStore;
   const [txt, setTxt] = useState("");
@@ -36,6 +38,12 @@ const index = observer(() => {
     setTime(parseInt(localTime));
     setAffirmations(JSON.parse(localAffirmations));
   }, []);
+
+  useEffect(() => {
+    if (affirmations.length === process.env.LIM_AFFIRMATIONS) {
+      modalStore.openModal(modals.success_message);
+    }
+  }, [affirmations]);
 
   // useEffect(() => {
   //   if (!UserStore?.user) {
@@ -104,5 +112,5 @@ const index = observer(() => {
       </div>
     </div>
   );
-});
-export default index;
+};
+export default observer(index);

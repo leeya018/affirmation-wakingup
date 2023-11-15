@@ -40,6 +40,7 @@
 //   }
 // }
 
+// "parser": "@babel/eslint-parser",
 {
   "env": {
     "browser": true,
@@ -51,7 +52,6 @@
     "eslint:recommended",
     "plugin:react/recommended"
   ],
-  "parser": "@babel/eslint-parser",
   "parserOptions": {
     "ecmaFeatures": {
       "legacyDecorators": true,
@@ -62,15 +62,17 @@
   },
   "plugins": ["react"],
   "rules": {
-    "react/prop-types": "off",
     "react/react-in-jsx-scope": "off",
+    "react/prop-types": "off",
     "no-unused-vars": "off",
     "react-hooks/exhaustive-deps": "off",
-    "react-hooks/rules-of-hooks": "off"
+    "react-hooks/rules-of-hooks": "off",
+    "mobx/missing-observer": "off"
+
+    // "eslint.autoFixOnSave": true,
     // "indent": ["error", 4]
     // "linebreak-style": ["error", "unix"],
     // "quotes": ["error", "double"],
-    // "semi": ["error", "always"],
     // "react-native/no-unused-styles": 2,
     // "react-native/split-platform-components": 2,
     // "react-native/no-inline-styles": 2,

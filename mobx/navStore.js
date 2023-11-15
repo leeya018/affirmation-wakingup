@@ -2,7 +2,7 @@ import { makeAutoObservable } from "mobx";
 import { navNames } from "..//util";
 
 class Nav {
-  selectedName = "";
+  selectedName = navNames.home;
 
   constructor() {
     makeAutoObservable(this);
