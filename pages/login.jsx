@@ -9,6 +9,7 @@ import { MessageStore } from "mobx/messageStore"
 import Alerts from "components/Alerts"
 import Image from "next/image"
 import { useFormik } from "formik"
+import * as Yup from "yup"
 
 export default function login() {
   const router = useRouter()
@@ -34,6 +35,12 @@ export default function login() {
         errors.password = "password has to be at least 6 characters"
       return errors
     },
+    validationSchema: Yup.object({
+      email: Yup.string()
+        .required("Email is required")
+        .email("Invalid email address"),
+      password: Yup.string().required("Password is required"),
+    }),
   })
 
   useEffect(() => {
