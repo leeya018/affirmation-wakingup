@@ -15,12 +15,13 @@ import faker from "faker"
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend)
 
-const today = new Date()
-const month = today.getMonth() + 1
-const year = today.getFullYear()
-const days = getDayArr(month, year).map((day) => day.getDate())
-
 function StackChart({ practices }) {
+  const today = new Date()
+  const month = today.getMonth() + 1
+  const year = today.getFullYear()
+  const days = getDayArr(month, year).map((day) => day.getDate())
+  console.log("days", days)
+
   const options = {
     plugins: {
       title: {
@@ -39,30 +40,38 @@ function StackChart({ practices }) {
     },
   }
 
-  const first = practices[0]
-  const end = practices[practices.length - 1]
-  const dayStart = moment(first.date).getDate()
-  const dayEnd = moment(first.end).getDate()
-  const typeArr1 = Array(dayStart - 1).fill(0)
-  const typeArr2 = practices.map((p) => {
-    return p.type
-  })
+  const getDay = (formatDate) => {
+    return formatDate.split("-")[0]
+  }
 
-  const typeArr3 = Array(days.length - dayEnd).fill(0)
-
-  const typeArr = [...typeArr1, ...typeArr2, ...typeArr3]
-
+  const getData = () => {
+    const currMonth = new Date().getMonth() + 1
+    const currYear = new Date().getFullYear()
+    const currMonthPractices = practices
+      .filter(
+        (p) =>
+          p.date.split("-")[1] == currMonth && p.date.split("-")[2] == currYear
+      )
+      .map((p) => ({ ...p, day: getDay(p.date) }))
+    let arr = new Array(days.length).fill({ type: 0, voice: 0 })
+    for (const p of currMonthPractices) {
+      arr[getDay(p.date) - 1] = p
+      arr.push(p)
+    }
+    return arr
+  }
+  const items = getData()
   const data = {
     labels: days,
     datasets: [
       {
         label: "Type",
-        data: typeArr,
+        data: items.map((p) => p.type),
         backgroundColor: "rgb(255, 99, 132)",
       },
       {
-        label: "Sound",
-        data: days.map(() => faker.datatype.number({ min: 0, max: 1 })),
+        label: "voice",
+        data: items.map((p) => p.voice),
         backgroundColor: "rgb(75, 192, 192)",
       },
     ],

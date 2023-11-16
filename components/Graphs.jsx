@@ -28,7 +28,7 @@ export default function Graphs() {
           className="flex-1/4 bg-white rounded-xl flex 
         flex-col gap-4 p-6"
         >
-          <Bar practices={practices} width={200} height={200} />;
+          <StackChart practices={user?.practices} />;
         </div>
         {/* <PieChart /> */}
       </div>

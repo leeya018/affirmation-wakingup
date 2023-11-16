@@ -69,7 +69,7 @@ export const changeAffirmationApi = async (affirmationName) => {
 export const addPracticeApi = async (practice) => {
   try {
     var today = new Date()
-    today.setDate(today.getDate() + 1)
+    today.setDate(today.getDate() + 8)
     const uid = auth.currentUser.uid
     const userRef = doc(db, "users", uid) // Replace 'groups' with your actual collection name
     const userSnap = await getDoc(userRef)
