@@ -14,6 +14,7 @@
     "@babel/eslint-parser": "^7.23.3",
     "@emotion/react": "^11.11.0",
     "@emotion/styled": "^11.11.0",
+    "@everapi/freecurrencyapi-js": "^1.0.1",
     "@mui/icons-material": "^5.11.11",
     "@mui/material": "^5.14.17",
     "@mui/styled-engine-sc": "^5.11.11",
