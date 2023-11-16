@@ -8,7 +8,6 @@ export default async function handler(req, res) {
     maxBodyLength: Infinity,
     url: "https://sandbox-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest?symbol=BTC",
     headers: {
-      // "X-CMC_PRO_API_KEY": "0b1d3ca4-fea7-45c9-828f-7b929109a091",
       "X-CMC_PRO_API_KEY": process.env.NEXT_PUBLIC_BTC_CURRENCY,
     },
   }
