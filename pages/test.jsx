@@ -4,8 +4,8 @@ import {
   getUserApi,
   loginApi,
   signupApi,
-} from "api";
-import React, { useEffect } from "react";
+} from "api"
+import React, { useEffect } from "react"
 
 export default function index() {
   const signUp = async () => {
@@ -13,37 +13,33 @@ export default function index() {
       name: "adi",
       email: "ida2@gmail.com",
       password: "password2121",
-    });
-    console.log(data);
-  };
+    })
+    console.log(data)
+  }
 
   const login = async () => {
     const data = await loginApi({
       email: "ida2@gmail.com",
       password: "password2121",
-    });
-    console.log(data);
-  };
+    })
+    console.log(data)
+  }
   const getUser = async () => {
-    const data = await getUserApi("ZEGQUOnJlEZwwT19qQKInHtwz5m2");
-    console.log(data);
-  };
+    const data = await getUserApi("ZEGQUOnJlEZwwT19qQKInHtwz5m2")
+    console.log(data)
+  }
 
   const changeAffirmation = async () => {
-    const data = await changeAffirmationApi("I am the king");
-    console.log(data);
-  };
+    const data = await changeAffirmationApi("I am the king")
+    console.log(data)
+  }
   const addPractice = async () => {
     const data = await addPracticeApi({
-      affirmation: "I am the best",
-      date: new Date(),
-      score: {
-        voice: 1,
-        type: 2,
-      },
-    });
-    console.log(data);
-  };
+      voice: 1,
+      type: 0,
+    })
+    console.log(data)
+  }
 
   return (
     <div
@@ -84,5 +80,5 @@ export default function index() {
         </button>
       </div>
     </div>
-  );
+  )
 }
