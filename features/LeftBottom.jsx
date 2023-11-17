@@ -8,7 +8,7 @@ import Calender from "../components/Calender"
 import Graphs from "../components/Graphs"
 
 const Left = observer(
-  ({ handleKeyDown, setTxt, affirmations, setTime, time, txt, inputRef }) => {
+  ({ handleKeyDown, setTxt, affirmations, txt, inputRef }) => {
     const { selectedName } = navStore
 
     return (
@@ -20,8 +20,6 @@ const Left = observer(
             handleKeyDown={handleKeyDown}
             setTxt={setTxt}
             affirmations={affirmations}
-            setTime={setTime}
-            time={time}
             txt={txt}
             inputRef={inputRef}
           />

@@ -1,29 +1,65 @@
-import React, { useEffect, useRef, useState } from "react";
-import Image from "next/image";
-import { BiTime } from "react-icons/bi";
-import { SiCounterstrike } from "react-icons/si";
-import { getTime } from "@/util";
-import { formatSeconds } from "@/util";
-import Timer from "./Timer";
-import useSound from "hooks/useSound";
+import React, { useEffect, useRef, useState } from "react"
+import Image from "next/image"
+import { BiTime } from "react-icons/bi"
+import { SiCounterstrike } from "react-icons/si"
+import { getTime, modals } from "@/util"
+import { formatSeconds } from "@/util"
+import Timer from "./Timer"
+import useSound from "hooks/useSound"
+import useTime from "hooks/useTime"
+import { modalStore } from "mobx/modalStore"
+import { MessageStore } from "mobx/messageStore"
+import SuccessModal from "./modal/message/success"
+import { addPracticeApi } from "api"
 
-const affirmationsLim = 100;
-const timeLimAudio = 5;
+const affirmationsLim = 100
+const timeLimAudio = 5
 export default function MiddleAffirmations({
   affirmations,
-  setAffirmations,
   handleKeyDown,
   inputRef,
   setTxt,
-  setTime,
   txt,
-  time,
 }) {
-  const { stopSound, playSound } = useSound("./Teeth_suggestion.mp3");
+  const [modalMessage, setModalMessage] = useState("")
+
+  const { time, startTime, stopTime } = useTime()
+
+  useEffect(() => {
+    if (affirmations.length === 1) {
+      startTime()
+    }
+    if (affirmations.length === affirmationsLim) {
+      stopTime()
+
+      modalStore.openModal(modals.db_add)
+    }
+  }, [affirmations])
+
+  const addPractice = async () => {
+    const data = await addPracticeApi({ voice: 0, type: 1 })
+    console.log(data)
+    setModalMessage(data.message)
+    modalStore.openModal(modals.success_message)
+  }
 
   return (
     <div className=" w-[45vw] shadow-rl h-[80vh] ">
       <div className="w-full flex flex-col gap-4 ">
+        <SuccessModal
+          title={"Message"}
+          modalName={modals.success_message}
+          message={modalMessage}
+          onClick={() => modalStore.closeModal()}
+          btnTxt={"Done"}
+        />
+        <SuccessModal
+          title={"Done workout"}
+          modalName={modals.db_add}
+          message={"You finish the typing workout "}
+          onClick={addPractice}
+          btnTxt={"Save Score"}
+        />
         {/* first block */}
         <div
           className="flex-1/4 bg-white rounded-xl flex 
@@ -62,11 +98,7 @@ export default function MiddleAffirmations({
                   <BiTime size={30} />
                 </div>
                 <div className="flex flex-col justify-between h-full">
-                  <Timer
-                    time={time}
-                    setTime={setTime}
-                    stop={affirmations.length >= affirmationsLim}
-                  />
+                  <Timer time={time} />
                   {/* <div className="font-bold text-xl">{formatSeconds(time)}</div> */}
                   <div>Time</div>
                 </div>
@@ -105,5 +137,5 @@ export default function MiddleAffirmations({
         </div>
       </div>
     </div>
-  );
+  )
 }

@@ -28,7 +28,6 @@ const index = () => {
   const [affirmations, setAffirmations] = useState([])
   const { selectedName } = navStore
   const [txt, setTxt] = useState("")
-  const [time, setTime] = useState(0)
   const inputRef = useRef(null)
   const router = useRouter()
 
@@ -40,7 +39,6 @@ const index = () => {
     const localAffirmations = localStorage.getItem("affirmations") || "[]"
     const localTime = localStorage.getItem("time") || 0
     console.log(parseInt(localTime))
-    setTime(parseInt(localTime))
     setAffirmations(JSON.parse(localAffirmations))
   }, [])
 
@@ -79,6 +77,8 @@ const index = () => {
       className="w-full border-2 h-[100vh] flex  items-center
      overflow-hidden bg-[#F3F3F7]"
     >
+      {/* modals */}
+
       {/* nav  */}
       <Nav />
       {/* all other */}
@@ -92,8 +92,6 @@ const index = () => {
           handleKeyDown={handleKeyDown}
           setTxt={setTxt}
           affirmations={affirmations}
-          setTime={setTime}
-          time={time}
           txt={txt}
           inputRef={inputRef}
         />

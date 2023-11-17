@@ -81,4 +81,5 @@ export const getResponse = (message, data = "") => {
 
 export const modals = {
   success_message: "success_message",
+  db_add: "db_add",
 }

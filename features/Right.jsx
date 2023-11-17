@@ -11,6 +11,7 @@ import { addPracticeApi } from "api"
 import SuccessButton from "ui/button/modal/success"
 import { modalStore } from "mobx/modalStore"
 import { modals } from "@/util"
+import useTime from "hooks/useTime"
 const timeLimAudio = 1800
 
 const EModalType = {
@@ -23,18 +24,31 @@ export default function Right({ affirmations, setAffirmations }) {
   const { stopSound, playSound, sound } = useSound("./Teeth_suggestion.mp3")
   const [timeAudio, setTimeAudio] = useState(0)
   const [currModal, setCurrModal] = useState(EModalType.none)
+  const { time, startTime, stopTime } = useTime()
+  const [modalMessage, setModalMessage] = useState("")
 
   useEffect(() => {
-    if (timeAudio >= timeLimAudio) {
+    if (time > timeLimAudio) {
+      stopTime()
       stopSound()
+      modalStore.openModal(modals.db_add)
     }
-  }, [timeAudio])
+  }, [time])
 
   const playSuggestion = () => {
     playSound()
-    setTimeAudio(1)
+    startTime()
   }
-  // console.log(affirmations.length - (affirmations.length % 10) || 10);
+  const stopSuggestion = () => {
+    stopSound()
+    stopTime()
+  }
+  const addPractice = async () => {
+    const data = await addPracticeApi({ voice: 1, type: 0 })
+    console.log(data)
+    setModalMessage(data.message)
+    modalStore.openModal(modals.success_message)
+  }
   return (
     <div className="  w-[45vw] rounded-xl h-[85vh] flex flex-col items-center gap-4">
       {/* <SuccessButton
@@ -61,19 +75,29 @@ export default function Right({ affirmations, setAffirmations }) {
       } */}
       <div className="p-6 bg-white w-full rounded-xl h-[10rem] flex items-center justify-around text-lg font-bold">
         <div className="flex justify-center items-center gap-2">
-          <BiTime size={30} onClick={playSuggestion} />
-          <Timer
-            time={timeAudio}
-            setTime={setTimeAudio}
-            stop={timeAudio >= timeLimAudio}
+          <SuccessModal
+            title={"Message"}
+            modalName={modals.success_message}
+            message={modalMessage}
+            onClick={() => modalStore.closeModal()}
+            btnTxt={"Done"}
           />
+          <SuccessModal
+            title={"Done workout"}
+            modalName={modals.db_add}
+            message={"You finish the voice workout "}
+            onClick={addPractice}
+            btnTxt={"Save Score"}
+          />
+          <BiTime size={30} onClick={playSuggestion} />
+          <Timer time={time} />
         </div>
         <div>affirmation name</div>
         {sound.playing() ? (
           <LiaStopCircle
             size={30}
             className="cursor-pointer text-[#CFCFD0]"
-            onClick={stopSound}
+            onClick={stopSuggestion}
           />
         ) : (
           <AiOutlinePlayCircle

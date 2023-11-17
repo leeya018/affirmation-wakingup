@@ -4,16 +4,9 @@ import { modals } from "@/util"
 class ModalStore {
   modalName = ""
 
-  // modalName = "";
-
   constructor() {
-    makeAutoObservable(this, {
-      closeModal: action,
-      openModal: action,
-      total: computed,
-    })
+    makeAutoObservable(this)
   }
-
   closeModal = () => {
     this.modalName = ""
   }
