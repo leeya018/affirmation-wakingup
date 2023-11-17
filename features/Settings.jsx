@@ -21,6 +21,11 @@ export default function Settings({}) {
   const [affirmation, setAffirmation] = useState("")
   const inputRef = useRef(null)
   const [image, setImage] = useState(null)
+  // const [isSuccess, setIsSuccess] = useState({
+  //   affirmation: false,
+  //   image: false,
+  //   audio: false,
+  // })
 
   const onImageChange = (event) => {
     if (event.target.files && event.target.files[0]) {
@@ -32,12 +37,21 @@ export default function Settings({}) {
     AsyncStore.setIsLoading(true)
     const data = await changeAffirmationApi(affirmation)
     if (data.isSuccess) {
-      MessageStore.setSuccess("done")
+      MessageStore.setSuccess(`affirmation updated successfully`)
     } else {
-      MessageStore.setError("problem updating")
+      MessageStore.setError("problem updating affirmation")
     }
     console.log(data)
     AsyncStore.setIsLoading(false)
+  }
+
+  const addImage = async (image, type) => {
+    const res = await addImageApi(image, type)
+    if (res.isSuccess) {
+      MessageStore.setSuccess(`added ${type} successfully`)
+    } else {
+      MessageStore.setSuccess(`added ${type} failed`)
+    }
   }
   return (
     <div
@@ -60,7 +74,7 @@ export default function Settings({}) {
         onClick={changeAffirmation}
         className="bg-red w-10 h-10 border-2"
       >
-        Add affirmation
+        Update affirmation
       </SettingsButton>
       <div>
         <input type="file" onChange={onImageChange} className="filetype" />
@@ -74,16 +88,16 @@ export default function Settings({}) {
         />
       </div>
       <SettingsButton
-        onClick={() => addImageApi(image)}
+        onClick={() => addImage(image, "image")}
         className="bg-red w-10 h-10 border-2"
       >
         Upload Image
       </SettingsButton>
 
       <input type="file" onChange={onImageChange} className="filetype" />
-
+      {/* {isSuccess.image && <Alert>Image uploaded</Alert>} */}
       <SettingsButton
-        onClick={() => addImageApi(image, "voice")}
+        onClick={() => addImage(image, "voice")}
         className="bg-red w-10 h-10 border-2"
       >
         Upload Image

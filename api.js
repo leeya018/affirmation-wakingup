@@ -181,10 +181,9 @@ export const addImageApi = async (file, type = "image") => {
 
     const storageRef = ref(storage, `${type}s/${type}_${uid}.${ext}`)
 
-    uploadBytes(storageRef, file).then((snapshot) => {
-      console.log("Uploaded a blob or file!")
-      return getResponse("Uploaded Image successfully").SUCCESS
-    })
+    const snapshot = await uploadBytes(storageRef, file)
+    console.log("Uploaded a blob or file!")
+    return getResponse("Uploaded Image successfully").SUCCESS
   } catch (error) {
     return getResponse(error.message).GENERAL_ERROR
   }
