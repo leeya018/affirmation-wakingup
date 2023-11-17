@@ -5,8 +5,8 @@ import { AiOutlinePlayCircle } from "react-icons/ai"
 import { BiTime } from "react-icons/bi"
 import { LiaStopCircle } from "react-icons/lia"
 import useSound from "hooks/useSound"
-import Timer from "./Timer"
-import SuccessModal from "./modal/message/success"
+import Timer from "../components/Timer"
+import SuccessModal from "../components/modal/message/success"
 import { addPracticeApi } from "api"
 import SuccessButton from "ui/button/modal/success"
 import { modalStore } from "mobx/modalStore"
@@ -19,7 +19,7 @@ const EModalType = {
   none: "none",
 }
 
-export default function RightHome({ affirmations, setAffirmations }) {
+export default function Right({ affirmations, setAffirmations }) {
   const { stopSound, playSound, sound } = useSound("./Teeth_suggestion.mp3")
   const [timeAudio, setTimeAudio] = useState(0)
   const [currModal, setCurrModal] = useState(EModalType.none)

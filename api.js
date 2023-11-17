@@ -131,6 +131,35 @@ export const signupApi = async (user) => {
   }
 }
 
+export const addAudioFile = async (file) => {
+  let storageRef = storage.ref()
+  let metadata = {
+    contentType: "audio/mp3",
+  }
+  let filePath = `${this.file.externalDataDirectory}` + `${this.fileName}`
+  this.file
+    .readAsDataURL(this.file.externalDataDirectory, this.fileName)
+    .then((file) => {
+      let voiceRef = storageRef
+        .child(`voices/${this.fileName}`)
+        .putString(file, storage.StringFormat.DATA_URL)
+      voiceRef.on(
+        storage.TaskEvent.STATE_CHANGED,
+        (snapshot) => {
+          console.log("uploading")
+        },
+        (e) => {
+          reject(e)
+          console.log(JSON.stringify(e, null, 2))
+        },
+        () => {
+          var downloadURL = voiceRef.snapshot.downloadURL
+          resolve(downloadURL)
+        }
+      )
+    })
+}
+
 export const loginApi = async ({ email, password }) => {
   try {
     const userCredential = await signInWithEmailAndPassword(

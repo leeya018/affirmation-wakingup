@@ -1,12 +1,12 @@
 import React, { useEffect, useRef, useState } from "react"
-import Nav from "components/Nav"
-import LeftNav from "components/LeftNav"
+import Nav from "features/Nav"
+import LeftNav from "features/LeftNav"
 import MiddleAffirmations from "components/MiddleAffirmations"
 import Image from "next/image"
-import RightNav from "components/RightHome"
+import RightNav from "features/Right"
 import Graphs from "components/Graphs"
 import { navStore } from "mobx/navStore"
-import { navNames } from "/util"
+import { navNames } from "@/util"
 import { observer } from "mobx-react-lite"
 import Calender from "components/Calender"
 import PieChart from "components/PieChart"
@@ -18,10 +18,11 @@ import { create } from "mobx-persist"
 import { UserStore } from "mobx/userStore"
 import { modalStore } from "mobx/modalStore"
 import { modals } from "@/util"
-import LeftBottom from "components/LeftBottom"
-import RightBottom from "components/RightBottom"
-import Left from "components/LeftBottom"
-import Right from "components/RightBottom"
+
+import Left from "features/LeftBottom"
+
+import Right from "features/Right"
+import Settings from "features/Settings"
 
 const index = () => {
   const [affirmations, setAffirmations] = useState([])
@@ -70,6 +71,9 @@ const index = () => {
   // if (!auth?.currentUser?.uid) {
   //   return null;
   // }
+  const getCalenderGraph = () => {
+    return <PieChart />
+  }
   return (
     <div
       className="w-full border-2 h-[100vh] flex  items-center
@@ -95,7 +99,16 @@ const index = () => {
         />
 
         {/* right */}
-        <Right affirmations={affirmations} setAffirmations={setAffirmations} />
+
+        {selectedName === navNames.home && (
+          <Right
+            affirmations={affirmations}
+            setAffirmations={setAffirmations}
+          />
+        )}
+        {selectedName === navNames.calender && getCalenderGraph()}
+        {selectedName === navNames.settings && <Settings />}
+        {/* {selectedName === navNames.insights && ( */}
       </div>
     </div>
   )
