@@ -82,26 +82,27 @@ const index = () => {
         {/* do not touch */}
         <LeftNav />
         {/* middle */}
-
-        <Left
-          handleKeyDown={handleKeyDown}
-          setTxt={setTxt}
-          affirmations={affirmations}
-          txt={txt}
-          inputRef={inputRef}
-        />
-
-        {/* right */}
-
         {selectedName === navNames.home && (
-          <Right
-            affirmations={affirmations}
-            setAffirmations={setAffirmations}
-          />
+          <>
+            <Left
+              handleKeyDown={handleKeyDown}
+              setTxt={setTxt}
+              affirmations={affirmations}
+              txt={txt}
+              inputRef={inputRef}
+            />
+
+            {/* right */}
+
+            <Right
+              affirmations={affirmations}
+              setAffirmations={setAffirmations}
+            />
+          </>
         )}
         {selectedName === navNames.calender && <Calender />}
+        {selectedName === navNames.insights && <Graphs />}
         {selectedName === navNames.settings && <Settings />}
-        {/* {selectedName === navNames.insights && ( */}
       </div>
     </div>
   )

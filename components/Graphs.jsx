@@ -22,15 +22,9 @@ export default function Graphs() {
   const { user } = UserStore
 
   return (
-    <div className=" w-[45vw] shadow-rl h-[80vh] ">
-      <div className="w-full flex flex-col gap-4 ">
-        <div
-          className="flex-1/4 bg-white rounded-xl flex 
-        flex-col gap-4 p-6"
-        >
-          <StackChart practices={user?.practices} />;
-        </div>
-        {/* <PieChart /> */}
+    <div className=" w-[90vw] shadow-rl rounded-xl bg-white h-[85vh] shadow-lg flex justify-center items-center ">
+      <div className="flex justify-center items-center w-[90%] h-[80vh]">
+        <StackChart practices={user?.practices} />;
       </div>
     </div>
   )
