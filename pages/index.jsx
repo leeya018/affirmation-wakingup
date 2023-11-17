@@ -66,12 +66,7 @@ const index = () => {
       localStorage.setItem("affirmations", JSON.stringify(affirmations))
     }
   }
-  // if (!auth?.currentUser?.uid) {
-  //   return null;
-  // }
-  const getCalenderGraph = () => {
-    return <PieChart />
-  }
+
   return (
     <div
       className="w-full border-2 h-[100vh] flex  items-center
@@ -104,7 +99,7 @@ const index = () => {
             setAffirmations={setAffirmations}
           />
         )}
-        {selectedName === navNames.calender && getCalenderGraph()}
+        {selectedName === navNames.calender && <Calender />}
         {selectedName === navNames.settings && <Settings />}
         {/* {selectedName === navNames.insights && ( */}
       </div>

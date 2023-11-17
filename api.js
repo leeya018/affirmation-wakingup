@@ -97,6 +97,37 @@ export const addPracticeApi = async (practice) => {
     return getResponse(error.message).GENERAL_ERROR
   }
 }
+// export const addPracticeApi = async (practice) => {
+//   try {
+//     var today = new Date()
+//     today.setDate(today.getDate() + 8)
+//     const uid = auth.currentUser.uid
+//     const userRef = doc(db, "users", uid) // Replace 'groups' with your actual collection name
+//     const userSnap = await getDoc(userRef)
+//     if (!userSnap.exists()) {
+//       return getResponse("User " + uid + " does not exist").NOT_FOUND
+//     }
+//     const user = userSnap.data()
+//     let practices = user.practices
+//     let foundPractice = practices.find((p) => p.date === formatDate(today))
+//     if (foundPractice) {
+//       foundPractice.voice += practice.voice
+//       foundPractice.type += practice.type
+//       practices.map((p) => {
+//         p.date === formatDate(today) ? foundPractice : p
+//       })
+//     } else {
+//       practices.push({ ...practice, date: formatDate(today) })
+//     }
+//     await updateDoc(userRef, {
+//       practices,
+//     })
+
+//     return getResponse("Practice added ").SUCCESS
+//   } catch (error) {
+//     return getResponse(error.message).GENERAL_ERROR
+//   }
+// }
 
 const addUser = async (user, id) => {
   const userRef = doc(db, "users", id)

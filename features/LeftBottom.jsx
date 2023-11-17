@@ -14,7 +14,7 @@ const Left = observer(
     return (
       <>
         {selectedName === navNames.insights && <Graphs />}
-        {selectedName === navNames.calender && <Calender />}
+        {/* {selectedName === navNames.calender && <Calender />} */}
         {selectedName === navNames.home && (
           <MiddleAffirmations
             handleKeyDown={handleKeyDown}

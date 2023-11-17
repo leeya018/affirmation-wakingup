@@ -1,21 +1,21 @@
-import React from "react";
-import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
-import { Pie } from "react-chartjs-2";
+import React from "react"
+import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js"
+import { Pie } from "react-chartjs-2"
 
-import { formatDate } from "@/util";
-import { UserStore } from "mobx/userStore";
+import { formatDate } from "@/util"
+import { UserStore } from "mobx/userStore"
 
-ChartJS.register(ArcElement, Tooltip, Legend);
+ChartJS.register(ArcElement, Tooltip, Legend)
 
 export default function PieChart({}) {
-  const maxPoints = 3;
-  const dateStr = formatDate(UserStore.chosenDate);
-  if (!UserStore.user?.practices[dateStr]) return <></>;
-  const practice = UserStore.user?.practices[dateStr];
-  const voice = practice.voice;
-  const type = practice.type;
-  let notDone = maxPoints - voice - type;
-  notDone = notDone > 0 ? notDone : 0;
+  const maxPoints = 3
+  const dateStr = formatDate(UserStore.chosenDate)
+  if (!UserStore.user?.practices[dateStr]) return <></>
+  const practice = UserStore.user?.practices[dateStr]
+  const voice = practice.voice
+  const type = practice.type
+  let notDone = maxPoints - voice - type
+  notDone = notDone > 0 ? notDone : 0
 
   const data = {
     labels: ["type", "voice", "Not done"],
@@ -36,6 +36,6 @@ export default function PieChart({}) {
         borderWidth: 1,
       },
     ],
-  };
-  return <Pie data={data} style={{ width: "30%" }} />;
+  }
+  return <Pie data={data} style={{ width: "30%" }} />
 }
