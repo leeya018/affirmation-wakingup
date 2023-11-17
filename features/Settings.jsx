@@ -80,7 +80,14 @@ export default function Settings({}) {
         Upload Image
       </SettingsButton>
 
-      <AddFileInput />
+      <input type="file" onChange={onImageChange} className="filetype" />
+
+      <SettingsButton
+        onClick={() => addImageApi(image, "voice")}
+        className="bg-red w-10 h-10 border-2"
+      >
+        Upload Image
+      </SettingsButton>
     </div>
   )
 }

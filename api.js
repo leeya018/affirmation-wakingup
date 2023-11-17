@@ -173,12 +173,13 @@ export const loginApi = async ({ email, password }) => {
     return getResponse(error.message).GENERAL_ERROR
   }
 }
-
-export const addImageApi = async (file) => {
+// add file and add the audio
+export const addImageApi = async (file, type = "image") => {
+  const ext = type === "audio" ? "mp3" : ".png"
   try {
     const uid = auth.currentUser.uid
 
-    const storageRef = ref(storage, `images/image_${uid}`)
+    const storageRef = ref(storage, `${type}s/${type}_${uid}.${ext}`)
 
     uploadBytes(storageRef, file).then((snapshot) => {
       console.log("Uploaded a blob or file!")
