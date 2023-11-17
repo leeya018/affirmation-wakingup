@@ -1,3 +1,4 @@
+import { addAudioFileApi } from "api"
 import axios from "axios"
 
 import React, { Component, useState } from "react"
@@ -24,7 +25,7 @@ const AddFileInput = () => {
 
     // Request made to the backend api
     // Send formData object
-    axios.post("api/uploadfile", formData)
+    addAudioFileApi(selectedFile)
   }
 
   // File content to be displayed after

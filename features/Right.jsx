@@ -7,7 +7,7 @@ import { LiaStopCircle } from "react-icons/lia"
 import useSound from "hooks/useSound"
 import Timer from "../components/Timer"
 import SuccessModal from "../components/modal/message/success"
-import { addPracticeApi } from "api"
+import { addPracticeApi, getImageApi } from "api"
 import SuccessButton from "ui/button/modal/success"
 import { modalStore } from "mobx/modalStore"
 import { modals } from "@/util"
@@ -26,6 +26,10 @@ export default function Right({ affirmations, setAffirmations }) {
   const [currModal, setCurrModal] = useState(EModalType.none)
   const { time, startTime, stopTime } = useTime()
   const [modalMessage, setModalMessage] = useState("")
+
+  useEffect(() => {
+    getImageApi()
+  }, [])
 
   useEffect(() => {
     if (time > timeLimAudio) {
@@ -75,6 +79,14 @@ export default function Right({ affirmations, setAffirmations }) {
       } */}
       <div className="p-6 bg-white w-full rounded-xl h-[10rem] flex items-center justify-around text-lg font-bold">
         <div className="flex justify-center items-center gap-2">
+          <button
+            onClick={() => {
+              console.log("clicke get")
+              getImageApi()
+            }}
+          >
+            get
+          </button>
           <SuccessModal
             title={"Message"}
             modalName={modals.success_message}

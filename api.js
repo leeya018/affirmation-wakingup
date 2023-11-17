@@ -17,6 +17,7 @@ import {
 } from "firebase/auth"
 import { formatSeconds } from "@/util"
 import { formatDate } from "@/util"
+import { getBlob, ref, uploadBytes } from "firebase/storage"
 // data in fire
 // affirmation
 // currencAffirmation,
@@ -97,37 +98,6 @@ export const addPracticeApi = async (practice) => {
     return getResponse(error.message).GENERAL_ERROR
   }
 }
-// export const addPracticeApi = async (practice) => {
-//   try {
-//     var today = new Date()
-//     today.setDate(today.getDate() + 8)
-//     const uid = auth.currentUser.uid
-//     const userRef = doc(db, "users", uid) // Replace 'groups' with your actual collection name
-//     const userSnap = await getDoc(userRef)
-//     if (!userSnap.exists()) {
-//       return getResponse("User " + uid + " does not exist").NOT_FOUND
-//     }
-//     const user = userSnap.data()
-//     let practices = user.practices
-//     let foundPractice = practices.find((p) => p.date === formatDate(today))
-//     if (foundPractice) {
-//       foundPractice.voice += practice.voice
-//       foundPractice.type += practice.type
-//       practices.map((p) => {
-//         p.date === formatDate(today) ? foundPractice : p
-//       })
-//     } else {
-//       practices.push({ ...practice, date: formatDate(today) })
-//     }
-//     await updateDoc(userRef, {
-//       practices,
-//     })
-
-//     return getResponse("Practice added ").SUCCESS
-//   } catch (error) {
-//     return getResponse(error.message).GENERAL_ERROR
-//   }
-// }
 
 const addUser = async (user, id) => {
   const userRef = doc(db, "users", id)
@@ -162,33 +132,31 @@ export const signupApi = async (user) => {
   }
 }
 
-export const addAudioFile = async (file) => {
+export const addAudioFileApi = async (file) => {
   let storageRef = storage.ref()
   let metadata = {
     contentType: "audio/mp3",
   }
-  let filePath = `${this.file.externalDataDirectory}` + `${this.fileName}`
-  this.file
-    .readAsDataURL(this.file.externalDataDirectory, this.fileName)
-    .then((file) => {
-      let voiceRef = storageRef
-        .child(`voices/${this.fileName}`)
-        .putString(file, storage.StringFormat.DATA_URL)
-      voiceRef.on(
-        storage.TaskEvent.STATE_CHANGED,
-        (snapshot) => {
-          console.log("uploading")
-        },
-        (e) => {
-          reject(e)
-          console.log(JSON.stringify(e, null, 2))
-        },
-        () => {
-          var downloadURL = voiceRef.snapshot.downloadURL
-          resolve(downloadURL)
-        }
-      )
-    })
+  let filePath = `${file.externalDataDirectory}` + `${"fileName"}`
+  file.readAsDataURL(file.externalDataDirectory, "fileName").then((file) => {
+    let voiceRef = storageRef
+      .child(`voices/${"fileName"}`)
+      .putString(file, storage.StringFormat.DATA_URL)
+    voiceRef.on(
+      storage.TaskEvent.STATE_CHANGED,
+      (snapshot) => {
+        console.log("uploading")
+      },
+      (e) => {
+        console.log(e)
+        console.log(JSON.stringify(e, null, 2))
+      },
+      () => {
+        var downloadURL = voiceRef.snapshot.downloadURL
+        console.log(downloadURL)
+      }
+    )
+  })
 }
 
 export const loginApi = async ({ email, password }) => {
@@ -205,3 +173,65 @@ export const loginApi = async ({ email, password }) => {
     return getResponse(error.message).GENERAL_ERROR
   }
 }
+
+export const addImageApi = async (file) => {
+  try {
+    const uid = auth.currentUser.uid
+
+    const storageRef = ref(storage, `images/image_${uid}`)
+
+    uploadBytes(storageRef, file).then((snapshot) => {
+      console.log("Uploaded a blob or file!")
+      return getResponse("Uploaded Image successfully").SUCCESS
+    })
+  } catch (error) {
+    return getResponse(error.message).GENERAL_ERROR
+  }
+}
+
+export const getImageApi = async () => {
+  try {
+    const uid = auth.currentUser.uid
+    const fileRef = ref(storage, `images/image_${uid}`)
+
+    // Get the blob
+    getBlob(fileRef)
+      .then((blob) => {
+        // Do something with the blob here
+        console.log("Blob retrieved:", blob)
+      })
+      .catch((error) => {
+        // Handle any errors
+        console.error("Error getting blob:", error)
+      })
+  } catch (error) {
+    console.log(error.message)
+    return getResponse(error.message).GENERAL_ERROR
+  }
+}
+// export const getImageApi = async () => {
+//   try {
+//     const uid = auth.currentUser.uid
+//     // Reference to your file in Firebase Storage
+//     const location = "gs://affirmations-adde0.appspot.com/images"
+//     const fileName = `image_${uid}`
+//     // const path = `firebasestorage.googleapis.com/images/${fileName}?alt=media`
+//     const path = `${location}/${fileName}?alt=media&token=392fe9e3-0ffb-48b0-8ec2-fbe316aff932`
+//     console.log("path", path)
+//     const fileRef = ref(storage, `${path}`)
+
+//     // Get the blob
+//     getBlob(fileRef)
+//       .then((blob) => {
+//         // Do something with the blob here
+//         console.log("Blob retrieved:", blob)
+//       })
+//       .catch((error) => {
+//         // Handle any errors
+//         console.error("Error getting blob:", error)
+//       })
+//   } catch (error) {
+//     console.log(error.message)
+//     return getResponse(error.message).GENERAL_ERROR
+//   }
+// }

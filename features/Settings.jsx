@@ -8,7 +8,7 @@ import useSound from "hooks/useSound"
 import Timer from "../components/Timer"
 import SuccessModal from "../components/modal/message/success"
 import ApproveButton from "ui/button/modal/approve"
-import { changeAffirmationApi } from "api"
+import { addImageApi, changeAffirmationApi } from "api"
 import { AsyncStore } from "mobx/asyncStore"
 import ApproveButton1 from "ui/button/modal/settings"
 import { Alert } from "@mui/material"
@@ -20,7 +20,13 @@ import AddFileInput from "ui/input/addFile"
 export default function Settings({}) {
   const [affirmation, setAffirmation] = useState("")
   const inputRef = useRef(null)
+  const [image, setImage] = useState(null)
 
+  const onImageChange = (event) => {
+    if (event.target.files && event.target.files[0]) {
+      setImage(URL.createObjectURL(event.target.files[0]))
+    }
+  }
   const changeAffirmation = async () => {
     if (!affirmation) return
     AsyncStore.setIsLoading(true)
@@ -55,6 +61,23 @@ export default function Settings({}) {
         className="bg-red w-10 h-10 border-2"
       >
         Add affirmation
+      </SettingsButton>
+      <div>
+        <input type="file" onChange={onImageChange} className="filetype" />
+
+        <Image
+          width={32}
+          height={32}
+          className="rounded-lg "
+          alt="preview image"
+          src={image ? image : ""}
+        />
+      </div>
+      <SettingsButton
+        onClick={() => addImageApi(image)}
+        className="bg-red w-10 h-10 border-2"
+      >
+        Upload Image
       </SettingsButton>
 
       <AddFileInput />
