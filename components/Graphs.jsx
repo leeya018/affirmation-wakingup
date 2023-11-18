@@ -15,10 +15,11 @@ import {
   Legend,
 } from "chart.js"
 import { Bar } from "react-chartjs-2"
+import { observer } from "mobx-react-lite"
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend)
 
-export default function Graphs() {
+const Graphs = observer(() => {
   const { user } = UserStore
 
   return (
@@ -28,4 +29,6 @@ export default function Graphs() {
       </div>
     </div>
   )
-}
+})
+
+export default Graphs

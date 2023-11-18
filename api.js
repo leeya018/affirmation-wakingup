@@ -18,6 +18,7 @@ import {
 import { formatSeconds } from "@/util"
 import { formatDate } from "@/util"
 import { getBlob, ref, uploadBytes } from "firebase/storage"
+import { UserStore } from "mobx/userStore"
 // data in fire
 // affirmation
 // currencAffirmation,
@@ -70,7 +71,7 @@ export const changeAffirmationApi = async (affirmationName) => {
 export const addPracticeApi = async (practice) => {
   try {
     var today = new Date()
-    today.setDate(today.getDate() + 8)
+    // today.setDate(today.getDate() - 8)
     const uid = auth.currentUser.uid
     const userRef = doc(db, "users", uid) // Replace 'groups' with your actual collection name
     const userSnap = await getDoc(userRef)
@@ -89,6 +90,7 @@ export const addPracticeApi = async (practice) => {
     } else {
       practices.push({ ...practice, date: formatDate(today) })
     }
+    UserStore.setUser({ ...UserStore.user, practices })
     await updateDoc(userRef, {
       practices,
     })

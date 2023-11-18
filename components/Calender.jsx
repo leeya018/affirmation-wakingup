@@ -7,9 +7,10 @@ import { UserStore } from "mobx/userStore"
 import PieChart from "./PieChart"
 import moment from "moment"
 import { toJS } from "mobx"
+import { observer } from "mobx-react-lite"
 const maxPoints = 3
 
-export default function Calender() {
+const Calender = observer(() => {
   const [currDate, setCurrDate] = useState(moment())
   const [data, setData] = useState([])
 
@@ -56,4 +57,5 @@ export default function Calender() {
       </div>
     </div>
   )
-}
+})
+export default Calender

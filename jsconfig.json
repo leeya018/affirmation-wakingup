@@ -2,7 +2,8 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@/util": ["util.js"]
+      "@/util": ["util.js"],
+      "@/firebase": ["firebase.js"]
     }
   }
 }

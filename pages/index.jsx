@@ -13,16 +13,18 @@ import PieChart from "components/PieChart"
 
 import { useRouter } from "next/router"
 
-import { getUserApi } from "api"
+import { addPracticeApi, getUserApi } from "api"
 import { create } from "mobx-persist"
 import { UserStore } from "mobx/userStore"
 import { modalStore } from "mobx/modalStore"
 import { modals } from "@/util"
-
 import Left from "features/LeftBottom"
 
 import Right from "features/Right"
 import Settings from "features/Settings"
+import { auth, db } from "@/firebase"
+import ApproveButton from "ui/button/modal/approve"
+import { collection, getDocs, onSnapshot, query } from "firebase/firestore"
 
 const index = () => {
   const [affirmations, setAffirmations] = useState([])
@@ -40,14 +42,31 @@ const index = () => {
     const localTime = localStorage.getItem("time") || 0
     console.log(parseInt(localTime))
     setAffirmations(JSON.parse(localAffirmations))
+    // test()
   }, [])
 
+  // const test = async () => {
+  //   // const userDocRef = collection(db, "users", "dOav3JCkRKgIO2chpJSlOUpxlTa2")
+
+  //   const q = query(collection(db, "users"))
+
+  //   const querySnapshot = await getDocs(q)
+  //   querySnapshot.forEach((doc) => {
+  //     // doc.data() is never undefined for query doc snapshots
+  //     console.log(doc.id, " => ", doc.data())
+  //   })
+  // }
   useEffect(() => {
     if (affirmations.length === process.env.LIM_AFFIRMATIONS) {
       modalStore.openModal(modals.success_message)
     }
   }, [affirmations])
 
+  const addPractice = async () => {
+    const data = await addPracticeApi({ voice: 0, type: 1 })
+    console.log(data)
+    modalStore.openModal(modals.success_message)
+  }
   const getUser = async () => {
     const data = await getUserApi()
     console.log(data)
@@ -73,11 +92,12 @@ const index = () => {
      overflow-hidden bg-[#F3F3F7]"
     >
       {/* modals */}
-
       {/* nav  */}
       <Nav />
       {/* all other */}
       <div className="w-full flex justify-around h-[80vh] gap-5 mx-6">
+        {/* <ApproveButton onClick={test}>test</ApproveButton> */}
+        <ApproveButton onClick={addPractice}>addPractice</ApproveButton>
         {/* left */}
         {/* do not touch */}
         <LeftNav />
