@@ -1,22 +1,22 @@
-import { makeAutoObservable } from "mobx";
+import { makeAutoObservable } from "mobx"
 
 class User {
-  user = null;
-  chosenDate = new Date();
+  user = null
+  chosenDate = new Date()
 
   constructor() {
-    makeAutoObservable(this);
+    makeAutoObservable(this)
   }
 
   setUser = (user) => {
-    console.log("user", user);
-    this.user = user;
-  };
+    console.log("user", user)
+    this.user = user
+  }
   setChosenDate = (date) => {
-    console.log("date", date);
+    console.log("date", date)
 
-    this.chosenDate = date;
-  };
+    this.chosenDate = date
+  }
 }
 
-export const UserStore = new User();
+export const UserStore = new User()

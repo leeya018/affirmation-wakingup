@@ -127,11 +127,13 @@ export default function Right({ affirmations, setAffirmations }) {
           alt="profile image"
           width={500}
           height={500}
-          className={`rounded-lg opacity-${
-            affirmations.length - (affirmations.length % 10) || 10
-          } 
+          className={`rounded-lg
    
         `}
+          style={{
+            opacity:
+              affirmations.length / process.env.NEXT_PUBLIC_AFFIRMATION_LIM,
+          }}
           src={"/smile.png"}
         />
       </div>

@@ -10,6 +10,7 @@ import Alerts from "components/Alerts"
 import Image from "next/image"
 import { useFormik } from "formik"
 import * as Yup from "yup"
+import { UserStore } from "mobx/userStore"
 
 export default function login() {
   const router = useRouter()
@@ -84,6 +85,8 @@ export default function login() {
         console.log(user.photoURL)
         console.log(user.displayName)
         console.log(user.uid)
+        localStorage.setItem("photoURL", user.photoURL)
+        localStorage.setItem("displayName", user.displayName)
 
         // debtStore.addUser(user.uid, user.displayName)
         router.push("/")
