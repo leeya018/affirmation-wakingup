@@ -130,7 +130,8 @@ function Right({ affirmations, setAffirmations }) {
    
         `}
           style={{
-            opacity: 1,
+            opacity:
+              affirmations.length / process.env.NEXT_PUBLIC_AFFIRMATION_LIM,
           }}
           src={UserStore.user?.imageAffirmation}
           // src={"/smile.png"}

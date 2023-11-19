@@ -61,6 +61,7 @@ export default function login() {
     if (data.isSuccess) {
       setSuccess(data.message)
       sessionStorage.setItem("uid", data.data.uid)
+      localStorage.setItem("displayName", data.data.name)
 
       router.push("/")
     } else {
@@ -87,7 +88,6 @@ export default function login() {
         console.log(user.displayName)
         console.log(user.uid)
         localStorage.setItem("photoURL", user.photoURL)
-        localStorage.setItem("displayName", user.displayName)
         sessionStorage.setItem("uid", user.uid)
 
         // debtStore.addUser(user.uid, user.displayName)

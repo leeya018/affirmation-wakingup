@@ -178,7 +178,8 @@ export const loginApi = async ({ email, password }) => {
     const user = userCredential.user
     console.log("login", user)
     sessionStorage.setItem("uid", user.uid)
-    return getResponse("user logged in successfully", user).SUCCESS
+    const res = await getUserApi()
+    return getResponse("user logged in successfully", res.data).SUCCESS
   } catch (error) {
     return getResponse(error.message).GENERAL_ERROR
   }
