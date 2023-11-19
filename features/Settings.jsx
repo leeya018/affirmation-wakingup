@@ -8,7 +8,7 @@ import useSound from "hooks/useSound"
 import Timer from "../components/Timer"
 import SuccessModal from "../components/modal/message/success"
 import ApproveButton from "ui/button/modal/approve"
-import { addImageApi, changeAffirmationApi } from "api"
+import { addAudioApi, addImageApi, changeAffirmationApi } from "api"
 import { AsyncStore } from "mobx/asyncStore"
 import ApproveButton1 from "ui/button/modal/settings"
 import { Alert } from "@mui/material"
@@ -23,11 +23,7 @@ function Settings({}) {
   const [affirmation, setAffirmation] = useState("")
   const inputRef = useRef(null)
   const [image, setImage] = useState(null)
-  // const [isSuccess, setIsSuccess] = useState({
-  //   affirmation: false,
-  //   image: false,
-  //   audio: false,
-  // })
+  const [file, setFile] = useState(null)
 
   useEffect(() => {
     setAffirmation(UserStore.user?.affirmation)
@@ -36,6 +32,11 @@ function Settings({}) {
   const onImageChange = (event) => {
     if (event.target.files && event.target.files[0]) {
       setImage(event.target.files[0])
+    }
+  }
+  const onFileChange = (event) => {
+    if (event.target.files && event.target.files[0]) {
+      setFile(event.target.files[0])
     }
   }
   const changeAffirmation = async () => {
@@ -52,12 +53,13 @@ function Settings({}) {
     AsyncStore.setIsLoading(false)
   }
 
-  const addImage = async (image, type) => {
+  const addImage = async () => {
     if (!image) {
-      MessageStore.setError(`You have to  choose image firts `)
+      MessageStore.setError(`You have to  choose file first `)
       return null
     }
-    const res = await addImageApi(image, type)
+    const res = await addAudioApi(image)
+
     if (res.isSuccess) {
       UserStore.setUser({
         ...UserStore.user,
@@ -66,6 +68,23 @@ function Settings({}) {
       MessageStore.setSuccess(`added image successfully`)
     } else {
       MessageStore.setError(`added image failed`)
+    }
+  }
+  const addAudio = async () => {
+    if (!file) {
+      MessageStore.setError(`You have to  choose file first `)
+      return null
+    }
+    const res = await addAudioApi(file)
+
+    if (res.isSuccess) {
+      UserStore.setUser({
+        ...UserStore.user,
+        audioAffirmation: res.data,
+      })
+      MessageStore.setSuccess(`added file successfully`)
+    } else {
+      MessageStore.setError(`added file failed`)
     }
   }
   return (
@@ -102,20 +121,15 @@ function Settings({}) {
           src={image ? URL.createObjectURL(image) : ""}
         />
       </div>
-      <SettingsButton
-        onClick={() => addImage(image, "image")}
-        className="bg-red w-10 h-10 border-2"
-      >
+      <SettingsButton onClick={addImage} className="bg-red w-10 h-10 border-2">
         Upload Image
       </SettingsButton>
 
-      <input type="file" onChange={onImageChange} className="filetype" />
+      <input type="file" onChange={onFileChange} className="filetype" />
       {/* {isSuccess.image && <Alert>Image uploaded</Alert>} */}
-      <SettingsButton
-        onClick={() => addImage(image, "voice")}
-        className="bg-red w-10 h-10 border-2"
-      >
-        Upload Image
+      <div>{file?.name}</div>
+      <SettingsButton onClick={addAudio} className="bg-red w-10 h-10 border-2">
+        Upload File
       </SettingsButton>
     </div>
   )

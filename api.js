@@ -204,30 +204,26 @@ export const addImageApi = async (file) => {
     return getResponse(error.message).GENERAL_ERROR
   }
 }
-// export const addImageApi = async (file, type = "image") => {
-//   const ext = type === "audio" ? "mp3" : ".png"
-//   try {
-//     const uid = auth.currentUser.uid
+export const addAudioApi = async (file) => {
+  try {
+    const uid = auth.currentUser.uid
 
-//     const storageRef = ref(storage, `${type}s/${type}_${uid}.${ext}`)
+    const storageRef = ref(storage, `${uid}/audios/${file.name}`)
 
-//     const snapshot = await uploadBytes(storageRef, file)
-//       .then((snapshot) => {
-//         return getDownloadURL(storageRef)
-//       })
-//       .then((downloadURL) => {
-//         console.log(`File available at: ${downloadURL}`, db)
-//         const userRef = doc(db, "users", uid)
-//         return updateDoc(userRef, {
-//           imageAffirmation: downloadURL,
-//         })
-//       })
-//     console.log("Uploaded a blob or file!")
-//     return getResponse("Uploaded Image successfully").SUCCESS
-//   } catch (error) {
-//     return getResponse(error.message).GENERAL_ERROR
-//   }
-// }
+    const snapshot = await uploadBytes(storageRef, file)
+    const downloadURL = await getDownloadURL(storageRef)
+
+    console.log(`File available at: ${downloadURL}`, db)
+    const userRef = doc(db, "users", uid)
+    updateDoc(userRef, {
+      audioAffirmation: downloadURL,
+    })
+    return getResponse("Uploaded file audio successfully", downloadURL).SUCCESS
+  } catch (error) {
+    console.log(error.message)
+    return getResponse(error.message).GENERAL_ERROR
+  }
+}
 
 // export const getImageApi = async () => {
 //   try {

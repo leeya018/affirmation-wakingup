@@ -23,7 +23,9 @@ const EModalType = {
 }
 
 function Right({ affirmations, setAffirmations }) {
-  const { stopSound, playSound, sound } = useSound("./Teeth_suggestion.mp3")
+  const { stopSound, playSound, sound, setSound } = useSound(
+    "./Teeth_suggestion.mp3"
+  )
   const [timeAudio, setTimeAudio] = useState(0)
   const [currModal, setCurrModal] = useState(EModalType.none)
   const { time, startTime, stopTime } = useTime()
@@ -37,6 +39,12 @@ function Right({ affirmations, setAffirmations }) {
       modalStore.openModal(modals.db_add)
     }
   }, [time])
+
+  useEffect(() => {
+    if (UserStore?.user?.audioAffirmation) {
+      setSound(UserStore?.user?.audioAffirmation)
+    }
+  }, [UserStore?.user?.audioAffirmation])
 
   const playSuggestion = () => {
     playSound()
@@ -95,8 +103,8 @@ function Right({ affirmations, setAffirmations }) {
           <BiTime size={30} onClick={playSuggestion} />
           <Timer time={time} />
         </div>
-        <div>affirmation name</div>
-        {sound.playing() ? (
+        <div>{"my affirmation sound"}</div>
+        {sound?.playing() ? (
           <LiaStopCircle
             size={30}
             className="cursor-pointer text-[#CFCFD0]"
