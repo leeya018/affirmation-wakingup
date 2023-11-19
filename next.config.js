@@ -3,7 +3,7 @@ const nextConfig = {
   reactStrictMode: true,
   swcMinify: false,
   images: {
-    domains: ["lh3.googleusercontent.com", "math-game-lee.netlify.app"],
+    domains: ["lh3.googleusercontent.com", "firebasestorage.googleapis.com"],
   },
   async headers() {
     return [
@@ -16,8 +16,8 @@ const nextConfig = {
           },
         ],
       },
-    ];
+    ]
   },
-};
+}
 
-module.exports = nextConfig;
+module.exports = nextConfig

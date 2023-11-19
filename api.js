@@ -17,7 +17,13 @@ import {
 } from "firebase/auth"
 import { formatSeconds } from "@/util"
 import { formatDate } from "@/util"
-import { getBlob, ref, uploadBytes } from "firebase/storage"
+import {
+  getBlob,
+  getDownloadURL,
+  getMetadata,
+  ref,
+  uploadBytes,
+} from "firebase/storage"
 import { UserStore } from "mobx/userStore"
 // data in fire
 // affirmation
@@ -178,41 +184,67 @@ export const loginApi = async ({ email, password }) => {
   }
 }
 // add file and add the audio
-export const addImageApi = async (file, type = "image") => {
-  const ext = type === "audio" ? "mp3" : ".png"
+export const addImageApi = async (file) => {
   try {
     const uid = auth.currentUser.uid
 
-    const storageRef = ref(storage, `${type}s/${type}_${uid}.${ext}`)
+    const storageRef = ref(storage, `${uid}/images/${file.name}`)
 
     const snapshot = await uploadBytes(storageRef, file)
-    console.log("Uploaded a blob or file!")
-    return getResponse("Uploaded Image successfully").SUCCESS
-  } catch (error) {
-    return getResponse(error.message).GENERAL_ERROR
-  }
-}
+    const downloadURL = await getDownloadURL(storageRef)
 
-export const getImageApi = async () => {
-  try {
-    const uid = auth.currentUser.uid
-    const fileRef = ref(storage, `images/image_${uid}`)
-
-    // Get the blob
-    getBlob(fileRef)
-      .then((blob) => {
-        // Do something with the blob here
-        console.log("Blob retrieved:", blob)
-      })
-      .catch((error) => {
-        // Handle any errors
-        console.error("Error getting blob:", error)
-      })
+    console.log(`File available at: ${downloadURL}`, db)
+    const userRef = doc(db, "users", uid)
+    updateDoc(userRef, {
+      imageAffirmation: downloadURL,
+    })
+    return getResponse("Uploaded file image successfully", downloadURL).SUCCESS
   } catch (error) {
     console.log(error.message)
     return getResponse(error.message).GENERAL_ERROR
   }
 }
+// export const addImageApi = async (file, type = "image") => {
+//   const ext = type === "audio" ? "mp3" : ".png"
+//   try {
+//     const uid = auth.currentUser.uid
+
+//     const storageRef = ref(storage, `${type}s/${type}_${uid}.${ext}`)
+
+//     const snapshot = await uploadBytes(storageRef, file)
+//       .then((snapshot) => {
+//         return getDownloadURL(storageRef)
+//       })
+//       .then((downloadURL) => {
+//         console.log(`File available at: ${downloadURL}`, db)
+//         const userRef = doc(db, "users", uid)
+//         return updateDoc(userRef, {
+//           imageAffirmation: downloadURL,
+//         })
+//       })
+//     console.log("Uploaded a blob or file!")
+//     return getResponse("Uploaded Image successfully").SUCCESS
+//   } catch (error) {
+//     return getResponse(error.message).GENERAL_ERROR
+//   }
+// }
+
+// export const getImageApi = async () => {
+//   try {
+//     const uid = sessionStorage.getItem("uid")
+
+//     const fileRef = ref(storage, `images/image_${uid}`)
+//     console.log(fileRef)
+//     const imagesRef = fileRef.parent
+//     // Get the blob
+//     console.log("fullPath", fileRef.fullPath)
+//     console.log("imagesRef", imagesRef)
+//   } catch (error) {
+//     console.log(error.message)
+//     return getResponse(error.message).GENERAL_ERROR
+//   }
+// }
+
 // export const getImageApi = async () => {
 //   try {
 //     const uid = auth.currentUser.uid

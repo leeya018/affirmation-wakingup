@@ -17,8 +17,9 @@ import Alerts from "components/Alerts"
 import SettingsButton from "ui/button/modal/settings"
 import AddFileInput from "ui/input/addFile"
 import { UserStore } from "mobx/userStore"
+import { observer } from "mobx-react-lite"
 
-export default function Settings({}) {
+function Settings({}) {
   const [affirmation, setAffirmation] = useState("")
   const inputRef = useRef(null)
   const [image, setImage] = useState(null)
@@ -29,12 +30,12 @@ export default function Settings({}) {
   // })
 
   useEffect(() => {
-    setAffirmation(UserStore.user.affirmation)
+    setAffirmation(UserStore.user?.affirmation)
   }, [UserStore.user])
 
   const onImageChange = (event) => {
     if (event.target.files && event.target.files[0]) {
-      setImage(URL.createObjectURL(event.target.files[0]))
+      setImage(event.target.files[0])
     }
   }
   const changeAffirmation = async () => {
@@ -52,11 +53,19 @@ export default function Settings({}) {
   }
 
   const addImage = async (image, type) => {
+    if (!image) {
+      MessageStore.setError(`You have to  choose image firts `)
+      return null
+    }
     const res = await addImageApi(image, type)
     if (res.isSuccess) {
-      MessageStore.setSuccess(`added ${type} successfully`)
+      UserStore.setUser({
+        ...UserStore.user,
+        imageAffirmation: res.data,
+      })
+      MessageStore.setSuccess(`added image successfully`)
     } else {
-      MessageStore.setSuccess(`added ${type} failed`)
+      MessageStore.setError(`added image failed`)
     }
   }
   return (
@@ -90,7 +99,7 @@ export default function Settings({}) {
           height={32}
           className="rounded-lg "
           alt="preview image"
-          src={image ? image : ""}
+          src={image ? URL.createObjectURL(image) : ""}
         />
       </div>
       <SettingsButton
@@ -111,3 +120,4 @@ export default function Settings({}) {
     </div>
   )
 }
+export default observer(Settings)

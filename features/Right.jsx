@@ -12,6 +12,8 @@ import SuccessButton from "ui/button/modal/success"
 import { modalStore } from "mobx/modalStore"
 import { modals } from "@/util"
 import useTime from "hooks/useTime"
+import { UserStore } from "mobx/userStore"
+import { observer } from "mobx-react-lite"
 const timeLimAudio = 1800
 
 const EModalType = {
@@ -20,16 +22,13 @@ const EModalType = {
   none: "none",
 }
 
-export default function Right({ affirmations, setAffirmations }) {
+function Right({ affirmations, setAffirmations }) {
   const { stopSound, playSound, sound } = useSound("./Teeth_suggestion.mp3")
   const [timeAudio, setTimeAudio] = useState(0)
   const [currModal, setCurrModal] = useState(EModalType.none)
   const { time, startTime, stopTime } = useTime()
   const [modalMessage, setModalMessage] = useState("")
-
-  useEffect(() => {
-    getImageApi()
-  }, [])
+  console.log("imageAffirmation", UserStore.user?.imageAffirmation)
 
   useEffect(() => {
     if (time > timeLimAudio) {
@@ -79,14 +78,6 @@ export default function Right({ affirmations, setAffirmations }) {
       } */}
       <div className="p-6 bg-white w-full rounded-xl h-[10rem] flex items-center justify-around text-lg font-bold">
         <div className="flex justify-center items-center gap-2">
-          <button
-            onClick={() => {
-              console.log("clicke get")
-              getImageApi()
-            }}
-          >
-            get
-          </button>
           <SuccessModal
             title={"Message"}
             modalName={modals.success_message}
@@ -131,12 +122,13 @@ export default function Right({ affirmations, setAffirmations }) {
    
         `}
           style={{
-            opacity:
-              affirmations.length / process.env.NEXT_PUBLIC_AFFIRMATION_LIM,
+            opacity: 1,
           }}
-          src={"/smile.png"}
+          src={UserStore.user?.imageAffirmation}
+          // src={"/smile.png"}
         />
       </div>
     </div>
   )
 }
+export default observer(Right)

@@ -13,7 +13,7 @@ import PieChart from "components/PieChart"
 
 import { useRouter } from "next/router"
 
-import { addPracticeApi, getUserApi } from "api"
+import { addPracticeApi, getImageApi, getUserApi } from "api"
 import { create } from "mobx-persist"
 import { UserStore } from "mobx/userStore"
 import { modalStore } from "mobx/modalStore"
@@ -34,28 +34,18 @@ const index = () => {
   const router = useRouter()
 
   useEffect(() => {
-    // setTimeout(() => {
-    getUser()
-    // }, 3000)
+    if (!sessionStorage.getItem("uid")) {
+      router.push("/login")
+    } else {
+      getUser()
 
-    const localAffirmations = localStorage.getItem("affirmations") || "[]"
-    const localTime = localStorage.getItem("time") || 0
-    console.log(parseInt(localTime))
-    setAffirmations(JSON.parse(localAffirmations))
-    // test()
+      const localAffirmations = localStorage.getItem("affirmations") || "[]"
+      const localTime = localStorage.getItem("time") || 0
+      console.log(parseInt(localTime))
+      setAffirmations(JSON.parse(localAffirmations))
+    }
   }, [])
 
-  // const test = async () => {
-  //   // const userDocRef = collection(db, "users", "dOav3JCkRKgIO2chpJSlOUpxlTa2")
-
-  //   const q = query(collection(db, "users"))
-
-  //   const querySnapshot = await getDocs(q)
-  //   querySnapshot.forEach((doc) => {
-  //     // doc.data() is never undefined for query doc snapshots
-  //     console.log(doc.id, " => ", doc.data())
-  //   })
-  // }
   useEffect(() => {
     if (affirmations.length === process.env.LIM_AFFIRMATIONS) {
       modalStore.openModal(modals.success_message)
@@ -98,6 +88,7 @@ const index = () => {
       <div className="w-full flex justify-around h-[80vh] gap-5 mx-6">
         {/* <ApproveButton onClick={test}>test</ApproveButton> */}
         <ApproveButton onClick={addPractice}>addPractice</ApproveButton>
+
         {/* left */}
         {/* do not touch */}
         <LeftNav />
