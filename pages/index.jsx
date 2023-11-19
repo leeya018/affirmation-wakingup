@@ -34,9 +34,9 @@ const index = () => {
   const router = useRouter()
 
   useEffect(() => {
-    setTimeout(() => {
-      getUser()
-    }, 1000)
+    // setTimeout(() => {
+    getUser()
+    // }, 3000)
 
     const localAffirmations = localStorage.getItem("affirmations") || "[]"
     const localTime = localStorage.getItem("time") || 0

@@ -35,7 +35,8 @@ import { UserStore } from "mobx/userStore"
 // }
 export const getUserApi = async () => {
   try {
-    const uid = auth.currentUser.uid
+    const uid = sessionStorage.getItem("uid")
+    console.log("sessionStorage", uid)
 
     const userRef = doc(db, "users", uid)
 
@@ -169,8 +170,9 @@ export const loginApi = async ({ email, password }) => {
       password
     )
     const user = userCredential.user
-
-    return getResponse("user logged in successfully").SUCCESS
+    console.log("login", user)
+    sessionStorage.setItem("uid", user.uid)
+    return getResponse("user logged in successfully", user).SUCCESS
   } catch (error) {
     return getResponse(error.message).GENERAL_ERROR
   }

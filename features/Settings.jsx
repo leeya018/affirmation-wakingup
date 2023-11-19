@@ -16,6 +16,7 @@ import { MessageStore } from "mobx/messageStore"
 import Alerts from "components/Alerts"
 import SettingsButton from "ui/button/modal/settings"
 import AddFileInput from "ui/input/addFile"
+import { UserStore } from "mobx/userStore"
 
 export default function Settings({}) {
   const [affirmation, setAffirmation] = useState("")
@@ -27,6 +28,10 @@ export default function Settings({}) {
   //   audio: false,
   // })
 
+  useEffect(() => {
+    setAffirmation(UserStore.user.affirmation)
+  }, [UserStore.user])
+
   const onImageChange = (event) => {
     if (event.target.files && event.target.files[0]) {
       setImage(URL.createObjectURL(event.target.files[0]))
@@ -37,6 +42,7 @@ export default function Settings({}) {
     AsyncStore.setIsLoading(true)
     const data = await changeAffirmationApi(affirmation)
     if (data.isSuccess) {
+      UserStore.setUser({ ...UserStore.user, affirmation })
       MessageStore.setSuccess(`affirmation updated successfully`)
     } else {
       MessageStore.setError("problem updating affirmation")
