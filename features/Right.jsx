@@ -13,6 +13,7 @@ import useTime from "hooks/useTime"
 import { UserStore } from "mobx/userStore"
 import { observer } from "mobx-react-lite"
 import { TfiAnnouncement } from "react-icons/tfi"
+import SuccessButton from "ui/button/modal/success"
 const timeLimAudio = 1800
 
 const EModalType = {
@@ -81,6 +82,7 @@ function Right({ affirmations, setAffirmations }) {
           onClick={() => addPracticeApi({ voice: 0, type: 1 })}
         />
       } */}
+      {/* <SuccessButton onClick={addPractice}>add practice</SuccessButton> */}
       <div className="p-6 bg-white w-full rounded-xl  shadow-md flex items-center justify-around text-lg font-bold">
         {/* first div */}
 
@@ -141,7 +143,8 @@ function Right({ affirmations, setAffirmations }) {
         `}
           style={{
             opacity:
-              affirmations.length / process.env.NEXT_PUBLIC_AFFIRMATION_LIM,
+              affirmations.length /
+              parseInt(process.env.NEXT_PUBLIC_AFFIRMATION_LIM),
           }}
           src={UserStore.user?.imageAffirmation}
           // src={"/smile.png"}

@@ -20,7 +20,10 @@ const Left = observer(
       if (affirmations.length === 1) {
         startTime()
       }
-      if (affirmations.length === process.env.NEXT_PUBLIC_AFFIRMATION_LIM) {
+      if (
+        affirmations.length ===
+        parseInt(process.env.NEXT_PUBLIC_AFFIRMATION_LIM)
+      ) {
         stopTime()
 
         console.log("UserStore.user", UserStore.user)
