@@ -87,7 +87,7 @@ const index = () => {
       {/* all other */}
       <div className="w-full flex justify-around h-[80vh] gap-5 mx-6">
         {/* <ApproveButton onClick={test}>test</ApproveButton> */}
-        <ApproveButton onClick={addPractice}>addPractice</ApproveButton>
+        {/* <ApproveButton onClick={addPractice}>addPractice</ApproveButton> */}
 
         {/* left */}
         {/* do not touch */}
@@ -99,6 +99,7 @@ const index = () => {
               handleKeyDown={handleKeyDown}
               setTxt={setTxt}
               affirmations={affirmations}
+              setAffirmations={setAffirmations}
               txt={txt}
               inputRef={inputRef}
             />

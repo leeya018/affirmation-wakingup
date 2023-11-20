@@ -33,6 +33,7 @@ const Nav = observer(() => {
     signOut(auth)
     UserStore.setUser(null)
 
+    localStorage.removeItem("affirmations")
     localStorage.removeItem("photoURL")
     localStorage.removeItem("displayName")
     localStorage.removeItem("uid")

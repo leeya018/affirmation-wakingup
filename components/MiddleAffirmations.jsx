@@ -17,7 +17,7 @@ import { observer } from "mobx-react-lite"
 const affirmationsLim = 100
 const timeLimAudio = 5
 const MiddleAffirmations = observer(
-  ({ affirmations, handleKeyDown, inputRef, setTxt, txt }) => {
+  ({ setAffirmations, affirmations, handleKeyDown, inputRef, setTxt, txt }) => {
     const [modalMessage, setModalMessage] = useState("")
 
     const { time, startTime, stopTime } = useTime()
@@ -48,7 +48,11 @@ const MiddleAffirmations = observer(
             title={"Message"}
             modalName={modals.success_message}
             message={modalMessage}
-            onClick={() => modalStore.closeModal()}
+            onClick={() => {
+              setAffirmations([])
+              localStorage.removeItem("affirmations")
+              modalStore.closeModal()
+            }}
             btnTxt={"Done"}
           />
           <SuccessModal
