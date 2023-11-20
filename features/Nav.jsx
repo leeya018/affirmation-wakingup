@@ -1,21 +1,15 @@
 import React, { useEffect, useState } from "react"
-import { BiBell } from "react-icons/bi"
 import Image from "next/image"
 import { UserStore } from "mobx/userStore"
 import Person2Icon from "@mui/icons-material/Person2"
 import { observer } from "mobx-react-lite"
-// import { useUser } from "context/userContext"
 import { signOut } from "firebase/auth"
 import { auth } from "@/firebase"
 import { useRouter } from "next/router"
-import StandardButton from "ui/button/standard"
 import { IoMdExit } from "react-icons/io"
-// import Tooltip from "ui/Tooltip"
-import { Tooltip, Button } from "@material-tailwind/react"
 import { TooltipDefault } from "ui/Tooltip"
 
 const Nav = observer(() => {
-  const [hasPhoto, setHasPhoto] = useState(false)
   const [photoURL, setPhotoURL] = useState("")
   const [displayName, setDisplayName] = useState("")
   const router = useRouter()
@@ -54,10 +48,7 @@ const Nav = observer(() => {
     } else {
       return (
         <div className="flex gap-2 p-2  ">
-          <Person2Icon
-            className="w-10 h-10   ml-auto cursor-pointer"
-            // onClick={login}
-          />
+          <Person2Icon className="w-10 h-10   ml-auto cursor-pointer" />
         </div>
       )
     }

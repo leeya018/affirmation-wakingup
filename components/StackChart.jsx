@@ -10,8 +10,6 @@ import {
 } from "chart.js"
 import { Bar } from "react-chartjs-2"
 import { getDayArr } from "@/util"
-import moment from "moment"
-import faker from "faker"
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend)
 

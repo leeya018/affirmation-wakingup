@@ -1,7 +1,5 @@
 import React, { useEffect, useRef, useState } from "react"
-import Title from "ui/Title"
 import { useRouter } from "next/router"
-import StandardButton from "ui/button/standard"
 import { signInWithPopup, GoogleAuthProvider } from "firebase/auth"
 import { auth } from "../firebase"
 import { loginApi } from "api"
@@ -10,7 +8,6 @@ import Alerts from "components/Alerts"
 import Image from "next/image"
 import { useFormik } from "formik"
 import * as Yup from "yup"
-import { UserStore } from "mobx/userStore"
 
 export default function login() {
   const router = useRouter()
@@ -26,16 +23,7 @@ export default function login() {
     onSubmit: (values) => {
       console.log("onSubmit", values)
     },
-    // validate: (values) => {
-    //   const errors = {}
-    //   if (!values.email) errors.email = "email is required"
-    //   else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email))
-    //     errors.email = "Invalid email address"
-    //   if (!values.password) errors.password = "password is required"
-    //   if (values.password.length < 6)
-    //     errors.password = "password has to be at least 6 characters"
-    //   return errors
-    // },
+
     validationSchema: Yup.object({
       email: Yup.string()
         .required("Email is required")

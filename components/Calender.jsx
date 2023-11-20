@@ -53,7 +53,6 @@ const Calender = observer(() => {
       </div>
       <div className="w-[45vw] bg-white rounded-xl flex justify-center items-center">
         <PieChart items={data} />
-        {formatDate(currDate)}
       </div>
     </div>
   )

@@ -1,20 +1,20 @@
-import { makeAutoObservable, observable } from "mobx";
+import { makeAutoObservable } from "mobx"
 
 class Message {
-  error = "";
-  success = "";
+  error = ""
+  success = ""
 
   constructor() {
-    makeAutoObservable(this);
+    makeAutoObservable(this)
   }
 
   setError = (value) => {
-    this.error = value;
-  };
+    this.error = value
+  }
 
   setSuccess = (value) => {
-    this.success = value;
-  };
+    this.success = value
+  }
 }
 
-export const MessageStore = new Message();
+export const MessageStore = new Message()

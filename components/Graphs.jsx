@@ -1,10 +1,7 @@
 import React from "react"
 
 import StackChart from "./StackChart"
-import PieChart from "./PieChart"
 import { UserStore } from "mobx/userStore"
-import faker from "faker"
-import { getDayArr } from "/util"
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -14,7 +11,6 @@ import {
   Tooltip,
   Legend,
 } from "chart.js"
-import { Bar } from "react-chartjs-2"
 import { observer } from "mobx-react-lite"
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend)

@@ -1,29 +1,22 @@
 import React, { useEffect, useRef, useState } from "react"
 import Nav from "features/Nav"
 import LeftNav from "features/LeftNav"
-import MiddleAffirmations from "components/MiddleAffirmations"
-import Image from "next/image"
-import RightNav from "features/Right"
 import Graphs from "components/Graphs"
 import { navStore } from "mobx/navStore"
 import { navNames } from "@/util"
 import { observer } from "mobx-react-lite"
 import Calender from "components/Calender"
-import PieChart from "components/PieChart"
 import { useRouter } from "next/router"
 
 import { addPracticeApi, getImageApi, getUserApi } from "api"
-import { create } from "mobx-persist"
+
 import { UserStore } from "mobx/userStore"
-import { modalStore } from "mobx/modalStore"
+import { ModalStore } from "mobx/modalStore"
 import { modals } from "@/util"
 import Left from "features/LeftBottom"
 
 import Right from "features/Right"
 import Settings from "features/Settings"
-import { auth, db } from "@/firebase"
-import ApproveButton from "ui/button/modal/approve"
-// import { useUser } from "context/userContext"
 
 const index = () => {
   const [affirmations, setAffirmations] = useState([])
@@ -50,14 +43,14 @@ const index = () => {
 
   useEffect(() => {
     if (affirmations.length === process.env.LIM_AFFIRMATIONS) {
-      modalStore.openModal(modals.success_message)
+      ModalStore.openModal(modals.success_message)
     }
   }, [affirmations])
 
   const addPractice = async () => {
     const data = await addPracticeApi({ voice: 0, type: 1 })
     console.log(data)
-    modalStore.openModal(modals.success_message)
+    ModalStore.openModal(modals.success_message)
   }
   const getUser = async () => {
     const data = await getUserApi()

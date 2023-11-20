@@ -1,14 +1,10 @@
-import React, { useEffect, useRef, useState } from "react"
-import Image from "next/image"
+import React, { useEffect, useState } from "react"
 import { BiTime } from "react-icons/bi"
 import { SiCounterstrike } from "react-icons/si"
 import { getTime, modals } from "@/util"
-import { formatSeconds } from "@/util"
 import Timer from "./Timer"
-import useSound from "hooks/useSound"
 import useTime from "hooks/useTime"
-import { modalStore } from "mobx/modalStore"
-import { MessageStore } from "mobx/messageStore"
+import { ModalStore } from "mobx/modalStore"
 import SuccessModal from "./modal/message/success"
 import { addPracticeApi } from "api"
 import { UserStore } from "mobx/userStore"
@@ -30,7 +26,7 @@ const MiddleAffirmations = observer(
         stopTime()
 
         console.log("UserStore.user", UserStore.user)
-        modalStore.openModal(modals.db_add)
+        ModalStore.openModal(modals.db_add)
       }
     }, [affirmations])
 
@@ -38,7 +34,7 @@ const MiddleAffirmations = observer(
       const data = await addPracticeApi({ voice: 0, type: 1 })
       console.log(data)
       setModalMessage(data.message)
-      modalStore.openModal(modals.success_message)
+      ModalStore.openModal(modals.success_message)
     }
 
     return (
@@ -51,7 +47,7 @@ const MiddleAffirmations = observer(
             onClick={() => {
               setAffirmations([])
               localStorage.removeItem("affirmations")
-              modalStore.closeModal()
+              ModalStore.closeModal()
             }}
             btnTxt={"Done"}
           />

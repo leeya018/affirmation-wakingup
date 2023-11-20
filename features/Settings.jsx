@@ -1,25 +1,14 @@
 import React, { useEffect, useRef, useState } from "react"
-import { BiBell } from "react-icons/bi"
 import Image from "next/image"
-import { AiOutlinePlayCircle } from "react-icons/ai"
-import { BiTime } from "react-icons/bi"
-import { LiaStopCircle } from "react-icons/lia"
-import useSound from "hooks/useSound"
-import Timer from "../components/Timer"
-import SuccessModal from "../components/modal/message/success"
-import ApproveButton from "ui/button/modal/approve"
-import { addAudioApi, addImageApi, changeAffirmationApi } from "api"
+import { addAudioApi, changeAffirmationApi } from "api"
 import { AsyncStore } from "mobx/asyncStore"
-import ApproveButton1 from "ui/button/modal/settings"
-import { Alert } from "@mui/material"
 import { MessageStore } from "mobx/messageStore"
 import Alerts from "components/Alerts"
 import SettingsButton from "ui/button/modal/settings"
-import AddFileInput from "ui/input/addFile"
 import { UserStore } from "mobx/userStore"
 import { observer } from "mobx-react-lite"
 
-function Settings({}) {
+function Settings() {
   const [affirmation, setAffirmation] = useState("")
   const inputRef = useRef(null)
   const [image, setImage] = useState(null)

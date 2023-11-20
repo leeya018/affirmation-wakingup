@@ -1,24 +1,18 @@
-import { useEffect, useState } from "react"
+import { useState } from "react"
 
-import { modalStore } from "mobx/modalStore"
+import { ModalStore } from "mobx/modalStore"
 import { observer } from "mobx-react-lite"
 
-import { MessageStore } from "mobx/messageStore"
-
-import { modals } from "@/util"
 import SuccessButton from "ui/button/modal/success"
 
 const SuccessModal = observer(
   ({ title, modalName, message, onClick, btnTxt }) => {
-    const [name, setName] = useState("")
-    const [isLoading, setIsLoading] = useState(false)
-
     return (
       <div
         className={`absolute h-screen top-0 left-0 
      right-0 bottom-0 bg-black shadow-md  
      flex justify-center items-center z-10 bg-opacity-70 ${
-       modalStore.modalName === modalName ? "visible" : "invisible"
+       ModalStore.modalName === modalName ? "visible" : "invisible"
      } `}
       >
         <div

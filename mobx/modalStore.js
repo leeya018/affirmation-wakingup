@@ -1,7 +1,6 @@
-import { action, autorun, computed, makeAutoObservable, observable } from "mobx"
-import { modals } from "@/util"
+import { makeAutoObservable } from "mobx"
 
-class ModalStore {
+class Modal {
   modalName = ""
 
   constructor() {
@@ -14,12 +13,4 @@ class ModalStore {
     this.modalName = name
   }
 }
-export const modalStore =
-  typeof window !== "undefined"
-    ? (window.store = new ModalStore())
-    : new ModalStore()
-
-// this run when there is a change in the store
-autorun(() => {
-  console.log("modalName", modalStore.modalName)
-})
+export const ModalStore = new Modal()

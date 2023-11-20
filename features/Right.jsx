@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react"
-import { BiBell } from "react-icons/bi"
 import Image from "next/image"
 import { AiOutlinePlayCircle } from "react-icons/ai"
 import { BiTime } from "react-icons/bi"
@@ -7,9 +6,8 @@ import { LiaStopCircle } from "react-icons/lia"
 import useSound from "hooks/useSound"
 import Timer from "../components/Timer"
 import SuccessModal from "../components/modal/message/success"
-import { addPracticeApi, getImageApi } from "api"
-import SuccessButton from "ui/button/modal/success"
-import { modalStore } from "mobx/modalStore"
+import { addPracticeApi } from "api"
+import { ModalStore } from "mobx/modalStore"
 import { modals } from "@/util"
 import useTime from "hooks/useTime"
 import { UserStore } from "mobx/userStore"
@@ -27,8 +25,6 @@ function Right({ affirmations, setAffirmations }) {
   const { stopSound, playSound, sound, setSound } = useSound(
     "./Teeth_suggestion.mp3"
   )
-  const [timeAudio, setTimeAudio] = useState(0)
-  const [currModal, setCurrModal] = useState(EModalType.none)
   const { time, startTime, stopTime } = useTime()
   const [modalMessage, setModalMessage] = useState("")
   console.log("imageAffirmation", UserStore.user?.imageAffirmation)
@@ -37,7 +33,7 @@ function Right({ affirmations, setAffirmations }) {
     if (time > timeLimAudio) {
       stopTime()
       stopSound()
-      modalStore.openModal(modals.db_add)
+      ModalStore.openModal(modals.db_add)
     }
   }, [time])
 
@@ -59,13 +55,13 @@ function Right({ affirmations, setAffirmations }) {
     const data = await addPracticeApi({ voice: 1, type: 0 })
     console.log(data)
     setModalMessage(data.message)
-    modalStore.openModal(modals.success_message)
+    ModalStore.openModal(modals.success_message)
   }
   return (
     <div className="  w-[45vw] rounded-xl h-[85vh] flex flex-col items-center gap-4">
       {/* <SuccessButton
         onClick={async () => {
-          modalStore.openModal(modals.success_message)
+          ModalStore.openModal(modals.success_message)
         }}
       >
         Done
@@ -91,7 +87,7 @@ function Right({ affirmations, setAffirmations }) {
             title={"Message"}
             modalName={modals.success_message}
             message={modalMessage}
-            onClick={() => modalStore.closeModal()}
+            onClick={() => ModalStore.closeModal()}
             btnTxt={"Done"}
           />
           <SuccessModal
