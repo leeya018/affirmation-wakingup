@@ -10,7 +10,6 @@ import { navNames } from "@/util"
 import { observer } from "mobx-react-lite"
 import Calender from "components/Calender"
 import PieChart from "components/PieChart"
-
 import { useRouter } from "next/router"
 
 import { addPracticeApi, getImageApi, getUserApi } from "api"
@@ -24,7 +23,7 @@ import Right from "features/Right"
 import Settings from "features/Settings"
 import { auth, db } from "@/firebase"
 import ApproveButton from "ui/button/modal/approve"
-import { collection, getDocs, onSnapshot, query } from "firebase/firestore"
+// import { useUser } from "context/userContext"
 
 const index = () => {
   const [affirmations, setAffirmations] = useState([])
@@ -32,9 +31,10 @@ const index = () => {
   const [txt, setTxt] = useState("")
   const inputRef = useRef(null)
   const router = useRouter()
+  // const user = useUser()
 
   useEffect(() => {
-    if (!sessionStorage.getItem("uid")) {
+    if (!localStorage.getItem("uid")) {
       router.push("/login")
     } else {
       getUser()

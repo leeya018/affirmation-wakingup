@@ -25,24 +25,11 @@ import {
   uploadBytes,
 } from "firebase/storage"
 import { UserStore } from "mobx/userStore"
-// data in fire
-// affirmation
-// currencAffirmation,
-// voiceFile
-// practices:[
-// affirmation
-//   date:
-//   score:{
-//     voice:1,
-//     type:2
-//   }
-// ]
-// }
-// }
+
 export const getUserApi = async () => {
   try {
-    const uid = sessionStorage.getItem("uid")
-    console.log("sessionStorage", uid)
+    const uid = localStorage.getItem("uid")
+    console.log("localStorage", uid)
 
     const userRef = doc(db, "users", uid)
 
@@ -63,7 +50,8 @@ export const getUserApi = async () => {
 
 export const changeAffirmationApi = async (affirmationName) => {
   try {
-    const uid = auth.currentUser.uid
+    const uid = localStorage.getItem("uid")
+
     const userRef = doc(db, "users", uid) // Replace 'groups' with your actual collection name
 
     await updateDoc(userRef, {
@@ -79,7 +67,8 @@ export const addPracticeApi = async (practice) => {
   try {
     var today = new Date()
     // today.setDate(today.getDate() - 8)
-    const uid = auth.currentUser.uid
+    const uid = localStorage.getItem("uid")
+
     const userRef = doc(db, "users", uid) // Replace 'groups' with your actual collection name
     const userSnap = await getDoc(userRef)
     if (!userSnap.exists()) {
@@ -177,7 +166,8 @@ export const loginApi = async ({ email, password }) => {
     )
     const user = userCredential.user
     console.log("login", user)
-    sessionStorage.setItem("uid", user.uid)
+    localStorage.setItem("uid", user.uid)
+
     const res = await getUserApi()
     return getResponse("user logged in successfully", res.data).SUCCESS
   } catch (error) {
@@ -187,7 +177,7 @@ export const loginApi = async ({ email, password }) => {
 // add file and add the audio
 export const addImageApi = async (file) => {
   try {
-    const uid = auth.currentUser.uid
+    const uid = localStorage.getItem("uid")
 
     const storageRef = ref(storage, `${uid}/images/${file.name}`)
 
@@ -207,7 +197,7 @@ export const addImageApi = async (file) => {
 }
 export const addAudioApi = async (file) => {
   try {
-    const uid = auth.currentUser.uid
+    const uid = localStorage.getItem("uid")
 
     const storageRef = ref(storage, `${uid}/audios/${file.name}`)
 
@@ -225,46 +215,3 @@ export const addAudioApi = async (file) => {
     return getResponse(error.message).GENERAL_ERROR
   }
 }
-
-// export const getImageApi = async () => {
-//   try {
-//     const uid = sessionStorage.getItem("uid")
-
-//     const fileRef = ref(storage, `images/image_${uid}`)
-//     console.log(fileRef)
-//     const imagesRef = fileRef.parent
-//     // Get the blob
-//     console.log("fullPath", fileRef.fullPath)
-//     console.log("imagesRef", imagesRef)
-//   } catch (error) {
-//     console.log(error.message)
-//     return getResponse(error.message).GENERAL_ERROR
-//   }
-// }
-
-// export const getImageApi = async () => {
-//   try {
-//     const uid = auth.currentUser.uid
-//     // Reference to your file in Firebase Storage
-//     const location = "gs://affirmations-adde0.appspot.com/images"
-//     const fileName = `image_${uid}`
-//     // const path = `firebasestorage.googleapis.com/images/${fileName}?alt=media`
-//     const path = `${location}/${fileName}?alt=media&token=392fe9e3-0ffb-48b0-8ec2-fbe316aff932`
-//     console.log("path", path)
-//     const fileRef = ref(storage, `${path}`)
-
-//     // Get the blob
-//     getBlob(fileRef)
-//       .then((blob) => {
-//         // Do something with the blob here
-//         console.log("Blob retrieved:", blob)
-//       })
-//       .catch((error) => {
-//         // Handle any errors
-//         console.error("Error getting blob:", error)
-//       })
-//   } catch (error) {
-//     console.log(error.message)
-//     return getResponse(error.message).GENERAL_ERROR
-//   }
-// }
