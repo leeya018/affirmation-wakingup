@@ -27,13 +27,15 @@ const Left = observer(
         stopTime()
 
         console.log("UserStore.user", UserStore.user)
-        ModalStore.openModal(modals.db_add)
+        ModalStore.openModal(modals.db_add_type)
       }
     }, [affirmations])
 
     const addPractice = async () => {
       const data = await addPracticeApi({ voice: 0, type: 1 })
       console.log(data)
+      setAffirmations([])
+      localStorage.setItem("affirmations", "[]")
       setModalMessage(data.message)
       ModalStore.openModal(modals.success_message)
     }
@@ -54,7 +56,7 @@ const Left = observer(
           />
           <SuccessModal
             title={"Done workout"}
-            modalName={modals.db_add}
+            modalName={modals.db_add_type}
             message={"You finish the typing workout "}
             onClick={addPractice}
             btnTxt={"Save Score"}

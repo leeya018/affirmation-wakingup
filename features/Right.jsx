@@ -14,7 +14,6 @@ import { UserStore } from "mobx/userStore"
 import { observer } from "mobx-react-lite"
 import { TfiAnnouncement } from "react-icons/tfi"
 import SuccessButton from "ui/button/modal/success"
-const timeLimAudio = 1800
 
 const EModalType = {
   success: "success",
@@ -31,10 +30,10 @@ function Right({ affirmations, setAffirmations }) {
   console.log("imageAffirmation", UserStore.user?.imageAffirmation)
 
   useEffect(() => {
-    if (time > timeLimAudio) {
+    if (time > process.env.NEXT_PUBLIC_AUDIO_LIM) {
       stopTime()
       stopSound()
-      ModalStore.openModal(modals.db_add)
+      ModalStore.openModal(modals.db_add_voice)
     }
   }, [time])
 
@@ -96,7 +95,7 @@ function Right({ affirmations, setAffirmations }) {
           />
           <SuccessModal
             title={"Done workout"}
-            modalName={modals.db_add}
+            modalName={modals.db_add_voice}
             message={"You finish the voice workout "}
             onClick={addPractice}
             btnTxt={"Save Score"}
