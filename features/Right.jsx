@@ -14,6 +14,7 @@ import { modals } from "@/util"
 import useTime from "hooks/useTime"
 import { UserStore } from "mobx/userStore"
 import { observer } from "mobx-react-lite"
+import { TfiAnnouncement } from "react-icons/tfi"
 const timeLimAudio = 1800
 
 const EModalType = {
@@ -119,9 +120,15 @@ function Right({ affirmations, setAffirmations }) {
         )}
       </div>
       <div
-        className="p-6 bg-white w-full rounded-xl 
+        className="p-6 bg-white w-full rounded-xl  relative
       h-full flex justify-center items-center"
       >
+        <div className="absolute top-1 flex items-center gap-2">
+          <TfiAnnouncement size={20} />
+          <div>
+            Image will be show on the screen better when typing affirmations
+          </div>
+        </div>
         <Image
           alt="profile image"
           width={500}
