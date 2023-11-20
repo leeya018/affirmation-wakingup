@@ -37,15 +37,15 @@ const Left = observer(
       setAffirmations([])
       localStorage.setItem("affirmations", "[]")
       setModalMessage(data.message)
-      ModalStore.openModal(modals.success_message)
+      ModalStore.openModal(modals.success_message_type)
     }
 
     return (
       <div className=" w-[45vw] shadow-rl h-[85vh] ">
         <div className="w-full flex flex-col gap-4 h-full">
           <SuccessModal
-            title={"Message"}
-            modalName={modals.success_message}
+            title={"Message type"}
+            modalName={modals.success_message_type}
             message={modalMessage}
             onClick={() => {
               setAffirmations([])

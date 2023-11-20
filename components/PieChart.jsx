@@ -6,7 +6,11 @@ ChartJS.register(ArcElement, Tooltip, Legend)
 
 export default function PieChart({ items }) {
   const data = {
-    labels: [`type - ${items[0]}`, `voice - ${items[1]}`, "Not done"],
+    labels: [
+      `type (${items[0]})`,
+      `voice (${items[1]})`,
+      `Not done (${items[2]})`,
+    ],
     datasets: [
       {
         label: "# of Votes",

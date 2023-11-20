@@ -25,7 +25,7 @@ function Right({ affirmations, setAffirmations }) {
   const { stopSound, playSound, sound, setSound } = useSound(
     "./Teeth_suggestion.mp3"
   )
-  const { time, startTime, stopTime } = useTime()
+  const { time, startTime, stopTime, setTime } = useTime()
   const [modalMessage, setModalMessage] = useState("")
   console.log("imageAffirmation", UserStore.user?.imageAffirmation)
 
@@ -55,13 +55,15 @@ function Right({ affirmations, setAffirmations }) {
     const data = await addPracticeApi({ voice: 1, type: 0 })
     console.log(data)
     setModalMessage(data.message)
-    ModalStore.openModal(modals.success_message)
+    stopSuggestion()
+    setTime(0)
+    ModalStore.openModal(modals.success_message_voice)
   }
   return (
     <div className="  w-[45vw] rounded-xl h-[85vh] flex flex-col items-center  gap-4">
       {/* <SuccessButton
         onClick={async () => {
-          ModalStore.openModal(modals.success_message)
+          ModalStore.openModal(modals.success_message_voice)
         }}
       >
         Done
@@ -87,8 +89,8 @@ function Right({ affirmations, setAffirmations }) {
 
         <div className="flex justify-center items-center gap-2 w-full">
           <SuccessModal
-            title={"Message"}
-            modalName={modals.success_message}
+            title={"Message voice"}
+            modalName={modals.success_message_voice}
             message={modalMessage}
             onClick={() => ModalStore.closeModal()}
             btnTxt={"Done"}

@@ -23,6 +23,7 @@ function useTime() {
     time,
     startTime,
     stopTime,
+    setTime,
   }
 }
 
