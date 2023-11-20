@@ -8,6 +8,7 @@ import Alerts from "components/Alerts"
 import Image from "next/image"
 import { useFormik } from "formik"
 import * as Yup from "yup"
+import FormikBoxErr from "ui/FormikBoxErr"
 
 export default function login() {
   const router = useRouter()
@@ -122,11 +123,6 @@ export default function login() {
                   placeholder="Enter Email"
                   className="mb-2 border-2 border-[#4B6DCF] text-semibold rounded-md h-9 pl-2 w-full focus:border-custom-blue"
                 />
-                <div className="error text-red">
-                  {formik.errors.email &&
-                    formik.touched.email &&
-                    formik.errors.email}
-                </div>
               </div>
 
               <div>
@@ -137,13 +133,8 @@ export default function login() {
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
                   placeholder="Type Password"
-                  className="mb-4 border-2 border-[#4B6DCF] text-semibold rounded-md h-9 pl-2  w-full focus:border-[#4B6DCF]"
+                  className="mb-4  border-2 border-[#4B6DCF] text-semibold rounded-md h-9 pl-2  w-full focus:border-[#4B6DCF]"
                 />
-                <div className="error text-red">
-                  {formik.errors.password &&
-                    formik.touched.password &&
-                    formik.errors.password}
-                </div>
               </div>
               <button
                 type="submit"
@@ -171,6 +162,16 @@ export default function login() {
                 />
                 <div className="text-black">Sign in with Google</div>
               </button>
+              <FormikBoxErr>
+                {formik.errors.email &&
+                  formik.touched.email &&
+                  formik.errors.email}
+              </FormikBoxErr>
+              <FormikBoxErr>
+                {formik.errors.password &&
+                  formik.touched.password &&
+                  formik.errors.password}
+              </FormikBoxErr>
             </form>
             <Alerts />
           </div>

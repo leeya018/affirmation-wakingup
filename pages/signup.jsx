@@ -5,6 +5,7 @@ import { MessageStore } from "mobx/messageStore"
 import Alerts from "components/Alerts"
 import { useFormik } from "formik"
 import * as Yup from "yup"
+import FormikBoxErr from "ui/FormikBoxErr"
 
 export default function signup() {
   const router = useRouter()
@@ -24,18 +25,7 @@ export default function signup() {
     onSubmit: (values) => {
       console.log("onSubmit", values)
     },
-    // validate: (values) => {
-    //   const errors = {}
-    //   if (!values.name) errors.name = "name is required"
-    //   if (!values.email) errors.email = "email is required"
-    //   else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email))
-    //     errors.email = "Invalid email address"
-    //   if (!values.password) errors.password = "password is required"
-    //   if (values.password.length < 6)
-    //     errors.password = "password has to be at least 6 characters"
 
-    //   return errors
-    // },
     validationSchema: Yup.object({
       email: Yup.string()
         .required("Email is required")
@@ -98,13 +88,8 @@ export default function signup() {
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
                   placeholder="Enter Full Name"
-                  className="mb-2 border-2 border-[#4B6DCF] text-semibold rounded-md h-9 pl-2 w-full focus:border-custom-blue"
+                  className="mb-2  border-2 border-[#4B6DCF] text-semibold rounded-md h-9 pl-2 w-full focus:border-custom-blue"
                 />
-                <div className="error text-red">
-                  {formik.errors.name &&
-                    formik.touched.name &&
-                    formik.errors.name}
-                </div>
               </div>
               <div>
                 <input
@@ -116,11 +101,6 @@ export default function signup() {
                   placeholder="Enter Email"
                   className="mb-2 border-2 border-[#4B6DCF] text-semibold rounded-md h-9 pl-2 w-full focus:border-custom-blue"
                 />
-                <div className="error text-red">
-                  {formik.errors.email &&
-                    formik.touched.email &&
-                    formik.errors.email}
-                </div>
               </div>
               <div>
                 <input
@@ -132,22 +112,32 @@ export default function signup() {
                   placeholder="Type Password"
                   className="mb-4 border-2 border-[#4B6DCF] text-semibold rounded-md h-9 pl-2  w-full focus:border-[#4B6DCF]"
                 />
-                <div className="error text-red">
+                <button
+                  type="submit"
+                  onClick={signup}
+                  disabled={isLoading}
+                  className={`${
+                    isLoading ? "bg-gray" : "bg-[#4B6DCF]"
+                  }  border-2  rounded-xl w-full py-2 text-white font-semibold flex justify-center items-center`}
+                >
+                  Sign up
+                </button>
+                <FormikBoxErr>
+                  {formik.errors.name &&
+                    formik.touched.name &&
+                    formik.errors.name}
+                </FormikBoxErr>
+                <FormikBoxErr>
+                  {formik.errors.email &&
+                    formik.touched.email &&
+                    formik.errors.email}
+                </FormikBoxErr>
+                <FormikBoxErr>
                   {formik.errors.password &&
                     formik.touched.password &&
                     formik.errors.password}
-                </div>
+                </FormikBoxErr>
               </div>
-              <button
-                type="submit"
-                onClick={signup}
-                disabled={isLoading}
-                className={`${
-                  isLoading ? "bg-gray" : "bg-[#4B6DCF]"
-                } mb-2  border-2  rounded-xl w-full py-2 text-white font-semibold flex justify-center items-center`}
-              >
-                Sign up
-              </button>
             </form>
             <Alerts />
           </div>
