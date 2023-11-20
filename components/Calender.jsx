@@ -38,7 +38,7 @@ const Calender = observer(() => {
     return [type, voice, notDone]
   }
   return (
-    <div className="flex gap-4 w-full  h-[85vh]">
+    <div className="flex gap-4 w-full  h-[80vh]">
       <div className="  w-[45vw] rounded-xl  flex flex-col bg-white items-center gap-4">
         <LocalizationProvider dateAdapter={AdapterDayjs}>
           <StaticDatePicker

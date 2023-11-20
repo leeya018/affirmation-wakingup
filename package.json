@@ -70,6 +70,8 @@
     "eslint-plugin-import": "^2.27.5",
     "eslint-plugin-unused-imports": "^2.0.0",
     "postcss": "^8.4.21",
-    "tailwindcss": "^3.2.7"
+    "prettier": "^3.1.0",
+    "prettier-plugin-tailwindcss": "^0.5.7",
+    "tailwindcss": "^3.3.2"
   }
 }

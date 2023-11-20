@@ -58,7 +58,7 @@ function Right({ affirmations, setAffirmations }) {
     ModalStore.openModal(modals.success_message)
   }
   return (
-    <div className="  w-[45vw] rounded-xl h-[85vh] flex flex-col items-center gap-4">
+    <div className="  w-[45vw] rounded-xl h-[85vh] flex flex-col items-center  gap-4">
       {/* <SuccessButton
         onClick={async () => {
           ModalStore.openModal(modals.success_message)
@@ -81,8 +81,10 @@ function Right({ affirmations, setAffirmations }) {
           onClick={() => addPracticeApi({ voice: 0, type: 1 })}
         />
       } */}
-      <div className="p-6 bg-white w-full rounded-xl h-[10rem] flex items-center justify-around text-lg font-bold">
-        <div className="flex justify-center items-center gap-2">
+      <div className="p-6 bg-white w-full rounded-xl   flex items-center justify-around text-lg font-bold">
+        {/* first div */}
+
+        <div className="flex justify-center items-center gap-2 w-full">
           <SuccessModal
             title={"Message"}
             modalName={modals.success_message}
@@ -97,27 +99,34 @@ function Right({ affirmations, setAffirmations }) {
             onClick={addPractice}
             btnTxt={"Save Score"}
           />
-          <BiTime size={30} onClick={playSuggestion} />
-          <Timer time={time} />
+
+          <div className="flex justify-between  items-center gap-2 w-full">
+            <div className="flex gap-2">
+              <BiTime size={30} onClick={playSuggestion} />
+              <Timer time={time} />
+            </div>
+
+            <div>{"my affirmation sound"}</div>
+            {sound?.playing() ? (
+              <LiaStopCircle
+                size={30}
+                className="cursor-pointer text-[#CFCFD0]"
+                onClick={stopSuggestion}
+              />
+            ) : (
+              <AiOutlinePlayCircle
+                size={30}
+                onClick={playSuggestion}
+                className="cursor-pointer text-[#7ED5FE]"
+              />
+            )}
+          </div>
         </div>
-        <div>{"my affirmation sound"}</div>
-        {sound?.playing() ? (
-          <LiaStopCircle
-            size={30}
-            className="cursor-pointer text-[#CFCFD0]"
-            onClick={stopSuggestion}
-          />
-        ) : (
-          <AiOutlinePlayCircle
-            size={30}
-            onClick={playSuggestion}
-            className="cursor-pointer text-[#7ED5FE]"
-          />
-        )}
       </div>
+      {/* second div */}
       <div
-        className="p-6 bg-white w-full rounded-xl  relative
-      h-full flex justify-center items-center"
+        className="p-6 bg-white w-full rounded-xl  relative border-2 h-full
+       flex justify-center items-center"
       >
         <div className="absolute top-1 flex items-center gap-2">
           <TfiAnnouncement size={20} />
@@ -126,9 +135,9 @@ function Right({ affirmations, setAffirmations }) {
           </div>
         </div>
         <Image
-          alt="profile image"
-          width={500}
-          height={500}
+          alt="affirmation image"
+          width={400}
+          height={400}
           className={`rounded-lg
    
         `}

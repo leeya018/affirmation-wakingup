@@ -2,17 +2,17 @@ import React, { useEffect, useState } from "react"
 import { BiTime } from "react-icons/bi"
 import { SiCounterstrike } from "react-icons/si"
 import { getTime, modals } from "@/util"
-import Timer from "./Timer"
 import useTime from "hooks/useTime"
 import { ModalStore } from "mobx/modalStore"
-import SuccessModal from "./modal/message/success"
+import SuccessModal from "components/modal/message/success"
 import { addPracticeApi } from "api"
 import { UserStore } from "mobx/userStore"
 import { observer } from "mobx-react-lite"
+import Timer from "components/Timer"
 
 const affirmationsLim = 100
 const timeLimAudio = 5
-const MiddleAffirmations = observer(
+const Left = observer(
   ({ setAffirmations, affirmations, handleKeyDown, inputRef, setTxt, txt }) => {
     const [modalMessage, setModalMessage] = useState("")
 
@@ -38,8 +38,8 @@ const MiddleAffirmations = observer(
     }
 
     return (
-      <div className=" w-[45vw] shadow-rl h-[80vh] ">
-        <div className="w-full flex flex-col gap-4 ">
+      <div className=" w-[45vw] shadow-rl h-[85vh] ">
+        <div className="w-full flex flex-col gap-4 h-full">
           <SuccessModal
             title={"Message"}
             modalName={modals.success_message}
@@ -107,12 +107,12 @@ const MiddleAffirmations = observer(
             </div>
           </div>
           {/* second block */}
-          <div className="flex-3/4 bg-white rounded-xl">
+          <div className=" bg-white rounded-xl h-full ">
             <div className=" rounded-lg p-1">
               <ul
                 className="flex flex-col gap-2 pt-2 overflow-y-scroll 
             scrollbar scrollbar-thumb-[#d4d6db] scrollbar-track-white 
-            scrollbar-thumb-rounded h-[36rem]"
+            scrollbar-thumb-rounded "
               >
                 {affirmations.length > 0 &&
                   affirmations
@@ -140,4 +140,4 @@ const MiddleAffirmations = observer(
     )
   }
 )
-export default MiddleAffirmations
+export default Left

@@ -13,8 +13,8 @@ const LeftNav = observer(() => {
   // console.log("selectedName", selectedName);
   return (
     <div
-      className="flex-1/10 mr-auto shadow-md bg-white flex flex-col gap-2  p-3
-     rounded-xl h-[85vh]"
+      className=" mr-auto shadow-md  flex bg-white  gap-2  p-3 flex-col
+     rounded-xl h-full"
     >
       {/*  */}
 
@@ -24,13 +24,12 @@ const LeftNav = observer(() => {
           setSelectedName(navNames.home)
         }}
         size={40}
-        className={`${
+        className={` ${
           selectedName === navNames.home
-            ? "text-[#7ED5FE] bg-[#DFF4FD] bg-opacity-50"
-            : "text-[#CFCFD0]"
+            ? "text-nav_blue bg-nav_gray  bg-opacity-50"
+            : "text-nav_gray"
         } p-2 rounded-md cursor-pointer`}
       />
-
       <BsGraphUpArrow
         name={navNames.insights}
         onClick={() => {
@@ -39,11 +38,10 @@ const LeftNav = observer(() => {
         size={40}
         className={`${
           selectedName === navNames.insights
-            ? "text-[#7ED5FE] bg-[#DFF4FD] bg-opacity-50"
-            : "text-[#CFCFD0]"
+            ? "text-nav_blue bg-nav_gray_offwhite bg-opacity-50"
+            : "text-nav_gray"
         } p-2 rounded-md cursor-pointer `}
       />
-
       <SlCalender
         name={navNames.calender}
         onClick={() => {
@@ -52,11 +50,10 @@ const LeftNav = observer(() => {
         size={40}
         className={`${
           selectedName === navNames.calender
-            ? "text-[#7ED5FE] bg-[#DFF4FD] bg-opacity-50"
-            : "text-[#CFCFD0]"
+            ? "text-nav_blue bg-nav_gray_offwhite bg-opacity-50"
+            : "text-nav_gray"
         } p-2 rounded-md cursor-pointer `}
       />
-
       <IoSettingsOutline
         name={navNames.settings}
         onClick={() => {
@@ -65,8 +62,8 @@ const LeftNav = observer(() => {
         size={40}
         className={`${
           selectedName === navNames.settings
-            ? "text-[#7ED5FE] bg-[#DFF4FD] bg-opacity-50"
-            : "text-[#CFCFD0]"
+            ? "text-nav_blue bg-nav_gray_offwhite bg-opacity-50"
+            : "text-nav_gray"
         } p-2 rounded-md cursor-pointer `}
       />
     </div>

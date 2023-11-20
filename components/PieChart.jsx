@@ -25,5 +25,5 @@ export default function PieChart({ items }) {
       },
     ],
   }
-  return <Pie data={data} style={{ width: "30%" }} className="border-2" />
+  return <Pie data={data} style={{ width: "30%" }} />
 }

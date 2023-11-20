@@ -8,12 +8,12 @@ import { observer } from "mobx-react-lite"
 import Calender from "components/Calender"
 import { useRouter } from "next/router"
 
-import { addPracticeApi, getImageApi, getUserApi } from "api"
+import { addPracticeApi, getUserApi } from "api"
 
 import { UserStore } from "mobx/userStore"
 import { ModalStore } from "mobx/modalStore"
 import { modals } from "@/util"
-import Left from "features/LeftBottom"
+import Left from "features/Left"
 
 import Right from "features/Right"
 import Settings from "features/Settings"
@@ -75,17 +75,14 @@ const index = () => {
   }
   return (
     <div
-      className="w-full border-2 h-[100vh] flex  items-center
+      className="w-full border-2 h-[100vh] flex flex-col  items-center
      overflow-hidden bg-[#F3F3F7]"
     >
       {/* modals */}
       {/* nav  */}
       <Nav />
       {/* all other */}
-      <div className="w-full flex justify-around h-[80vh] gap-5 mx-6">
-        {/* <ApproveButton onClick={test}>test</ApproveButton> */}
-        {/* <ApproveButton onClick={addPractice}>addPractice</ApproveButton> */}
-
+      <div className="w-full flex justify-around h-[85vh] gap-5 mx-6  mt-5">
         {/* left */}
         {/* do not touch */}
         <LeftNav />
