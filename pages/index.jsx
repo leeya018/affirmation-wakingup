@@ -27,6 +27,7 @@ import ApproveButton from "ui/button/modal/approve"
 
 const index = () => {
   const [affirmations, setAffirmations] = useState([])
+  const [isClient, setIsClient] = useState(false)
   const { selectedName } = navStore
   const [txt, setTxt] = useState("")
   const inputRef = useRef(null)
@@ -37,6 +38,7 @@ const index = () => {
     if (!localStorage.getItem("uid")) {
       router.push("/login")
     } else {
+      setIsClient(true)
       getUser()
 
       const localAffirmations = localStorage.getItem("affirmations") || "[]"
@@ -75,7 +77,9 @@ const index = () => {
       localStorage.setItem("affirmations", JSON.stringify(affirmations))
     }
   }
-
+  if (!isClient) {
+    return null
+  }
   return (
     <div
       className="w-full border-2 h-[100vh] flex  items-center
