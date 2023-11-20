@@ -97,7 +97,7 @@ export const addPracticeApi = async (practice) => {
   }
 }
 
-const addUser = async (user, id) => {
+export const addUserApi = async (user, id) => {
   const userRef = doc(db, "users", id)
   if (!userRef) return
   await setDoc(
@@ -122,7 +122,7 @@ export const signupApi = async (user) => {
 
     const newUser = { email, name, practices: [] }
 
-    await addUser(newUser, uid)
+    await addUserApi(newUser, uid)
 
     return getResponse("signup success").SUCCESS
   } catch (error) {

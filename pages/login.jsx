@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react"
 import { useRouter } from "next/router"
 import { signInWithPopup, GoogleAuthProvider } from "firebase/auth"
 import { auth } from "../firebase"
-import { loginApi } from "api"
+import { addUserApi, loginApi } from "api"
 import { MessageStore } from "mobx/messageStore"
 import Alerts from "components/Alerts"
 import Image from "next/image"
@@ -78,10 +78,17 @@ export default function login() {
         localStorage.setItem("photoURL", user.photoURL)
         localStorage.setItem("uid", user.uid)
 
-        // debtStore.addUser(user.uid, user.displayName)
-        router.push("/")
-        // IdP data available using getAdditionalUserInfo(result)
-        // ...
+        addUserApi(
+          { email: user.email, name: user.displayName, practices: [] },
+          user.uid
+        )
+          .then(() => {
+            router.push("/")
+          })
+          .catch((err) => {
+            // console.log('there was an error connect with google account')
+            MessageStore.setError(err.message)
+          })
       })
       .catch((error) => {
         // Handle Errors here.
