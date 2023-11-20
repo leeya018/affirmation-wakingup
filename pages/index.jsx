@@ -28,6 +28,7 @@ const index = () => {
   // const user = useUser()
 
   useEffect(() => {
+    ModalStore.closeModal()
     if (!localStorage.getItem("uid")) {
       router.push("/login")
     } else {
@@ -75,20 +76,21 @@ const index = () => {
   }
   return (
     <div
-      className="w-full border-2 h-[100vh] flex flex-col  items-center
-     overflow-hidden bg-[#F3F3F7]"
+      className="w-full h-[100vh] flex flex-col  items-center
+     overflow-hidden bg-[#F3F3F7]  "
     >
       {/* modals */}
       {/* nav  */}
       <Nav />
       {/* all other */}
-      <div className="w-full flex justify-around h-[85vh] gap-5 mx-6  mt-5">
+      <div className="w-full flex justify-around h-[85vh]  mt-5 px-5   ">
         {/* left */}
         {/* do not touch */}
         <LeftNav />
         {/* middle */}
+
         {selectedName === navNames.home && (
-          <>
+          <div className="w-[90vw]  flex justify-around gap-4">
             <Left
               handleKeyDown={handleKeyDown}
               setTxt={setTxt}
@@ -98,17 +100,18 @@ const index = () => {
               inputRef={inputRef}
             />
 
-            {/* right */}
-
             <Right
               affirmations={affirmations}
               setAffirmations={setAffirmations}
             />
-          </>
+          </div>
         )}
+
         {selectedName === navNames.calender && <Calender />}
         {selectedName === navNames.insights && <Graphs />}
         {selectedName === navNames.settings && <Settings />}
+        {/* <div className="border-2 h-[85vh] bg-white ">
+        </div> */}
       </div>
     </div>
   )

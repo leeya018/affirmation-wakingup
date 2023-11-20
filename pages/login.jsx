@@ -10,6 +10,10 @@ import { useFormik } from "formik"
 import * as Yup from "yup"
 import FormikBoxErr from "ui/FormikBoxErr"
 
+import { ModalStore } from "mobx/modalStore"
+import { modals } from "@/util"
+import LoadingModal from "components/modal/message/loading"
+
 export default function login() {
   const router = useRouter()
   const inputRef = useRef(null)
@@ -63,6 +67,8 @@ export default function login() {
     const provider = new GoogleAuthProvider()
     signInWithPopup(auth, provider)
       .then((result) => {
+        ModalStore.openModal(modals.loading)
+
         // This gives you a Google Access Token. You can use it to access the Google API.
         const credential = GoogleAuthProvider.credentialFromResult(result)
         const someToken = credential.accessToken
@@ -77,6 +83,7 @@ export default function login() {
         console.log(user.uid)
         localStorage.setItem("photoURL", user.photoURL)
         localStorage.setItem("uid", user.uid)
+        localStorage.setItem("displayName", user.displayName)
 
         addUserApi(
           { email: user.email, name: user.displayName, practices: [] },
@@ -91,6 +98,7 @@ export default function login() {
           })
       })
       .catch((error) => {
+        ModalStore.closeModal()
         // Handle Errors here.
         const errorCode = error.code
         const errorMessage = error.message
@@ -107,6 +115,11 @@ export default function login() {
       className="w-full  h-[100vh] flex  items-center justify-center 
    overflow-hidden bg-[#F3F3F7]"
     >
+      <LoadingModal
+        message="Loading..."
+        modalName={modals.loading}
+        title="Loading"
+      />
       <div className="w-[80%] h-[80vh]  bg-white flex items-center justify-between rounded-xl shadow-xl p-3">
         <div className="flex flex-col items-center justify-between h-full ">
           {/* title */}

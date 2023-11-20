@@ -4,9 +4,7 @@
     "paths": {
       "@/util": ["util.js"],
       "@/firebase": ["firebase.js"],
-      "@/features": ["features/*"],
-      "@/ui": ["ui/*"],
-      "@/components": ["components/*"]
+      "@/features": ["features/*"]
     }
   }
 }

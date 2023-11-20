@@ -60,7 +60,7 @@ const Left = observer(
           />
           {/* first block */}
           <div
-            className="flex-1/4 bg-white rounded-xl flex 
+            className="flex-1/4 bg-white shadow-md rounded-xl flex 
         flex-col gap-4 p-6"
           >
             <div className="text-lg font-bold">
@@ -76,7 +76,7 @@ const Left = observer(
                   onChange={(e) => setTxt(e.target.value)}
                   onKeyDown={handleKeyDown}
                   placeholder="Type your short suggestion"
-                  className="border-2 border-[#d4d6db] rounded-md w-[20rem] h-10 pr-2"
+                  className="border-2 border-[#d4d6db]  rounded-md w-[20rem] h-10 pr-2"
                 />
               </div>
               <div className="flex justify-end items-center gap-6">
@@ -93,7 +93,7 @@ const Left = observer(
                   </div>
                 </div>
                 {/* second item */}
-                <div className="flex justify-center items-center rounded-md h-16 gap-3">
+                <div className="flex  justify-center items-center rounded-md h-16 gap-3">
                   <div className="h-full">
                     <BiTime size={30} />
                   </div>
@@ -107,7 +107,7 @@ const Left = observer(
             </div>
           </div>
           {/* second block */}
-          <div className=" bg-white rounded-xl h-full ">
+          <div className=" bg-white shadow-md rounded-xl h-full ">
             <div className=" rounded-lg p-1">
               <ul
                 className="flex flex-col gap-2 pt-2 overflow-y-scroll 

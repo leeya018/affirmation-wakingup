@@ -13,8 +13,8 @@ const LeftNav = observer(() => {
   // console.log("selectedName", selectedName);
   return (
     <div
-      className=" mr-auto shadow-md  flex bg-white  gap-2  p-3 flex-col
-     rounded-xl h-full"
+      className=" shadow-md  flex bg-white  gap-2  p-3 flex-col h-[85vh] 
+     rounded-xl "
     >
       {/*  */}
 

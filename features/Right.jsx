@@ -81,7 +81,7 @@ function Right({ affirmations, setAffirmations }) {
           onClick={() => addPracticeApi({ voice: 0, type: 1 })}
         />
       } */}
-      <div className="p-6 bg-white w-full rounded-xl   flex items-center justify-around text-lg font-bold">
+      <div className="p-6 bg-white w-full rounded-xl  shadow-md flex items-center justify-around text-lg font-bold">
         {/* first div */}
 
         <div className="flex justify-center items-center gap-2 w-full">
@@ -125,10 +125,10 @@ function Right({ affirmations, setAffirmations }) {
       </div>
       {/* second div */}
       <div
-        className="p-6 bg-white w-full rounded-xl  relative border-2 h-full
-       flex justify-center items-center"
+        className="p-6 bg-white w-full rounded-xl  relative h-full
+       flex justify-center items-center shadow-md"
       >
-        <div className="absolute top-1 flex items-center gap-2">
+        <div className="absolute top-1 flex items-center gap-2 ">
           <TfiAnnouncement size={20} />
           <div>
             Image will be show on the screen better when typing affirmations

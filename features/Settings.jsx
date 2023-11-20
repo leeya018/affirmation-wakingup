@@ -98,7 +98,7 @@ function Settings() {
   }
   return (
     <div
-      className=" p-6 gap-5  w-full rounded-xl
+      className=" p-6 gap-5  rounded-xl w-[90vw] 
      h-[80vh] flex flex-col 
      items-center  bg-white  
       text-lg font-bold"
