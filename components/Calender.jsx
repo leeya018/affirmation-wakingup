@@ -39,7 +39,7 @@ const Calender = observer(() => {
   }
   return (
     <div className=" flex gap-4 w-[90vw]   h-[85vh]">
-      <div className="  w-[45vw] rounded-xl flex flex-col bg-white items-center gap-4">
+      <div className="  w-[45vw] rounded-xl flex flex-col bg-white items-center gap-4 shadow-md">
         <LocalizationProvider dateAdapter={AdapterDayjs}>
           <StaticDatePicker
             orientation="landscape"
@@ -51,7 +51,7 @@ const Calender = observer(() => {
           />
         </LocalizationProvider>
       </div>
-      <div className="w-[45vw] bg-white rounded-xl flex justify-center items-center">
+      <div className="w-[45vw] bg-white rounded-xl flex justify-center items-center shadow-md">
         <PieChart items={data} />
       </div>
     </div>

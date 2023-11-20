@@ -99,11 +99,11 @@ function Settings() {
   return (
     <div
       className=" p-6 gap-5  rounded-xl w-[90vw] 
-     h-[80vh] flex flex-col 
+     h-[85vh] flex flex-col 
      items-center  bg-white  
-      text-lg font-bold"
+      text-lg font-bold shadow-md"
     >
-      <div className="w-[50%] border-2 flex flex-col gap-4 p-5">
+      <div className="w-[50%]  flex flex-col gap-4 p-5">
         {/* first */}
         <div className="mr-auto flex flex-col items-center gap-2">
           <div className="flex gap-2 items-center">

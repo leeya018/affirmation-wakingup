@@ -10,8 +10,6 @@ import { UserStore } from "mobx/userStore"
 import { observer } from "mobx-react-lite"
 import Timer from "components/Timer"
 
-const affirmationsLim = 100
-const timeLimAudio = 5
 const Left = observer(
   ({ setAffirmations, affirmations, handleKeyDown, inputRef, setTxt, txt }) => {
     const [modalMessage, setModalMessage] = useState("")
@@ -22,7 +20,7 @@ const Left = observer(
       if (affirmations.length === 1) {
         startTime()
       }
-      if (affirmations.length === affirmationsLim) {
+      if (affirmations.length === process.env.NEXT_PUBLIC_AFFIRMATION_LIM) {
         stopTime()
 
         console.log("UserStore.user", UserStore.user)
@@ -61,7 +59,7 @@ const Left = observer(
           {/* first block */}
           <div
             className="flex-1/4 bg-white shadow-md rounded-xl flex 
-        flex-col gap-4 p-6"
+        flex-col gap-4 px-6 py-3"
           >
             <div className="text-lg font-bold">
               {UserStore.user?.affirmation}
@@ -89,7 +87,6 @@ const Left = observer(
                     <div className="font-bold text-xl">
                       {affirmations.length}
                     </div>
-                    <div>Strikes</div>
                   </div>
                 </div>
                 {/* second item */}
@@ -99,8 +96,6 @@ const Left = observer(
                   </div>
                   <div className="flex flex-col justify-between h-full">
                     <Timer time={time} />
-                    {/* <div className="font-bold text-xl">{formatSeconds(time)}</div> */}
-                    <div>Time</div>
                   </div>
                 </div>
               </div>
