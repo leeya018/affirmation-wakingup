@@ -46,6 +46,7 @@ export default function login() {
   const login = async () => {
     const { email, password } = formik.values
     setIsLoading(true)
+    ModalStore.openModal(modals.loading)
 
     const data = await loginApi({
       email,
@@ -61,6 +62,7 @@ export default function login() {
     }
     console.log(data)
     setIsLoading(false)
+    ModalStore.closeModal()
   }
 
   const googleLogin = () => {
@@ -121,7 +123,7 @@ export default function login() {
         title="Loading"
       />
       <div className="w-[80%] h-[80vh]  bg-white flex items-center justify-between rounded-xl shadow-xl p-3">
-        <div className="flex flex-col items-center justify-between h-full ">
+        <div className="flex flex-col items-center justify-between h-full  w-[30%]">
           {/* title */}
           <div className="text-lg font-bold text-left w-full p-2">
             My Affirmations

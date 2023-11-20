@@ -179,7 +179,7 @@ export const addImageApi = async (file) => {
   try {
     const uid = localStorage.getItem("uid")
 
-    const storageRef = ref(storage, `${uid}/images/${file.name}`)
+    const storageRef = ref(storage, `users/${uid}/images/${file.name}`)
 
     const snapshot = await uploadBytes(storageRef, file)
     const downloadURL = await getDownloadURL(storageRef)
@@ -199,7 +199,7 @@ export const addAudioApi = async (file) => {
   try {
     const uid = localStorage.getItem("uid")
 
-    const storageRef = ref(storage, `${uid}/audios/${file.name}`)
+    const storageRef = ref(storage, `users/${uid}/audios/${file.name}`)
 
     const snapshot = await uploadBytes(storageRef, file)
     const downloadURL = await getDownloadURL(storageRef)

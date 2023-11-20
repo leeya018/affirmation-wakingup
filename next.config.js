@@ -16,7 +16,7 @@ const nextConfig = {
         headers: [
           {
             key: "Access-Control-Allow-Origin",
-            value: "https://math-game-lee.netlify.app",
+            value: "affirmations-lee.netlify.app",
           },
         ],
       },

@@ -65,7 +65,7 @@ const Left = observer(
               {UserStore.user?.affirmation}
             </div>
             <div className="flex justify-end items-center gap-3">
-              <div className="h-full mr-auto">
+              <div className="h-full mr-auto  w-full">
                 <input
                   dir="rtl"
                   ref={inputRef}
@@ -74,7 +74,7 @@ const Left = observer(
                   onChange={(e) => setTxt(e.target.value)}
                   onKeyDown={handleKeyDown}
                   placeholder="Type your short suggestion"
-                  className="border-2 border-[#d4d6db]  rounded-md w-[20rem] h-10 pr-2"
+                  className="border-2 border-[#d4d6db]  rounded-md w-[90%] h-10 pr-2"
                 />
               </div>
               <div className="flex justify-end items-center gap-6">

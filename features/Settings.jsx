@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react"
 import Image from "next/image"
-import { addAudioApi, changeAffirmationApi } from "api"
+import { addAudioApi, addImageApi, changeAffirmationApi } from "api"
 import { AsyncStore } from "mobx/asyncStore"
 import SettingsButton from "ui/button/settings"
 import { UserStore } from "mobx/userStore"
@@ -65,7 +65,7 @@ function Settings() {
 
       return null
     }
-    const res = await addAudioApi(image)
+    const res = await addImageApi(image)
 
     if (res.isSuccess) {
       UserStore.setUser({

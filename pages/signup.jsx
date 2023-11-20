@@ -66,7 +66,7 @@ export default function signup() {
    overflow-hidden bg-[#F3F3F7]"
     >
       <div className="w-[80%] h-[80vh]  bg-white flex items-center justify-between rounded-xl shadow-xl p-3">
-        <div className="flex flex-col items-center justify-between h-full ">
+        <div className="flex flex-col items-center justify-between h-full w-[30%]">
           {/* title */}
           <div className="text-lg font-bold text-left w-full p-2">
             My Affirmations

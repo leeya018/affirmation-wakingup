@@ -128,11 +128,9 @@ function Right({ affirmations, setAffirmations }) {
         className="p-6 bg-white w-full rounded-xl  relative h-full
        flex justify-center items-center shadow-md"
       >
-        <div className="absolute top-1 flex items-center gap-2 ">
+        <div className="absolute top-1 left-1/2 -translate-x-1/2  flex items-center gap-2 ">
           <TfiAnnouncement size={20} />
-          <div>
-            Image will be show on the screen better when typing affirmations
-          </div>
+          <div>Image will get clearer with typing more</div>
         </div>
         <Image
           alt="affirmation image"
