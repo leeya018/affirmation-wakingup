@@ -13,6 +13,7 @@ import FormikBoxErr from "ui/FormikBoxErr"
 import { ModalStore } from "mobx/modalStore"
 import { modals } from "@/util"
 import LoadingModal from "components/modal/message/loading"
+import { UserStore } from "mobx/userStore"
 
 export default function login() {
   const router = useRouter()
@@ -56,7 +57,7 @@ export default function login() {
       setSuccess(data.message)
 
       localStorage.setItem("displayName", data.data.name)
-      router.push("/")
+      // router.push("/")
     } else {
       setError(data.message)
     }
@@ -112,6 +113,10 @@ export default function login() {
       })
   }
 
+  // if (UserStore.user) {
+  //   router.push("/")
+  // }
+
   return (
     <div
       className="w-full  h-[100vh] flex  items-center justify-center 
@@ -123,7 +128,7 @@ export default function login() {
         title="Loading"
       />
       <div className="w-[80%] h-[80vh]  bg-white flex items-center justify-between rounded-xl shadow-xl p-3">
-        <div className="flex flex-col items-center justify-between h-full  w-[30%]">
+        <div className="flex flex-col items-center justify-between h-full w-[90%] md:w-[50%] lg:w-[30%] ">
           {/* title */}
           <div className="text-lg font-bold text-left w-full p-2">
             My Affirmations
@@ -143,7 +148,8 @@ export default function login() {
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
                   placeholder="Enter Email"
-                  className="mb-2 border-2 border-[#4B6DCF] text-semibold rounded-md h-9 pl-2 w-full focus:border-custom-blue"
+                  className="mb-2 border-2 border-[#4B6DCF] text-semibold rounded-md h-9 
+                  pl-2 w-full focus:border-custom-blue"
                 />
               </div>
 
@@ -198,7 +204,7 @@ export default function login() {
             <Alerts />
           </div>
           {/* end */}
-          <div className="flex flex-col items-center text-sm ">
+          <div className="flex flex-col items-center text-sm  mb-5 lg:mb-2">
             <div className="text-gray_dark">Dont have an account? </div>
             <div
               className="text-[#4B6DCF] underline cursor-pointer"
@@ -208,7 +214,11 @@ export default function login() {
             </div>
           </div>
         </div>
-        <div className="bg-my_affirmations h-full w-[60%] rounded-xl shadow-lg flex items-center justify-center">
+
+        <div
+          className="hidden bg-my_affirmations h-full w-[60%] rounded-xl
+         shadow-lg  items-center justify-center  sm:flex  "
+        >
           <div className="text-white font-bold text-5xl rotate-12">
             My Affirmations
           </div>

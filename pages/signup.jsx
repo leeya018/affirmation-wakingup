@@ -36,8 +36,10 @@ export default function signup() {
       name: Yup.string().required("Name is required"),
     }),
   })
-
   useEffect(() => {
+    if (localStorage.getItem("uid")) {
+      // router.push("/")
+    }
     inputRef.current.focus()
   }, [])
 
@@ -66,7 +68,7 @@ export default function signup() {
    overflow-hidden bg-[#F3F3F7]"
     >
       <div className="w-[80%] h-[80vh]  bg-white flex items-center justify-between rounded-xl shadow-xl p-3">
-        <div className="flex flex-col items-center justify-between h-full w-[30%]">
+        <div className="flex flex-col items-center justify-between h-full w-[90%] md:w-[50%] lg:w-[30%] ">
           {/* title */}
           <div className="text-lg font-bold text-left w-full p-2">
             My Affirmations
@@ -142,7 +144,7 @@ export default function signup() {
             <Alerts />
           </div>
           {/* end */}
-          <div className="flex flex-col items-center text-sm ">
+          <div className="flex flex-col items-center text-sm mb-5 lg:mb-2">
             <div className="text-gray_dark">Already have an account? </div>
             <div
               className="text-[#4B6DCF] underline cursor-pointer"
@@ -152,7 +154,7 @@ export default function signup() {
             </div>
           </div>
         </div>
-        <div className="bg-my_affirmations h-full w-[60%] rounded-xl shadow-lg flex items-center justify-center">
+        <div className="hidden bg-my_affirmations h-full w-[60%] rounded-xl shadow-lg  items-center justify-center sm:flex ">
           <div className="text-white font-bold text-5xl rotate-12">
             My Affirmations
           </div>

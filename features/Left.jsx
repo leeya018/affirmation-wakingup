@@ -41,7 +41,7 @@ const Left = observer(
     }
 
     return (
-      <div className=" w-[45vw] shadow-rl h-[85vh] ">
+      <div className=" w-[45vw] shadow-rl h-[85vh] hidden lg:flex">
         <div className="w-full flex flex-col gap-4 h-full">
           <SuccessModal
             title={"Message type"}

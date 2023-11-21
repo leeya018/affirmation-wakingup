@@ -60,7 +60,7 @@ function Right({ affirmations, setAffirmations }) {
     ModalStore.openModal(modals.success_message_voice)
   }
   return (
-    <div className="  w-[45vw] rounded-xl h-[85vh] flex flex-col items-center  gap-4">
+    <div className="   rounded-xl  flex flex-col items-center  gap-4 w-full  md:w-[45vw] md:h-[85vh]">
       {/* <SuccessButton
         onClick={async () => {
           ModalStore.openModal(modals.success_message_voice)
@@ -87,7 +87,7 @@ function Right({ affirmations, setAffirmations }) {
       <div className="p-6 bg-white w-full rounded-xl  shadow-md flex items-center justify-around text-lg font-bold">
         {/* first div */}
 
-        <div className="flex justify-center items-center gap-2 w-full">
+        <div className="flex justify-center items-center gap-2 w-full ">
           <SuccessModal
             title={"Message voice"}
             modalName={modals.success_message_voice}
@@ -129,7 +129,7 @@ function Right({ affirmations, setAffirmations }) {
       {/* second div */}
       <div
         className="p-6 bg-white w-full rounded-xl  relative h-full
-       flex justify-center items-center shadow-md"
+        justify-center items-center shadow-md flex"
       >
         <div className="absolute top-1 left-1/2 -translate-x-1/2  flex items-center gap-2 ">
           <TfiAnnouncement size={20} />

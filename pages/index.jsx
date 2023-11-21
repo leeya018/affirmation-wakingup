@@ -83,14 +83,17 @@ const index = () => {
       {/* nav  */}
       <Nav />
       {/* all other */}
-      <div className="w-full flex justify-around h-[85vh]  mt-5 px-5   ">
+      <div
+        className="w-full flex h-[85vh] mt-5 flex-col gap-2 
+      md:flex-row md:justify-around md:gap-0 md:px-5 "
+      >
         {/* left */}
         {/* do not touch */}
         <LeftNav />
         {/* middle */}
 
         {selectedName === navNames.home && (
-          <div className="w-[90vw]  flex justify-around gap-4">
+          <div className="flex justify-around gap-4 md:w-[90vw]">
             <Left
               handleKeyDown={handleKeyDown}
               setTxt={setTxt}

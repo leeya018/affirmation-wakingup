@@ -13,8 +13,9 @@ const LeftNav = observer(() => {
   // console.log("selectedName", selectedName);
   return (
     <div
-      className=" shadow-md  flex bg-white  gap-2  p-3 flex-col h-[85vh] 
-     rounded-xl "
+      className=" shadow-md  flex  justify-between bg-white  gap-2  p-3 items-center  h-16 w-full
+         md:flex-col md:justify-start  md:h-[85vh] md:w-16
+     rounded-xl md:mr-2"
     >
       {/*  */}
 

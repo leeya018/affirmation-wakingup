@@ -19,8 +19,8 @@ const Graphs = observer(() => {
   const { user } = UserStore
 
   return (
-    <div className=" w-[90vw]   shadow-rl rounded-xl bg-white h-[85vh] shadow-lg flex justify-center items-center ">
-      <div className="flex justify-center items-center w-[90%] h-[80vh] ">
+    <div className="  w-full shadow-rl rounded-xl bg-white h-[85vh] shadow-lg flex justify-center items-center md:w-[90vw] ">
+      <div className="w-full flex justify-center items-center  h-[80vh] px-2 md:w-[90%]  md:p-0">
         <StackChart practices={user?.practices || []} />;
       </div>
     </div>

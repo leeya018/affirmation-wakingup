@@ -103,10 +103,10 @@ function Settings() {
      items-center  bg-white  
       text-lg font-bold shadow-md"
     >
-      <div className="w-[50%]  flex flex-col gap-4 p-5">
+      <div className=" flex flex-col gap-4  w-[90%] items-center md:w-[50%] p-4 md:p-5">
         {/* first */}
-        <div className="mr-auto flex flex-col items-center gap-2">
-          <div className="flex gap-2 items-center">
+        <div className="flex flex-col items-center gap-2 md:mr-auto ">
+          <div className="flex gap-2 items-center flex-col w-full md:flex-row">
             <input
               dir="rtl"
               ref={inputRef}
@@ -133,8 +133,8 @@ function Settings() {
           />
         </div>
         {/* second */}
-        <div className=" mr-auto flex flex-col items-center gap-2">
-          <div className="flex gap-2 items-center">
+        <div className="flex flex-col items-center gap-2 md:mr-auto ">
+          <div className="flex gap-2 items-center flex-col w-full md:flex-row">
             <input
               type="file"
               onChange={onImageChange}
@@ -158,8 +158,8 @@ function Settings() {
           />
         </div>
         {/* third */}
-        <div className=" mr-auto flex flex-col items-center gap-2">
-          <div className="flex gap-2 items-center">
+        <div className="  flex flex-col items-center gap-2  md:mr-auto">
+          <div className="flex gap-2 items-center flex-col w-full md:flex-row">
             <input
               type="file"
               onChange={onFileChange}

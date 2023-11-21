@@ -55,7 +55,7 @@ const Nav = observer(() => {
   }
 
   return (
-    <div className="  py-2 px-10 bg-white w-full flex justify-between items-center text-black">
+    <div className="  py-2  bg-white w-full flex justify-between items-center text-black px-2 md:px-10">
       <div className="flex items-center gap-2">
         <Image
           alt="profile image"
