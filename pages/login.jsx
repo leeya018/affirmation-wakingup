@@ -41,6 +41,13 @@ export default function login() {
   })
 
   useEffect(() => {
+    if (localStorage.getItem("uid")) {
+      setIsLoading(true)
+      ModalStore.openModal(modals.loading)
+      router.push("/")
+      // const newUrl = window.location.host + "/"
+      // window.history.pushState({ path: newUrl }, "", newUrl)
+    }
     inputRef.current.focus()
   }, [])
 
@@ -57,7 +64,7 @@ export default function login() {
       setSuccess(data.message)
 
       localStorage.setItem("displayName", data.data.name)
-      // router.push("/")
+      router.push("/")
     } else {
       setError(data.message)
     }
