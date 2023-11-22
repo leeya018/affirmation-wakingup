@@ -4,6 +4,7 @@ import { getUrl } from "@/util"
 import axios from "axios"
 import SuccessModal from "components/modal/message/success"
 import Image from "next/image"
+import Link from "next/link"
 
 const freecurrencyapi = new Freecurrencyapi(
   process.env.NEXT_PUBLIC_CURRENCY_KEY
@@ -14,6 +15,9 @@ const Currency = {
   USD: "USD",
   EUR: "EUR",
 }
+
+const onlineBtcValPath =
+  "https://www.google.com/search?q=btc+in+doallr&rlz=1C1KNTJ_enIL1051IL1051&oq=btc&gs_lcrp=EgZjaHJvbWUqBggAEEUYOzIGCAAQRRg7Mg4IARBFGCcYOxiABBiKBTIPCAIQRRg5GIMBGLEDGIAEMg4IAxBFGCcYOxiABBiKBTINCAQQABiDARixAxiABDINCAUQABiDARixAxiABDIQCAYQABiDARixAxiABBiKBTIGCAcQRRg80gEIMTM3OWoxajeoAgCwAgA&sourceid=chrome&ie=UTF-8"
 
 export default function altshuler() {
   const [nis, setNis] = useState()
@@ -114,23 +118,35 @@ export default function altshuler() {
         >
           {showCommitions ? "hide commitions" : "show commitions"}
         </div>
-        <div className="flex flex-col items-center">
-          <input
-            type="number"
-            name="btcValue"
-            value={btcValue}
-            onChange={(e) => setBtcValue(e.target.value)}
-            placeholder="Enter Btc rate in dollars"
-            className="mb-2 border-2 border-[#4B6DCF] text-semibold rounded-md h-9 pl-2  focus:border-custom-blue"
-          />
-          <input
-            type="number"
-            name="nis"
-            value={nis}
-            onChange={(e) => setNis(e.target.value)}
-            placeholder="Enter Nis"
-            className="mb-2 border-2 border-[#4B6DCF] text-semibold rounded-md h-9 pl-2  focus:border-custom-blue"
-          />
+        <Link target="_blank" className="underline " href={onlineBtcValPath}>
+          get btc val
+        </Link>
+        <div className="flex flex-col items-start justify-center  gap-2">
+          <div className="flex justify-between gap-2  items-center w-full">
+            <div> btc rate: </div>
+            <input
+              type="number"
+              name="btcValue"
+              value={btcValue}
+              onChange={(e) => setBtcValue(e.target.value)}
+              placeholder="Enter Btc rate in dollars"
+              className="border-2 border-[#4B6DCF] text-semibold rounded-md h-9 pl-2  focus:border-custom-blue"
+            />
+          </div>
+          <div>
+            <div className="flex justify-between gap-2  items-center">
+              <div>nis amount: </div>
+
+              <input
+                type="number"
+                name="nis"
+                value={nis}
+                onChange={(e) => setNis(e.target.value)}
+                placeholder="Enter Nis"
+                className="border-2 border-[#4B6DCF] text-semibold rounded-md h-9 pl-2  focus:border-custom-blue"
+              />
+            </div>
+          </div>
           <button
             type="submit"
             onClick={getBtc}
