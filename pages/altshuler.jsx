@@ -93,7 +93,7 @@ export default function altshuler() {
   return (
     <div
       className="w-full  h-[100vh] flex flex-col  items-center   border-2
- overflow-hidden bg-[#F3F3F7] "
+ overflow-y-scroll bg-[#F3F3F7] "
     >
       {showCommitions && (
         <Image
@@ -105,7 +105,9 @@ export default function altshuler() {
         />
       )}
       <div className="w-[60%] flex flex-col items-center gap-5">
-        <div className="text-lg font-semibold underline mt-20">altshuler</div>
+        <div className="text-lg font-semibold underline mt-5 md:mt-20">
+          altshuler
+        </div>
         <div
           className="underline text-md"
           onClick={() => {
@@ -128,7 +130,7 @@ export default function altshuler() {
               type="number"
               name="btcValue"
               value={btcValue}
-              onChange={(e) => setBtcValue(e.target.value)}
+              onChange={(e) => setBtcValue(parseInt(e.target.value))}
               placeholder="Enter Btc rate in dollars"
               className="border-2 border-[#4B6DCF] text-semibold rounded-md h-9 pl-2  focus:border-custom-blue"
             />
