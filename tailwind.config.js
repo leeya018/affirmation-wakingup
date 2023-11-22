@@ -34,6 +34,7 @@ module.exports = {
         zebra: "url('/zebra.png')",
         my_affirmations: "url('/my_affirmations.png')",
         google: "url('/google.png')",
+        altshuler_commitions: "url('/altshuler_commitions.png')",
       },
     },
   },
