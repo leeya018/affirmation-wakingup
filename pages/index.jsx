@@ -65,7 +65,7 @@ const index = () => {
     console.log("handleKeyDown")
     console.log(e.code === "Enter")
     if (e.code === "Enter") {
-      if (txt.length < 20) return null
+      if (txt.split(" ").length < 3) return null
       setAffirmations((prev) => [...prev, { name: txt, date: new Date() }])
       setTxt("")
       localStorage.setItem("affirmations", JSON.stringify(affirmations))

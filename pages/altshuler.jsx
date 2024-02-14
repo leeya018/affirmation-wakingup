@@ -130,7 +130,10 @@ export default function altshuler() {
               type="number"
               name="btcValue"
               value={btcValue}
-              onChange={(e) => setBtcValue(parseInt(e.target.value))}
+              onChange={(e) => {
+                const num = e.target.value.split(",").join("")
+                setBtcValue(e.target.value)
+              }}
               placeholder="Enter Btc rate in dollars"
               className="border-2 border-[#4B6DCF] text-semibold rounded-md h-9 pl-2  focus:border-custom-blue"
             />
