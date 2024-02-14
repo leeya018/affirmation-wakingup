@@ -4,10 +4,11 @@ import { SiCounterstrike } from "react-icons/si"
 import { getTime, modals } from "@/util"
 import { ModalStore } from "mobx/modalStore"
 import SuccessModal from "components/modal/message/success"
-import { addPracticeApi } from "api"
+
 import { UserStore } from "mobx/userStore"
 import { observer } from "mobx-react-lite"
 import Timer from "components/Timer"
+import { addPracticeApi } from "api copy"
 
 const Left = observer(
   ({ setAffirmations, affirmations, handleKeyDown, inputRef, setTxt, txt }) => {
@@ -20,11 +21,12 @@ const Left = observer(
     }, [affirmations])
 
     const addPractice = async () => {
-      const data = await addPracticeApi({ voice: 0, type: 1 })
-      console.log(data)
+      const practices = await addPracticeApi({ voice: 0, type: 1 })
+      UserStore.updateUser({ practices })
+
       setAffirmations([])
       localStorage.setItem("affirmations", "[]")
-      setModalMessage(data.message)
+      setModalMessage("practice Added")
       ModalStore.openModal(modals.success_message_type)
     }
 

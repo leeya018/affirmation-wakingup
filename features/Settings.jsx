@@ -1,18 +1,14 @@
 import React, { use, useEffect, useRef, useState } from "react"
 import Image from "next/image"
-import {
-  addAudioApi,
-  addImageApi,
-  changeAffirmationApi,
-  getImagesByUserApi,
-  updateUser,
-} from "api"
+
 import { AsyncStore } from "mobx/asyncStore"
 import SettingsButton from "ui/button/settings"
 import { UserStore } from "mobx/userStore"
 import { observer } from "mobx-react-lite"
 import BasicSelect from "ui/basicSelect"
 import { storageNames } from "@/util"
+import { updateUserApi } from "firebase/updateUser"
+import { addAudioApi, addImageApi, changeAffirmationApi } from "api copy"
 
 function Settings() {
   const [affirmation, setAffirmation] = useState("")
@@ -64,7 +60,7 @@ function Settings() {
   const editUser = async (userInfo) => {
     try {
       console.log({ userInfo })
-      const data = await updateUser(userInfo)
+      const data = await updateUserApi(userInfo)
       UserStore.updateUser(userInfo)
       console.log(data)
     } catch (error) {
