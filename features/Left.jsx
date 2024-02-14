@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react"
 import { BiTime } from "react-icons/bi"
 import { SiCounterstrike } from "react-icons/si"
 import { getTime, modals } from "@/util"
-import useTime from "hooks/useTime"
 import { ModalStore } from "mobx/modalStore"
 import SuccessModal from "components/modal/message/success"
 import { addPracticeApi } from "api"
@@ -13,23 +12,6 @@ import Timer from "components/Timer"
 const Left = observer(
   ({ setAffirmations, affirmations, handleKeyDown, inputRef, setTxt, txt }) => {
     const [modalMessage, setModalMessage] = useState("")
-
-    const { time, startTime, stopTime } = useTime()
-
-    useEffect(() => {
-      if (affirmations.length === 1) {
-        startTime()
-      }
-      if (
-        affirmations.length ===
-        parseInt(process.env.NEXT_PUBLIC_AFFIRMATION_LIM)
-      ) {
-        stopTime()
-
-        console.log("UserStore.user", UserStore.user)
-        ModalStore.openModal(modals.db_add_type)
-      }
-    }, [affirmations])
 
     const addPractice = async () => {
       const data = await addPracticeApi({ voice: 0, type: 1 })
@@ -92,15 +74,6 @@ const Left = observer(
                     <div className="font-bold text-xl">
                       {affirmations.length}
                     </div>
-                  </div>
-                </div>
-                {/* second item */}
-                <div className="flex  justify-center items-center rounded-md h-16 gap-3">
-                  <div className="h-full">
-                    <BiTime size={30} />
-                  </div>
-                  <div className="flex flex-col justify-between h-full">
-                    <Timer time={time} />
                   </div>
                 </div>
               </div>
