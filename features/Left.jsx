@@ -13,6 +13,12 @@ const Left = observer(
   ({ setAffirmations, affirmations, handleKeyDown, inputRef, setTxt, txt }) => {
     const [modalMessage, setModalMessage] = useState("")
 
+    useEffect(() => {
+      if (affirmations.length >= process.env.NEXT_PUBLIC_AFFIRMATION_LIM) {
+        ModalStore.openModal(modals.success_message_type)
+      }
+    }, [affirmations])
+
     const addPractice = async () => {
       const data = await addPracticeApi({ voice: 0, type: 1 })
       console.log(data)
@@ -25,17 +31,19 @@ const Left = observer(
     return (
       <div className=" w-[45vw] shadow-rl h-[85vh] hidden lg:flex">
         <div className="w-full flex flex-col gap-4 h-full">
-          <SuccessModal
-            title={"Message type"}
-            modalName={modals.success_message_type}
-            message={modalMessage}
-            onClick={() => {
-              setAffirmations([])
-              localStorage.removeItem("affirmations")
-              ModalStore.closeModal()
-            }}
-            btnTxt={"Done"}
-          />
+          {modals.success_message_type === ModalStore.modalName && (
+            <SuccessModal
+              title={"Message type"}
+              modalName={modals.success_message_type}
+              message={modalMessage}
+              onClick={() => {
+                setAffirmations([])
+                localStorage.removeItem("affirmations")
+                ModalStore.closeModal()
+              }}
+              btnTxt={"Done"}
+            />
+          )}
           <SuccessModal
             title={"Done workout"}
             modalName={modals.db_add_type}

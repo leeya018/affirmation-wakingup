@@ -87,3 +87,8 @@ export const modals = {
   db_add_voice: "db_add_voice",
   loading: "loading",
 }
+
+export const storageNames = {
+  audios: "audios",
+  images: "images",
+}

@@ -107,6 +107,7 @@ export const addPracticeApi = async (practice) => {
 
     return getResponse("Practice added ").SUCCESS
   } catch (error) {
+    console.log(error.message)
     return getResponse(error.message).GENERAL_ERROR
   }
 }
@@ -230,15 +231,15 @@ export const addAudioApi = async (file) => {
   }
 }
 
-export const getImagesByUserApi = async () => {
+export const getImagesByUserApi = async (collectionName) => {
   try {
     const uid = localStorage.getItem("uid")
 
-    const storageRef = ref(storage, `users/${uid}/images`)
-    // Get all the items (images) in the reference
+    const storageRef = ref(storage, `users/${uid}/${collectionName}`)
+    // Get all the items (files) in the reference
     const res = await listAll(storageRef)
 
-    const imageInfoPromises = res.items.map((itemRef) => {
+    const fileInfoPromises = res.items.map((itemRef) => {
       // Get the download URL for each image
       return getDownloadURL(itemRef).then((url) => {
         // Return an object containing both the name and the URL of the image
@@ -250,9 +251,9 @@ export const getImagesByUserApi = async () => {
     })
 
     // Wait for all image info to be fetched
-    const images = await Promise.all(imageInfoPromises)
-    console.log(images)
-    return images
+    const files = await Promise.all(fileInfoPromises)
+    console.log(files)
+    return files
   } catch (error) {
     console.log(error.message)
     return getResponse(error.message).GENERAL_ERROR

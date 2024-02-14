@@ -12,6 +12,10 @@ class User {
     console.log("user", user)
     this.user = user
   }
+  updateUser = (userInfo) => {
+    console.log("userInfo", userInfo)
+    this.user = { ...this.user, ...userInfo }
+  }
   setChosenDate = (date) => {
     console.log("date", date)
 

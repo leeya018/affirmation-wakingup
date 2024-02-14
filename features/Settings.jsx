@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react"
+import React, { use, useEffect, useRef, useState } from "react"
 import Image from "next/image"
 import {
   addAudioApi,
@@ -12,19 +12,21 @@ import SettingsButton from "ui/button/settings"
 import { UserStore } from "mobx/userStore"
 import { observer } from "mobx-react-lite"
 import BasicSelect from "ui/basicSelect"
+import { storageNames } from "@/util"
 
 function Settings() {
   const [affirmation, setAffirmation] = useState("")
   const [isAffirmationChanged, setIsAffirmationChanged] = useState(false)
   const inputRef = useRef(null)
   const [image, setImage] = useState(null)
-  const [imageUrl, setImageUrl] = useState(null)
+  const [audioUrl, setAudioUrl] = useState("")
+  const [imageUrl, setImageUrl] = useState("")
+  const [audioItemOptions, setAudioItemOptions] = useState([])
   const [imageItemOptions, setImageItemOptions] = useState([])
   const [file, setFile] = useState(null)
   const [txtColor, setTxtColor] = useState({
     text: "text-green",
     image: "text-green",
-
     audio: "text-green",
   })
   const [affirmationStatus, setAffirmationStatus] = useState({
@@ -38,10 +40,20 @@ function Settings() {
   }, [UserStore.user])
 
   useEffect(() => {
-    getImagesByUserApi().then((imageItems) => {
-      setImageItemOptions(imageItems)
-    })
+    if (UserStore.user) {
+      getSources()
+    }
   }, [UserStore.user])
+
+  const getSources = async () => {
+    const res = await Promise.all([
+      getImagesByUserApi(storageNames.images),
+      getImagesByUserApi(storageNames.audios),
+    ])
+    console.log({ res })
+    setImageItemOptions(res[0])
+    setAudioItemOptions(res[1])
+  }
 
   const onImageChange = (event) => {
     if (event.target.files && event.target.files[0]) {
@@ -49,10 +61,15 @@ function Settings() {
       setImage(event.target.files[0])
     }
   }
-  const updateImage = async () => {
-    console.log({ imageUrl })
-    const data = await updateUser({ imageAffirmation: imageUrl })
-    console.log(data)
+  const editUser = async (userInfo) => {
+    try {
+      console.log({ userInfo })
+      const data = await updateUser(userInfo)
+      UserStore.updateUser(userInfo)
+      console.log(data)
+    } catch (error) {
+      console.log(error.message)
+    }
   }
   const onFileChange = (event) => {
     if (event.target.files && event.target.files[0]) {
@@ -164,7 +181,7 @@ function Settings() {
               name="images select"
             />
             <SettingsButton
-              onClick={updateImage}
+              onClick={() => editUser({ imageAffirmation: imageUrl })}
               isDisabled={imageUrl === null}
             >
               Update Image
@@ -195,6 +212,21 @@ function Settings() {
         </div>
         {/* third */}
         <div className="  flex flex-col items-center gap-2  md:mr-auto">
+          <div className="flex gap-2 items-center flex-col w-full md:flex-row">
+            <BasicSelect
+              className="w-36 h-full box-content"
+              handleChange={setAudioUrl}
+              value={audioUrl}
+              options={audioItemOptions}
+              name="audio select"
+            />
+            <SettingsButton
+              onClick={() => editUser({ audioAffirmation: audioUrl })}
+              isDisabled={audioUrl === null}
+            >
+              Update Audio
+            </SettingsButton>
+          </div>
           <div className="flex gap-2 items-center flex-col w-full md:flex-row">
             <input
               type="file"
