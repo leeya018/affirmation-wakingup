@@ -21,6 +21,7 @@ import {
   getBlob,
   getDownloadURL,
   getMetadata,
+  listAll,
   ref,
   uploadBytes,
 } from "firebase/storage"
@@ -210,6 +211,35 @@ export const addAudioApi = async (file) => {
       audioAffirmation: downloadURL,
     })
     return getResponse("Uploaded file audio successfully", downloadURL).SUCCESS
+  } catch (error) {
+    console.log(error.message)
+    return getResponse(error.message).GENERAL_ERROR
+  }
+}
+
+export const getImagesByUserApi = async () => {
+  try {
+    const uid = localStorage.getItem("uid")
+
+    const storageRef = ref(storage, `users/${uid}/images`)
+    // Get all the items (images) in the reference
+    const res = await listAll(storageRef)
+
+    const imageInfoPromises = res.items.map((itemRef) => {
+      // Get the download URL for each image
+      return getDownloadURL(itemRef).then((url) => {
+        // Return an object containing both the name and the URL of the image
+        return {
+          name: itemRef.name,
+          url: url,
+        }
+      })
+    })
+
+    // Wait for all image info to be fetched
+    const images = await Promise.all(imageInfoPromises)
+    console.log(images)
+    return images
   } catch (error) {
     console.log(error.message)
     return getResponse(error.message).GENERAL_ERROR

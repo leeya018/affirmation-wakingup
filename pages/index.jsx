@@ -8,7 +8,7 @@ import { observer } from "mobx-react-lite"
 import Calender from "components/Calender"
 import { useRouter } from "next/router"
 
-import { addPracticeApi, getUserApi } from "api"
+import { addPracticeApi, getImagesByUserApi, getUserApi } from "api"
 
 import { UserStore } from "mobx/userStore"
 import { ModalStore } from "mobx/modalStore"
@@ -27,6 +27,10 @@ const index = () => {
   const inputRef = useRef(null)
   const router = useRouter()
   // const user = useUser()
+
+  useEffect(() => {
+    getImagesByUserApi()
+  }, [])
 
   useEffect(() => {
     ModalStore.closeModal()
