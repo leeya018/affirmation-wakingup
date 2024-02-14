@@ -1,20 +1,30 @@
 import React, { useEffect, useRef, useState } from "react"
 import Image from "next/image"
-import { addAudioApi, addImageApi, changeAffirmationApi } from "api"
+import {
+  addAudioApi,
+  addImageApi,
+  changeAffirmationApi,
+  getImagesByUserApi,
+  updateUser,
+} from "api"
 import { AsyncStore } from "mobx/asyncStore"
 import SettingsButton from "ui/button/settings"
 import { UserStore } from "mobx/userStore"
 import { observer } from "mobx-react-lite"
+import BasicSelect from "ui/basicSelect"
 
 function Settings() {
   const [affirmation, setAffirmation] = useState("")
   const [isAffirmationChanged, setIsAffirmationChanged] = useState(false)
   const inputRef = useRef(null)
   const [image, setImage] = useState(null)
+  const [imageUrl, setImageUrl] = useState(null)
+  const [imageItemOptions, setImageItemOptions] = useState([])
   const [file, setFile] = useState(null)
   const [txtColor, setTxtColor] = useState({
     text: "text-green",
     image: "text-green",
+
     audio: "text-green",
   })
   const [affirmationStatus, setAffirmationStatus] = useState({
@@ -27,11 +37,22 @@ function Settings() {
     setAffirmation(UserStore.user?.affirmation)
   }, [UserStore.user])
 
+  useEffect(() => {
+    getImagesByUserApi().then((imageItems) => {
+      setImageItemOptions(imageItems)
+    })
+  }, [UserStore.user])
+
   const onImageChange = (event) => {
     if (event.target.files && event.target.files[0]) {
       setAffirmationStatus((prev) => ({ ...prev, image: "" }))
       setImage(event.target.files[0])
     }
+  }
+  const updateImage = async () => {
+    console.log({ imageUrl })
+    const data = await updateUser({ imageAffirmation: imageUrl })
+    console.log(data)
   }
   const onFileChange = (event) => {
     if (event.target.files && event.target.files[0]) {
@@ -134,6 +155,21 @@ function Settings() {
         </div>
         {/* second */}
         <div className="flex flex-col items-center gap-2 md:mr-auto ">
+          <div className="flex gap-2 items-center flex-col w-full md:flex-row">
+            <BasicSelect
+              className="w-36 h-full box-content"
+              handleChange={setImageUrl}
+              value={imageUrl}
+              options={imageItemOptions}
+              name="images select"
+            />
+            <SettingsButton
+              onClick={updateImage}
+              // isDisabled={imageItem === null}
+            >
+              Update Image
+            </SettingsButton>
+          </div>
           <div className="flex gap-2 items-center flex-col w-full md:flex-row">
             <input
               type="file"

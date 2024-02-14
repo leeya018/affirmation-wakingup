@@ -49,6 +49,19 @@ export const getUserApi = async () => {
   }
 }
 
+export const updateUser = async (userInfo) => {
+  try {
+    const uid = localStorage.getItem("uid")
+
+    const userRef = doc(db, "users", uid) // Replace 'groups' with your actual collection name
+
+    await updateDoc(userRef, userInfo)
+    console.log("updated user successfully")
+    return getResponse("user  has changed").SUCCESS
+  } catch (error) {
+    return getResponse(error.message).GENERAL_ERROR
+  }
+}
 export const changeAffirmationApi = async (affirmationName) => {
   try {
     const uid = localStorage.getItem("uid")
