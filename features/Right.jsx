@@ -3,7 +3,7 @@ import Image from "next/image"
 import { AiOutlinePlayCircle } from "react-icons/ai"
 import { BiTime } from "react-icons/bi"
 import { LiaStopCircle } from "react-icons/lia"
-import useSound from "hooks/useSound"
+// import useSound from "hooks/useSound"
 import Timer from "../components/Timer"
 import SuccessModal from "../components/modal/message/success"
 import { addPracticeApi } from "api"
@@ -14,6 +14,7 @@ import { UserStore } from "mobx/userStore"
 import { observer } from "mobx-react-lite"
 import { TfiAnnouncement } from "react-icons/tfi"
 import SuccessButton from "ui/button/modal/success"
+import { AudioStore } from "mobx/audioStore"
 
 const EModalType = {
   success: "success",
@@ -22,41 +23,37 @@ const EModalType = {
 }
 
 function Right({ affirmations, setAffirmations }) {
-  const { stopSound, playSound, sound, setSound } = useSound(
-    "./Teeth_suggestion.mp3"
-  )
-  const { time, startTime, stopTime, setTime } = useTime()
   const [modalMessage, setModalMessage] = useState("")
   console.log("imageAffirmation", UserStore.user?.imageAffirmation)
 
   useEffect(() => {
-    if (time > process.env.NEXT_PUBLIC_AUDIO_LIM) {
-      stopTime()
-      stopSound()
+    if (AudioStore.time > process.env.NEXT_PUBLIC_AUDIO_LIM) {
+      AudioStore.stopTime()
+      AudioStore.stopSound()
       ModalStore.openModal(modals.db_add_voice)
     }
-  }, [time])
+  }, [AudioStore.time])
 
   useEffect(() => {
     if (UserStore?.user?.audioAffirmation) {
-      setSound(UserStore?.user?.audioAffirmation)
+      AudioStore.setSound(UserStore?.user?.audioAffirmation)
     }
   }, [UserStore?.user?.audioAffirmation])
 
   const playSuggestion = () => {
-    playSound()
-    startTime()
+    AudioStore.playSound()
+    AudioStore.startTime()
   }
   const stopSuggestion = () => {
-    stopSound()
-    stopTime()
+    AudioStore.stopSound()
+    AudioStore.stopTime()
   }
   const addPractice = async () => {
     const data = await addPracticeApi({ voice: 1, type: 0 })
     console.log(data)
     setModalMessage(data.message)
     stopSuggestion()
-    setTime(0)
+    AudioStore.setTime(0)
     ModalStore.openModal(modals.success_message_voice)
   }
   return (
@@ -106,11 +103,11 @@ function Right({ affirmations, setAffirmations }) {
           <div className="flex justify-between  items-center gap-2 w-full">
             <div className="flex gap-2">
               <BiTime size={30} onClick={playSuggestion} />
-              <Timer time={time} />
+              <Timer time={AudioStore.time} />
             </div>
 
             <div>{"my affirmation sound"}</div>
-            {sound?.playing() ? (
+            {AudioStore.sound?.playing() ? (
               <LiaStopCircle
                 size={30}
                 className="cursor-pointer text-[#CFCFD0]"

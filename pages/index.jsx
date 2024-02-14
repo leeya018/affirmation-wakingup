@@ -17,6 +17,7 @@ import Left from "features/Left"
 
 import Right from "features/Right"
 import Settings from "features/Settings"
+import { AudioStore } from "mobx/audioStore"
 
 const index = () => {
   const [affirmations, setAffirmations] = useState([])
