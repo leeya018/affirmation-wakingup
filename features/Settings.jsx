@@ -165,7 +165,7 @@ function Settings() {
             />
             <SettingsButton
               onClick={updateImage}
-              // isDisabled={imageItem === null}
+              isDisabled={imageUrl === null}
             >
               Update Image
             </SettingsButton>
