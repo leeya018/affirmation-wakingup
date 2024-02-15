@@ -32,5 +32,6 @@ export const addPracticeApi = async (practice) => {
     return practices
   } catch (error) {
     console.log(error.message)
+    throw error
   }
 }

@@ -16,8 +16,9 @@ export const addImageApi = async (file) => {
     updateDoc(userRef, {
       imageAffirmation: downloadURL,
     })
-    return "Uploaded file image successfully", downloadURL
+    return downloadURL
   } catch (error) {
     console.log(error.message)
+    throw error
   }
 }

@@ -18,6 +18,7 @@ import Left from "features/Left"
 import Right from "features/Right"
 import Settings from "features/Settings"
 import { AudioStore } from "mobx/audioStore"
+import { messageStore } from "mobx/messageStore"
 
 const index = () => {
   const [affirmations, setAffirmations] = useState([])
@@ -50,9 +51,15 @@ const index = () => {
   }, [affirmations])
 
   const addPractice = async () => {
-    const data = await addPracticeApi({ voice: 0, type: 1 })
-    console.log(data)
-    ModalStore.openModal(modals.success_message)
+    try {
+      const data = await addPracticeApi({ voice: 0, type: 1 })
+      console.log(data)
+      messageStore.setMessage("Practice added successfully", 200)
+
+      ModalStore.openModal(modals.success_message)
+    } catch (error) {
+      messageStore.setMessage("Could not add Practice ", 500)
+    }
   }
   const getUser = async () => {
     const data = await getUserApi()

@@ -38,27 +38,27 @@ function Settings() {
     audio: "",
   })
 
-  // useEffect(() => {
-  //   console.log({ getFilesByUserApi })
-  // }, [])
   useEffect(() => {
     setAffirmation(UserStore.user?.affirmation)
   }, [UserStore.user])
 
   useEffect(() => {
     getSources()
-    // if (UserStore.user) {
-    // }
   }, [])
 
   const getSources = async () => {
-    const res = await Promise.all([
-      getFilesByUserApi(storageNames.images),
-      getFilesByUserApi(storageNames.audios),
-    ])
-    console.log({ res })
-    setImageItemOptions(res[0])
-    setAudioItemOptions(res[1])
+    try {
+      const res = await Promise.all([
+        getFilesByUserApi(storageNames.images),
+        getFilesByUserApi(storageNames.audios),
+      ])
+      console.log({ res })
+      setImageItemOptions(res[0])
+      setAudioItemOptions(res[1])
+      messageStore.setMessage("resources has been loaded successfully", 200)
+    } catch (error) {
+      messageStore.setMessage("There was a problem loading the resources", 500)
+    }
   }
 
   const onImageChange = (event) => {
@@ -73,8 +73,9 @@ function Settings() {
       const data = await updateUserApi(userInfo)
       UserStore.updateUser(userInfo)
       console.log(data)
+      messageStore.setMessage("user update successfully ", 200)
     } catch (error) {
-      console.log(error.message)
+      messageStore.setMessage("Failed to update user", 500)
     }
   }
   const onFileChange = (event) => {
@@ -89,37 +90,34 @@ function Settings() {
     setTxtColor((prev) => ({ ...prev, [type]: textColor }))
   }
   const changeAffirmation = async () => {
-    if (!affirmation) return
-    AsyncStore.setIsLoading(true)
-    const data = await changeAffirmationApi(affirmation)
-    if (data.isSuccess) {
+    try {
+      if (!affirmation) return
+      AsyncStore.setIsLoading(true)
+      await changeAffirmationApi(affirmation)
       setIsAffirmationChanged(false)
-      UserStore.setUser({ ...UserStore.user, affirmation })
-      updateMessage("text", `affirmation updated successfully`, true)
-    } else {
-      updateMessage("text", `problem updating affirmation`, false)
+      UserStore.updateUser({ affirmation })
+
+      AsyncStore.setIsLoading(false)
+
+      messageStore.setMessage("user update successfully successfully", 200)
+    } catch (error) {
+      messageStore.setMessage("Filed to update user", 500)
     }
-    console.log(data)
-    AsyncStore.setIsLoading(false)
   }
 
   const addImage = async () => {
-    if (!image) {
-      updateMessage("image", `You have to  choose file first `, false)
-
-      return null
-    }
-    const res = await addImageApi(image)
-
-    if (res.isSuccess) {
-      UserStore.setUser({
-        ...UserStore.user,
-        imageAffirmation: res.data,
+    try {
+      if (!image) {
+        throw new Error("You have to  choose file first")
+      }
+      const downloadURL = await addImageApi(image)
+      UserStore.updateUser({
+        imageAffirmation: downloadURL,
       })
 
-      updateMessage("image", `added image successfully `, true)
-    } else {
-      updateMessage("image", `added image failed `, false)
+      messageStore.setMessage("Image added successfully", 200)
+    } catch (error) {
+      messageStore.setMessage("cannot upload image ", 500)
     }
   }
   const addAudio = async () => {

@@ -8,6 +8,7 @@ import SuccessModal from "components/modal/message/success"
 import { UserStore } from "mobx/userStore"
 import { observer } from "mobx-react-lite"
 import { addPracticeApi } from "firebaseDb"
+import { messageStore } from "mobx/messageStore"
 
 const Left = observer(
   ({ setAffirmations, affirmations, handleKeyDown, inputRef, setTxt, txt }) => {
@@ -20,13 +21,18 @@ const Left = observer(
     }, [affirmations])
 
     const addPractice = async () => {
-      const practices = await addPracticeApi({ voice: 0, type: 1 })
-      UserStore.updateUser({ practices })
+      try {
+        const practices = await addPracticeApi({ voice: 0, type: 1 })
+        UserStore.updateUser({ practices })
 
-      setAffirmations([])
-      localStorage.setItem("affirmations", "[]")
-      setModalMessage("practice Added")
-      ModalStore.openModal(modals.success_message_type)
+        setAffirmations([])
+        localStorage.setItem("affirmations", "[]")
+        setModalMessage("practice Added")
+        messageStore.setMessage("Practice added successfully", 200)
+        ModalStore.openModal(modals.success_message_type)
+      } catch (error) {
+        messageStore.setMessage("Could not add Practice ", 500)
+      }
     }
 
     return (

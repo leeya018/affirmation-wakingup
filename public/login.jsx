@@ -3,7 +3,7 @@ import Title from "ui/Title"
 import { useRouter } from "next/router"
 import StandardButton from "ui/button/standard"
 import { signInWithPopup, GoogleAuthProvider } from "firebase/auth"
-import { auth } from ".@/firebase"
+import { auth } from "@/firebase"
 
 export default function signup() {
   const router = useRouter()

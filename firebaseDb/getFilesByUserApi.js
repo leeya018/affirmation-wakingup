@@ -26,5 +26,6 @@ export const getFilesByUserApi = async (collectionName) => {
     return files
   } catch (error) {
     console.log(error.message)
+    throw error
   }
 }

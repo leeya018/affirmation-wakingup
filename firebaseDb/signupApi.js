@@ -1,6 +1,7 @@
 import { auth, db, storage } from "@/firebase"
 import { addUserApi } from "firebaseDb"
 import { createUserWithEmailAndPassword } from "firebase/auth"
+import { messageStore } from "mobx/messageStore"
 
 export const signupApi = async (user) => {
   const { email, password, name } = user
@@ -17,8 +18,8 @@ export const signupApi = async (user) => {
 
     await addUserApi(newUser, uid)
 
-    return "signup success"
+    messageStore.setMessage("SignUp successfully ", 200)
   } catch (error) {
-    console.log(error.message)
+    messageStore.setMessage(error.message, 500)
   }
 }

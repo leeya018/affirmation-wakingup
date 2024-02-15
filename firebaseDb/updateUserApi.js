@@ -12,5 +12,6 @@ export const updateUserApi = async (userInfo) => {
     return "user  has changed"
   } catch (error) {
     console.log(error.message)
+    throw error
   }
 }

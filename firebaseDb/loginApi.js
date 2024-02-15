@@ -1,9 +1,11 @@
 import { db, storage, auth } from "@/firebase"
 import { getUserApi } from "firebaseDb"
 import { signInWithEmailAndPassword } from "firebase/auth"
+import { messageStore } from "mobx/messageStore"
 
 export const loginApi = async ({ email, password }) => {
   try {
+    console.log({ email, password })
     const userCredential = await signInWithEmailAndPassword(
       auth,
       email,
@@ -12,10 +14,8 @@ export const loginApi = async ({ email, password }) => {
     const user = userCredential.user
     console.log("login", user)
     localStorage.setItem("uid", user.uid)
-
-    const res = await getUserApi()
-    return "user logged in successfully", res.data
+    messageStore.setMessage("Sign in successfully ", 200)
   } catch (error) {
-    console.log(error.message)
+    messageStore.setMessage(error.message, 500)
   }
 }

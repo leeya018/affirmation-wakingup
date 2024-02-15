@@ -19,5 +19,6 @@ export const getUserApi = async () => {
     return { ...userData, id: uid }
   } catch (error) {
     console.log(error.message)
+    throw error
   }
 }

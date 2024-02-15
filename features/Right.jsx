@@ -13,6 +13,7 @@ import { observer } from "mobx-react-lite"
 import { TfiAnnouncement } from "react-icons/tfi"
 import SuccessButton from "ui/button/modal/success"
 import { AudioStore } from "mobx/audioStore"
+import { messageStore } from "mobx/messageStore"
 
 const EModalType = {
   success: "success",
@@ -47,12 +48,18 @@ function Right({ affirmations, setAffirmations }) {
     AudioStore.stopTime()
   }
   const addPractice = async () => {
-    const data = await addPracticeApi({ voice: 1, type: 0 })
-    console.log(data)
-    setModalMessage(data.message)
-    stopSuggestion()
-    AudioStore.setTime(0)
-    ModalStore.openModal(modals.success_message_voice)
+    try {
+      const data = await addPracticeApi({ voice: 1, type: 0 })
+      console.log(data)
+      setModalMessage(data.message)
+      stopSuggestion()
+      AudioStore.setTime(0)
+      messageStore.setMessage("Practice added successfully", 200)
+
+      ModalStore.openModal(modals.success_message_voice)
+    } catch (error) {
+      messageStore.setMessage("Could not add Practice ", 500)
+    }
   }
   return (
     <div className="   rounded-xl  flex flex-col items-center  gap-4 w-full  md:w-[45vw] md:h-[85vh]">
