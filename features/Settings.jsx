@@ -12,8 +12,8 @@ import {
   updateUserApi,
   addImageApi,
   changeAffirmationApi,
-} from "@/firebaseDb"
-import { getImagesByUserApi } from "@/firebaseDb"
+  getFilesByUserApi,
+} from "firebaseDb"
 
 function Settings() {
   const [affirmation, setAffirmation] = useState("")
@@ -36,20 +36,23 @@ function Settings() {
     audio: "",
   })
 
+  // useEffect(() => {
+  //   console.log({ getFilesByUserApi })
+  // }, [])
   useEffect(() => {
     setAffirmation(UserStore.user?.affirmation)
   }, [UserStore.user])
 
   useEffect(() => {
-    if (UserStore.user) {
-      getSources()
-    }
-  }, [UserStore.user])
+    getSources()
+    // if (UserStore.user) {
+    // }
+  }, [])
 
   const getSources = async () => {
     const res = await Promise.all([
-      getImagesByUserApi(storageNames.images),
-      getImagesByUserApi(storageNames.audios),
+      getFilesByUserApi(storageNames.images),
+      getFilesByUserApi(storageNames.audios),
     ])
     console.log({ res })
     setImageItemOptions(res[0])

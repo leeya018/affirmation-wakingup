@@ -1,4 +1,4 @@
-import { addAudioFileApi } from "@/firebaseDb"
+import { addAudioApi, addAudioFileApi } from "firebaseDb"
 import axios from "axios"
 
 import React, { Component, useState } from "react"
@@ -25,7 +25,7 @@ const AddFileInput = () => {
 
     // Request made to the backend api
     // Send formData object
-    addAudioFileApi(selectedFile)
+    addAudioApi(selectedFile)
   }
 
   // File content to be displayed after

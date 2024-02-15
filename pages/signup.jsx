@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react"
 import { useRouter } from "next/router"
-import { signupApi } from "@/firebaseDb"
+import { signupApi } from "firebaseDb"
 import { MessageStore } from "mobx/messageStore"
 import Alerts from "components/Alerts"
 import { useFormik } from "formik"
