@@ -1,5 +1,5 @@
 import { auth, db, storage } from "@/firebase"
-import { addUserApi } from "api copy"
+import { addUserApi } from "firebaseDb"
 import { createUserWithEmailAndPassword } from "firebase/auth"
 
 export const signupApi = async (user) => {

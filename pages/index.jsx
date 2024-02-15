@@ -8,7 +8,7 @@ import { observer } from "mobx-react-lite"
 import Calender from "components/Calender"
 import { useRouter } from "next/router"
 
-import { addPracticeApi, getImagesByUserApi, getUserApi } from "api"
+import { addPracticeApi, getImagesByUserApi, getUserApi } from "@/firebaseDb"
 
 import { UserStore } from "mobx/userStore"
 import { ModalStore } from "mobx/modalStore"

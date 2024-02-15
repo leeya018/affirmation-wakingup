@@ -4,7 +4,8 @@
     "paths": {
       "@/util": ["util.js"],
       "@/firebase": ["firebase.js"],
-      "@/features": ["features/*"]
+      "@/features": ["features/*"],
+      "@/firebaseDb": ["firebaseDb/*"]
     }
   }
 }

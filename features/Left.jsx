@@ -7,8 +7,7 @@ import SuccessModal from "components/modal/message/success"
 
 import { UserStore } from "mobx/userStore"
 import { observer } from "mobx-react-lite"
-import Timer from "components/Timer"
-import { addPracticeApi } from "api copy"
+import { addPracticeApi } from "@/firebaseDb"
 
 const Left = observer(
   ({ setAffirmations, affirmations, handleKeyDown, inputRef, setTxt, txt }) => {

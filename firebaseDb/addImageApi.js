@@ -1,5 +1,5 @@
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage"
-import { db, storage } from "./firebase"
+import { db, storage } from "@/firebase"
 import { doc, updateDoc } from "firebase/firestore"
 // add file and add the audio
 export const addImageApi = async (file) => {

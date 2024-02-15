@@ -7,8 +7,13 @@ import { UserStore } from "mobx/userStore"
 import { observer } from "mobx-react-lite"
 import BasicSelect from "ui/basicSelect"
 import { storageNames } from "@/util"
-import { updateUserApi } from "firebase/updateUser"
-import { addAudioApi, addImageApi, changeAffirmationApi } from "api copy"
+import {
+  addAudioApi,
+  updateUserApi,
+  addImageApi,
+  changeAffirmationApi,
+} from "@/firebaseDb"
+import { getImagesByUserApi } from "@/firebaseDb"
 
 function Settings() {
   const [affirmation, setAffirmation] = useState("")

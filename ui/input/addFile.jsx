@@ -1,4 +1,4 @@
-import { addAudioFileApi } from "api"
+import { addAudioFileApi } from "@/firebaseDb"
 import axios from "axios"
 
 import React, { Component, useState } from "react"

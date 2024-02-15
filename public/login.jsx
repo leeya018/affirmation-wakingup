@@ -1,53 +1,53 @@
-import React, { useEffect, useRef, useState } from "react";
-import Title from "ui/Title";
-import { useRouter } from "next/router";
-import StandardButton from "ui/button/standard";
-import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
-import { auth } from "../firebase";
+import React, { useEffect, useRef, useState } from "react"
+import Title from "ui/Title"
+import { useRouter } from "next/router"
+import StandardButton from "ui/button/standard"
+import { signInWithPopup, GoogleAuthProvider } from "firebase/auth"
+import { auth } from ".@/firebase"
 
 export default function signup() {
-  const router = useRouter();
-  const inputRef = useRef(null);
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const router = useRouter()
+  const inputRef = useRef(null)
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
 
   useEffect(() => {
-    inputRef.current.focus();
-  }, []);
+    inputRef.current.focus()
+  }, [])
 
   const googleLogin = () => {
-    const provider = new GoogleAuthProvider();
+    const provider = new GoogleAuthProvider()
     signInWithPopup(auth, provider)
       .then((result) => {
         // This gives you a Google Access Token. You can use it to access the Google API.
-        const credential = GoogleAuthProvider.credentialFromResult(result);
-        const someToken = credential.accessToken;
+        const credential = GoogleAuthProvider.credentialFromResult(result)
+        const someToken = credential.accessToken
         // console.log(token)
 
         // The signed-in user info.
-        const user = result.user;
-        console.log(user);
+        const user = result.user
+        console.log(user)
 
-        console.log(user.photoURL);
-        console.log(user.displayName);
-        console.log(user.uid);
+        console.log(user.photoURL)
+        console.log(user.displayName)
+        console.log(user.uid)
 
         // debtStore.addUser(user.uid, user.displayName)
-        router.push("/");
+        router.push("/")
         // IdP data available using getAdditionalUserInfo(result)
         // ...
       })
       .catch((error) => {
         // Handle Errors here.
-        const errorCode = error.code;
-        const errorMessage = error.message;
+        const errorCode = error.code
+        const errorMessage = error.message
         // The email of the user's account used.
         // const email = error.customData.email
         // The AuthCredential type that was used.
-        const credential = GoogleAuthProvider.credentialFromError(error);
+        const credential = GoogleAuthProvider.credentialFromError(error)
         // ...
-      });
-  };
+      })
+  }
 
   return (
     <div
@@ -100,7 +100,7 @@ export default function signup() {
         </div>
       </div>
     </div>
-  );
+  )
 }
 // {/* left */}
 // <div className="h-full border-r-2 border-gray w-[50%] flex justify-center">

@@ -1,5 +1,5 @@
 import { doc, getDoc, updateDoc } from "firebase/firestore"
-import { db } from "./firebase"
+import { db } from "@/firebase"
 import { formatDate } from "@/util"
 
 export const addPracticeApi = async (practice) => {

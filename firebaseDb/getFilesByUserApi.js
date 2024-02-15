@@ -1,7 +1,7 @@
 import { getDownloadURL, listAll, ref } from "firebase/storage"
-import { storage } from "./firebase"
+import { storage } from "@/firebase"
 
-export const getImagesByUserApi = async (collectionName) => {
+export const getFilesByUserApi = async (collectionName) => {
   try {
     const uid = localStorage.getItem("uid")
 

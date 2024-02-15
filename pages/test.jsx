@@ -4,7 +4,7 @@ import {
   getUserApi,
   loginApi,
   signupApi,
-} from "api"
+} from "@/firebaseDb"
 import React, { useEffect } from "react"
 
 export default function index() {
