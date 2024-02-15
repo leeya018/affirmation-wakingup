@@ -16,8 +16,10 @@ export const addAudioApi = async (file) => {
     updateDoc(userRef, {
       audioAffirmation: downloadURL,
     })
-    return "Uploaded file audio successfully", downloadURL
+    // return "Uploaded file audio successfully",
+    return downloadURL
   } catch (error) {
     console.log(error.message)
+    throw error
   }
 }

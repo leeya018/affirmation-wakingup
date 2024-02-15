@@ -1,20 +1,17 @@
 import { makeAutoObservable } from "mobx"
 
 class Message {
-  error = ""
-  success = ""
+  message = ""
+  status = 0
 
   constructor() {
     makeAutoObservable(this)
   }
 
-  setError = (value) => {
-    this.error = value
-  }
-
-  setSuccess = (value) => {
-    this.success = value
+  setMessage = (msg, st) => {
+    this.message = msg
+    this.status = st
   }
 }
 
-export const MessageStore = new Message()
+export const messageStore = new Message()

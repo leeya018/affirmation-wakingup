@@ -14,6 +14,8 @@ import {
   changeAffirmationApi,
   getFilesByUserApi,
 } from "firebaseDb"
+import { messageStore } from "mobx/messageStore"
+import Alerts from "components/Alerts"
 
 function Settings() {
   const [affirmation, setAffirmation] = useState("")
@@ -121,21 +123,19 @@ function Settings() {
     }
   }
   const addAudio = async () => {
-    if (!file) {
-      updateMessage("audio", `you have to  choose audio file first `, false)
+    try {
+      if (!file) {
+        updateMessage("audio", `you have to  choose audio file first `, false)
 
-      return null
-    }
-    const res = await addAudioApi(file)
-
-    if (res.isSuccess) {
-      UserStore.setUser({
-        ...UserStore.user,
-        audioAffirmation: res.data,
+        return null
+      }
+      const downloadURL = await addAudioApi(file)
+      UserStore.updateUser({
+        audioAffirmation: downloadURL,
       })
-      updateMessage("audio", `added audio successfully `, true)
-    } else {
-      updateMessage("audio", `added audio failed `, false)
+      messageStore.setMessage("Audio added successfully", 200)
+    } catch (error) {
+      messageStore.setMessage("cannot upload audio ", 500)
     }
   }
   return (
@@ -146,7 +146,9 @@ function Settings() {
       text-lg font-bold shadow-md"
     >
       <div className=" flex flex-col gap-4  w-[90%] items-center md:w-[50%] p-4 md:p-5">
+        <Alerts />
         {/* first */}
+
         <div className="flex flex-col items-center gap-2 md:mr-auto ">
           <div className="flex gap-2 items-center flex-col w-full md:flex-row">
             <input
