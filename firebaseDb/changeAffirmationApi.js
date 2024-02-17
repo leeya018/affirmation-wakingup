@@ -1,11 +1,9 @@
 import { db } from "@/firebase"
 import { doc, updateDoc } from "firebase/firestore"
 
-export const changeAffirmationApi = async (affirmationName) => {
+export const changeAffirmationApi = async (user, affirmationName) => {
   try {
-    const uid = localStorage.getItem("uid")
-
-    const userRef = doc(db, "users", uid)
+    const userRef = doc(db, "users", user.uid)
 
     await updateDoc(userRef, {
       affirmation: affirmationName,

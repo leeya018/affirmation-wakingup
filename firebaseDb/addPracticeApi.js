@@ -2,19 +2,18 @@ import { doc, getDoc, updateDoc } from "firebase/firestore"
 import { db } from "@/firebase"
 import { formatDate } from "@/util"
 
-export const addPracticeApi = async (practice) => {
+export const addPracticeApi = async (user, practice) => {
+  console.log(user)
   try {
     var today = new Date()
-    // today.setDate(today.getDate() - 8)
-    const uid = localStorage.getItem("uid")
 
-    const userRef = doc(db, "users", uid) // Replace 'groups' with your actual collection name
+    const userRef = doc(db, "users", user.uid) // Replace 'groups' with your actual collection name
     const userSnap = await getDoc(userRef)
     if (!userSnap.exists()) {
-      return "User " + uid + " does not exist"
+      return "User " + user.uid + " does not exist"
     }
-    const user = userSnap.data()
-    let practices = user.practices
+    const userData = userSnap.data()
+    let practices = userData.practices
     let foundPractice = practices.find((p) => p.date === formatDate(today))
     if (foundPractice) {
       foundPractice.voice += practice.voice

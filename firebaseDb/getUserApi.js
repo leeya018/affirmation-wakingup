@@ -1,12 +1,11 @@
 import { db, storage } from "@/firebase"
 import { doc, getDoc } from "firebase/firestore"
 
-export const getUserApi = async () => {
+export const getUserApi = async (user) => {
   try {
-    const uid = localStorage.getItem("uid")
-    console.log("localStorage", uid)
+    console.log("localStorage", user.uid)
 
-    const userRef = doc(db, "users", uid)
+    const userRef = doc(db, "users", user.uid)
 
     const userSnap = await getDoc(userRef)
 
@@ -16,7 +15,7 @@ export const getUserApi = async () => {
 
     const userData = userSnap.data()
 
-    return { ...userData, id: uid }
+    return { ...userData, id: user.uid }
   } catch (error) {
     console.log(error.message)
     throw error

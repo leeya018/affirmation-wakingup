@@ -92,3 +92,9 @@ export const storageNames = {
   audios: "audios",
   images: "images",
 }
+
+// export const NavNames = {
+//   home: "",
+//   login: "login",
+//   signup: "signup",
+// }

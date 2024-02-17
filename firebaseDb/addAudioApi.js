@@ -2,17 +2,15 @@ import { db, storage } from "@/firebase"
 import { doc, updateDoc } from "firebase/firestore"
 import { getDownloadURL, listAll, ref, uploadBytes } from "firebase/storage"
 
-export const addAudioApi = async (file) => {
+export const addAudioApi = async (user, file) => {
   try {
-    const uid = localStorage.getItem("uid")
-
-    const storageRef = ref(storage, `users/${uid}/audios/${file.name}`)
+    const storageRef = ref(storage, `users/${user.uid}/audios/${file.name}`)
 
     const snapshot = await uploadBytes(storageRef, file)
     const downloadURL = await getDownloadURL(storageRef)
 
     console.log(`File available at: ${downloadURL}`, db)
-    const userRef = doc(db, "users", uid)
+    const userRef = doc(db, "users", user.uid)
     updateDoc(userRef, {
       audioAffirmation: downloadURL,
     })

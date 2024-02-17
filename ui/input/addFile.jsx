@@ -25,7 +25,7 @@ const AddFileInput = () => {
 
     // Request made to the backend api
     // Send formData object
-    addAudioApi(selectedFile)
+    addAudioApi(user, selectedFile)
   }
 
   // File content to be displayed after

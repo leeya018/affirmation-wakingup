@@ -1,11 +1,9 @@
 import { getDownloadURL, listAll, ref } from "firebase/storage"
 import { storage } from "@/firebase"
 
-export const getFilesByUserApi = async (collectionName) => {
+export const getFilesByUserApi = async (user, collectionName) => {
   try {
-    const uid = localStorage.getItem("uid")
-
-    const storageRef = ref(storage, `users/${uid}/${collectionName}`)
+    const storageRef = ref(storage, `users/${user.uid}/${collectionName}`)
     // Get all the items (files) in the reference
     const res = await listAll(storageRef)
 

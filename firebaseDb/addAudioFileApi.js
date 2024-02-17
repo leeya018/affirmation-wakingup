@@ -1,7 +1,7 @@
 import { storage } from "@/firebase"
 import { getDownloadURL, ref, uploadString } from "firebase/storage"
 
-export const addAudioFileApi = async (file) => {
+export const addAudioFileApi = async (user, file) => {
   const metadata = {
     contentType: "audio/mp3",
   }

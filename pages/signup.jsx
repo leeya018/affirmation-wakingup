@@ -37,9 +37,6 @@ export default function signup() {
     }),
   })
   useEffect(() => {
-    if (localStorage.getItem("uid")) {
-      // router.push("/")
-    }
     inputRef.current.focus()
   }, [])
 

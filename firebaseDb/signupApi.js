@@ -16,7 +16,7 @@ export const signupApi = async (user) => {
 
     const newUser = { email, name, practices: [] }
 
-    await addUserApi(newUser, uid)
+    await addUserApi(user, newUser, uid)
 
     messageStore.setMessage("SignUp successfully ", 200)
   } catch (error) {

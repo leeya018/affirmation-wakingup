@@ -39,17 +39,6 @@ export default function login() {
     }),
   })
 
-  useEffect(() => {
-    if (localStorage.getItem("uid")) {
-      setIsLoading(true)
-      ModalStore.openModal(modals.loading)
-      router.push("/")
-      // const newUrl = window.location.host + "/"
-      // window.history.pushState({ path: newUrl }, "", newUrl)
-    }
-    inputRef.current.focus()
-  }, [])
-
   const login = async () => {
     try {
       const { email, password } = formik.values
@@ -69,58 +58,71 @@ export default function login() {
     }
   }
 
-  const googleLogin = () => {
+  // const googleLogin = () => {
+  //   const provider = new GoogleAuthProvider()
+  //   signInWithPopup(auth, provider)
+  //     .then((result) => {
+  //       ModalStore.openModal(modals.loading)
+
+  //       // This gives you a Google Access Token. You can use it to access the Google API.
+  //       const credential = GoogleAuthProvider.credentialFromResult(result)
+  //       const someToken = credential.accessToken
+  //       // console.log(token)
+
+  //       // The signed-in user info.
+  //       const user = result.user
+  //       console.log(user)
+
+  //       console.log(user.photoURL)
+  //       console.log(user.displayName)
+  //       console.log(user.uid)("photoURL", user.photoURL)("uid", user.uid)(
+  //         "displayName",
+  //         user.displayName
+  //       )
+
+  //       addUserApi(
+  //         user,
+  //         { email: user.email, name: user.displayName, practices: [] },
+  //         user.uid
+  //       )
+  //         .then(() => {
+  //           router.push("/")
+  //         })
+  //         .catch((err) => {
+  //           console.log(err)
+  //           // console.log('there was an error connect with google account')
+  //           MessageStore.setMessage(err.message, 500)
+  //         })
+  //     })
+  //     .catch((error) => {
+  //       console.log(error)
+  //       ModalStore.closeModal()
+  //       // Handle Errors here.
+  //       const errorCode = error.code
+  //       const errorMessage = error.message
+  //       // The email of the user's account used.
+  //       // const email = error.customData.email
+  //       // The AuthCredential type that was used.
+  //       const credential = GoogleAuthProvider.credentialFromError(error)
+  //       // ...
+  //     })
+  // }
+
+  const googleSignIn = async () => {
     const provider = new GoogleAuthProvider()
     signInWithPopup(auth, provider)
-      .then((result) => {
-        ModalStore.openModal(modals.loading)
-
-        // This gives you a Google Access Token. You can use it to access the Google API.
-        const credential = GoogleAuthProvider.credentialFromResult(result)
-        const someToken = credential.accessToken
-        // console.log(token)
-
-        // The signed-in user info.
-        const user = result.user
-        console.log(user)
-
-        console.log(user.photoURL)
-        console.log(user.displayName)
-        console.log(user.uid)
-        localStorage.setItem("photoURL", user.photoURL)
-        localStorage.setItem("uid", user.uid)
-        localStorage.setItem("displayName", user.displayName)
-
-        addUserApi(
-          { email: user.email, name: user.displayName, practices: [] },
-          user.uid
-        )
-          .then(() => {
-            router.push("/")
-          })
-          .catch((err) => {
-            console.log(err)
-            // console.log('there was an error connect with google account')
-            MessageStore.setMessage(err.message, 500)
-          })
+      .then(async (UserCredentialImp) => {
+        const { email, displayName, uid } = UserCredentialImp.user
+        const newUser = { email, name: displayName, uid, practices: [] }
+        console.log(newUser)
+        await addUserApi(newUser)
+        router.push("/")
       })
-      .catch((error) => {
-        console.log(error)
-        ModalStore.closeModal()
-        // Handle Errors here.
-        const errorCode = error.code
-        const errorMessage = error.message
-        // The email of the user's account used.
-        // const email = error.customData.email
-        // The AuthCredential type that was used.
-        const credential = GoogleAuthProvider.credentialFromError(error)
-        // ...
+      .catch((err) => {
+        console.log(err.message)
+        throw err
       })
   }
-
-  // if (UserStore.user) {
-  //   router.push("/")
-  // }
 
   return (
     <div
@@ -181,7 +183,7 @@ export default function login() {
               Sign in
             </button>
             <button
-              onClick={googleLogin}
+              onClick={googleSignIn}
               className="bg-[##4284F3]
               mb-2  border-2 border-black  rounded-xl
               w-full py-2 text-white

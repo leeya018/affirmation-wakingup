@@ -12,8 +12,7 @@ export const loginApi = async ({ email, password }) => {
       password
     )
     const user = userCredential.user
-    console.log("login", user)
-    localStorage.setItem("uid", user.uid)
+    console.log("login", user)("uid", user.uid)
     messageStore.setMessage("Sign in successfully ", 200)
   } catch (error) {
     messageStore.setMessage(error.message, 500)

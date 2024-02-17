@@ -19,31 +19,23 @@ import Right from "features/Right"
 import Settings from "features/Settings"
 import { AudioStore } from "mobx/audioStore"
 import { messageStore } from "mobx/messageStore"
+import { useUser } from "context/userContext"
+import ProtectedRoute from "components/ProtectedRoute"
 
 const index = () => {
   const [affirmations, setAffirmations] = useState([])
-  const [isClient, setIsClient] = useState(false)
+  // const [isClient, setIsClient] = useState(false)
   const { selectedName } = navStore
   const [txt, setTxt] = useState("")
   const inputRef = useRef(null)
   const router = useRouter()
-  // const user = useUser()
+  const user = useUser()
 
   useEffect(() => {
-    ModalStore.closeModal()
-    if (!localStorage.getItem("uid")) {
-      router.push("/login")
-    } else {
-      setIsClient(true)
-      getUser()
-
-      const localAffirmations = localStorage.getItem("affirmations") || "[]"
-      const localTime = localStorage.getItem("time") || 0
-      console.log(parseInt(localTime))
-      setAffirmations(JSON.parse(localAffirmations))
+    if (affirmations.length === process.env.LIM_AFFIRMATIONS) {
+      ModalStore.openModal(modals.success_message)
     }
-  }, [])
-
+  }, [affirmations])
   useEffect(() => {
     if (affirmations.length === process.env.LIM_AFFIRMATIONS) {
       ModalStore.openModal(modals.success_message)
@@ -52,7 +44,7 @@ const index = () => {
 
   const addPractice = async () => {
     try {
-      const data = await addPracticeApi({ voice: 0, type: 1 })
+      const data = await addPracticeApi(user, { voice: 0, type: 1 })
       console.log(data)
       messageStore.setMessage("Practice added successfully", 200)
 
@@ -62,7 +54,7 @@ const index = () => {
     }
   }
   const getUser = async () => {
-    const data = await getUserApi()
+    const data = await getUserApi(user)
     console.log(data)
     if (data.isSuccess) {
       UserStore.setUser(data.data)
@@ -75,56 +67,55 @@ const index = () => {
     if (e.code === "Enter") {
       if (txt.split(" ").length < 3) return null
       setAffirmations((prev) => [...prev, { name: txt, date: new Date() }])
-      setTxt("")
-      localStorage.setItem("affirmations", JSON.stringify(affirmations))
+      setTxt("")("affirmations", JSON.stringify(affirmations))
     }
   }
-  if (!isClient) {
+  if (!user) {
     return null
   }
   return (
-    <div
-      className="w-full h-[100vh] flex flex-col  items-center
-     overflow-hidden bg-[#F3F3F7]  "
-    >
-      {/* modals */}
-      {/* nav  */}
-      <Nav />
-      {/* all other */}
+    <ProtectedRoute>
       <div
-        className="w-full flex h-[85vh] mt-5 flex-col gap-2 
-      md:flex-row md:justify-around md:gap-0 md:px-5 "
+        className="w-full h-[100vh] flex flex-col  items-center
+      overflow-hidden bg-[#F3F3F7]  "
       >
-        {/* left */}
-        {/* do not touch */}
-        <LeftNav />
-        {/* middle */}
+        {/* modals */}
+        {/* nav  */}
+        <Nav />
+        {/* all other */}
+        <div
+          className="w-full flex h-[85vh] mt-5 flex-col gap-2 
+        md:flex-row md:justify-around md:gap-0 md:px-5 "
+        >
+          {/* left */}
+          {/* do not touch */}
+          <LeftNav />
+          {/* middle */}
 
-        {selectedName === navNames.home && (
-          <div className="flex justify-around gap-4 md:w-[90vw]">
-            <Left
-              handleKeyDown={handleKeyDown}
-              setTxt={setTxt}
-              affirmations={affirmations}
-              setAffirmations={setAffirmations}
-              txt={txt}
-              inputRef={inputRef}
-            />
+          {selectedName === navNames.home && (
+            <div className="flex justify-around gap-4 md:w-[90vw]">
+              <Left
+                handleKeyDown={handleKeyDown}
+                setTxt={setTxt}
+                affirmations={affirmations}
+                setAffirmations={setAffirmations}
+                txt={txt}
+                inputRef={inputRef}
+              />
 
-            <Right
-              affirmations={affirmations}
-              setAffirmations={setAffirmations}
-            />
-          </div>
-        )}
+              <Right
+                affirmations={affirmations}
+                setAffirmations={setAffirmations}
+              />
+            </div>
+          )}
 
-        {selectedName === navNames.calender && <Calender />}
-        {selectedName === navNames.insights && <Graphs />}
-        {selectedName === navNames.settings && <Settings />}
-        {/* <div className="border-2 h-[85vh] bg-white ">
-        </div> */}
+          {selectedName === navNames.calender && <Calender />}
+          {selectedName === navNames.insights && <Graphs />}
+          {selectedName === navNames.settings && <Settings />}
+        </div>
       </div>
-    </div>
+    </ProtectedRoute>
   )
 }
 export default observer(index)

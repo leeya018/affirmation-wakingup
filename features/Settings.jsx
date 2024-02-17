@@ -49,8 +49,8 @@ function Settings() {
   const getSources = async () => {
     try {
       const res = await Promise.all([
-        getFilesByUserApi(storageNames.images),
-        getFilesByUserApi(storageNames.audios),
+        getFilesByUserApi(user, storageNames.images),
+        getFilesByUserApi(user, storageNames.audios),
       ])
       console.log({ res })
       setImageItemOptions(res[0])
@@ -70,7 +70,7 @@ function Settings() {
   const editUser = async (userInfo) => {
     try {
       console.log({ userInfo })
-      const data = await updateUserApi(userInfo)
+      const data = await updateUserApi(user, userInfo)
       UserStore.updateUser(userInfo)
       console.log(data)
       messageStore.setMessage("user update successfully ", 200)
@@ -93,7 +93,7 @@ function Settings() {
     try {
       if (!affirmation) return
       AsyncStore.setIsLoading(true)
-      await changeAffirmationApi(affirmation)
+      await changeAffirmationApi(user, affirmation)
       setIsAffirmationChanged(false)
       UserStore.updateUser({ affirmation })
 
@@ -110,7 +110,7 @@ function Settings() {
       if (!image) {
         throw new Error("You have to  choose file first")
       }
-      const downloadURL = await addImageApi(image)
+      const downloadURL = await addImageApi(user, image)
       UserStore.updateUser({
         imageAffirmation: downloadURL,
       })
@@ -127,7 +127,7 @@ function Settings() {
 
         return null
       }
-      const downloadURL = await addAudioApi(file)
+      const downloadURL = await addAudioApi(user, file)
       UserStore.updateUser({
         audioAffirmation: downloadURL,
       })

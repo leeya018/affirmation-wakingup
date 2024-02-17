@@ -10,7 +10,7 @@
 
 // export default function index() {
 //   const signUp = async () => {
-//     const data = await signupApi({
+//     const data = await signupApi(user,{
 //       name: "adi",
 //       email: "ida2@gmail.com",
 //       password: "password2121",
@@ -19,25 +19,25 @@
 //   }
 
 //   const login = async () => {
-//     const data = await loginApi({
+//     const data = await loginApi(user,{
 //       email: "ida2@gmail.com",
 //       password: "password2121",
 //     })
 //     console.log(data)
 //   }
 //   const getUser = async () => {
-//     const data = await getUserApi("ZEGQUOnJlEZwwT19qQKInHtwz5m2")
+//     const data = await getUserApi(user,"ZEGQUOnJlEZwwT19qQKInHtwz5m2")
 //     console.log(data)
 //   }
 
 //   const changeAffirmation = async () => {
 //     tryca
-//      await changeAffirmationApi("I am the king")
+//      await changeAffirmationApi(user,"I am the king")
 //     console.log(data)
 //   }
 //   const addPractice = async () => {
 //     try {
-//       const data = await addPracticeApi({
+//       const data = await addPracticeApi(user,{
 //         voice: 1,
 //         type: 0,
 //       })

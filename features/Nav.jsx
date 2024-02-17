@@ -14,23 +14,10 @@ const Nav = observer(() => {
   const [displayName, setDisplayName] = useState("")
   const router = useRouter()
 
-  // const user = useUser()
-
-  useEffect(() => {
-    setPhotoURL(localStorage.getItem("photoURL"))
-    setDisplayName(localStorage.getItem("displayName"))
-  }, [])
-
-  // if (!hasPhoto) return null
-
   const logout = () => {
     signOut(auth)
     UserStore.setUser(null)
 
-    localStorage.removeItem("affirmations")
-    localStorage.removeItem("photoURL")
-    localStorage.removeItem("displayName")
-    localStorage.removeItem("uid")
     router.push("/login")
   }
   const getProfileImage = () => {
