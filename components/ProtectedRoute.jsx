@@ -1,8 +1,9 @@
 "use client"
 import { auth } from "@/firebase"
-import userStore from "@/mobx/userStore"
+
 import { NavNames } from "@/util"
 import { onAuthStateChanged } from "firebase/auth"
+import { UserStore } from "mobx/userStore"
 import { useRouter } from "next/navigation"
 import React, { useEffect, useState } from "react"
 
@@ -16,9 +17,9 @@ export default function ProtectedRout({ children }) {
       console.log(user)
       if (user) {
         setIsAuthenticated(true)
-        userStore.setUser(user)
+        UserStore.setUser(user)
       } else {
-        userStore.setUser(null)
+        UserStore.setUser(null)
         router.push(NavNames.login)
       }
       setIsLoading(false)

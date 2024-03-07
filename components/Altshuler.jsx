@@ -1,8 +1,5 @@
 import React, { useEffect, useState } from "react"
 import Freecurrencyapi from "@everapi/freecurrencyapi-js"
-import { getUrl } from "@/util"
-import axios from "axios"
-import SuccessModal from "components/modal/message/success"
 import Image from "next/image"
 import Link from "next/link"
 
@@ -19,7 +16,7 @@ const Currency = {
 const onlineBtcValPath =
   "https://www.google.com/search?q=btc+in+doallr&rlz=1C1KNTJ_enIL1051IL1051&oq=btc&gs_lcrp=EgZjaHJvbWUqBggAEEUYOzIGCAAQRRg7Mg4IARBFGCcYOxiABBiKBTIPCAIQRRg5GIMBGLEDGIAEMg4IAxBFGCcYOxiABBiKBTINCAQQABiDARixAxiABDINCAUQABiDARixAxiABDIQCAYQABiDARixAxiABBiKBTIGCAcQRRg80gEIMTM3OWoxajeoAgCwAgA&sourceid=chrome&ie=UTF-8"
 
-export default function altshuler() {
+export default function Altshuler() {
   const [nis, setNis] = useState()
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState("")
@@ -89,12 +86,8 @@ export default function altshuler() {
       setError(error.message)
     }
   }
-
   return (
-    <div
-      className="w-full  h-[100vh] flex flex-col  items-center   border-2
- overflow-y-scroll bg-[#F3F3F7] "
-    >
+    <div>
       {showCommitions && (
         <Image
           alt="altshuler_commitions image"

@@ -9,14 +9,10 @@ import { UserStore } from "mobx/userStore"
 import { observer } from "mobx-react-lite"
 import { addPracticeApi } from "firebaseDb"
 import { messageStore } from "mobx/messageStore"
-import { useUser } from "context/userContext"
 
 const Left = observer(
   ({ setAffirmations, affirmations, handleKeyDown, inputRef, setTxt, txt }) => {
     const [modalMessage, setModalMessage] = useState("")
-
-    const user = useUser()
-    // console.log({ user })
 
     useEffect(() => {
       if (affirmations.length >= process.env.NEXT_PUBLIC_AFFIRMATION_LIM) {
@@ -26,7 +22,10 @@ const Left = observer(
 
     const addPractice = async () => {
       try {
-        const practices = await addPracticeApi(user, { voice: 0, type: 1 })
+        const practices = await addPracticeApi(UserStore.user, {
+          voice: 0,
+          type: 1,
+        })
         UserStore.updateUser({ practices })
 
         setAffirmations([])("affirmations", "[]")

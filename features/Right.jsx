@@ -14,13 +14,11 @@ import { TfiAnnouncement } from "react-icons/tfi"
 import SuccessButton from "ui/button/modal/success"
 import { AudioStore } from "mobx/audioStore"
 import { messageStore } from "mobx/messageStore"
-import { useUser } from "context/userContext"
 
 function Right({ affirmations, setAffirmations }) {
   const [modalMessage, setModalMessage] = useState("")
   console.log("imageAffirmation", UserStore.user?.imageAffirmation)
 
-  const user = useUser()
   useEffect(() => {
     if (AudioStore.time > process.env.NEXT_PUBLIC_AUDIO_LIM) {
       AudioStore.stopTime()
@@ -45,7 +43,7 @@ function Right({ affirmations, setAffirmations }) {
   }
   const addPractice = async () => {
     try {
-      const data = await addPracticeApi(user, { voice: 1, type: 0 })
+      const data = await addPracticeApi(UserStore.user, { voice: 1, type: 0 })
       console.log(data)
       setModalMessage(data.message)
       stopSuggestion()

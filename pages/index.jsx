@@ -19,7 +19,7 @@ import Right from "features/Right"
 import Settings from "features/Settings"
 import { AudioStore } from "mobx/audioStore"
 import { messageStore } from "mobx/messageStore"
-import { useUser } from "context/userContext"
+
 import ProtectedRoute from "components/ProtectedRoute"
 
 const index = () => {
@@ -29,7 +29,6 @@ const index = () => {
   const [txt, setTxt] = useState("")
   const inputRef = useRef(null)
   const router = useRouter()
-  const user = useUser()
 
   useEffect(() => {
     if (affirmations.length === process.env.LIM_AFFIRMATIONS) {
@@ -44,7 +43,7 @@ const index = () => {
 
   const addPractice = async () => {
     try {
-      const data = await addPracticeApi(user, { voice: 0, type: 1 })
+      const data = await addPracticeApi(UserStore.user, { voice: 0, type: 1 })
       console.log(data)
       messageStore.setMessage("Practice added successfully", 200)
 
@@ -54,7 +53,7 @@ const index = () => {
     }
   }
   const getUser = async () => {
-    const data = await getUserApi(user)
+    const data = await getUserApi(UserStore.user)
     console.log(data)
     if (data.isSuccess) {
       UserStore.setUser(data.data)
@@ -70,7 +69,7 @@ const index = () => {
       setTxt("")("affirmations", JSON.stringify(affirmations))
     }
   }
-  if (!user) {
+  if (!UserStore.user) {
     return null
   }
   return (
