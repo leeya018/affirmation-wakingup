@@ -21,18 +21,30 @@ function BankLoan() {
       console.log({ netMoney })
       //
       let moneyShifting = netMoney
-      const startYear = new Date().getFullYear()
-      const nextYear = startYear + 1
-      const relationJump = data[nextYear].minPrice / data[startYear].minPrice
+
       //
-      moneyShifting = relationJump * moneyShifting
       let moneyToBankTmp = 0
-      //
-      for (let month = 1; month <= 12; month++) {
-        const moneyOut = moneyToRetPerMonth * (4 / 3)
-        moneyShifting = moneyShifting - moneyOut
-        moneyToBankTmp += moneyToRetPerMonth
+      let startYear = new Date().getFullYear()
+      let nextYear = startYear + 1
+
+      let monthsLeft = monthsToRet - 12 // round which I pay from side
+      while (monthsLeft > 0) {
+        const relationJump = data[nextYear].minPrice / data[startYear].minPrice
+        //
+        moneyShifting = relationJump * moneyShifting
+
+        //
+        const lim = Math.min(12, monthsLeft)
+        for (let month = 1; month <= lim; month++) {
+          monthsLeft--
+          const moneyOut = moneyToRetPerMonth * (4 / 3)
+          moneyShifting = moneyShifting - moneyOut
+          moneyToBankTmp += moneyToRetPerMonth
+        }
+        startYear++
+        nextYear++
       }
+
       //
       setTotalToBank(moneyToBankTmp + moneyApart)
       setTotalToMe(moneyShifting)
@@ -43,7 +55,9 @@ function BankLoan() {
     <div className="flex items-center gap-2">
       <div className="flex flex-col">
         <span>loaner</span>
-        <div>Bank</div>
+        <div>
+          Bank - not accurate <br /> (showing better results for me)
+        </div>
       </div>
       <div className="flex flex-col">
         <span>money</span>
@@ -56,6 +70,7 @@ function BankLoan() {
       <div className="flex flex-col">
         <span>months to return</span>
         <input
+          min={24}
           type="number"
           value={monthsToRet}
           onChange={(e) => setMonthsToRet(parseInt(e.target.value))}
