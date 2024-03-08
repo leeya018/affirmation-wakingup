@@ -12,6 +12,16 @@ const BtcPage = () => {
     >
       <div className="flex flex-col">
         <Altshuler />
+        <div>
+          <a
+            href="https://www.supermarker.themarker.com/Calculators/Loan/LoanCalculator.aspx"
+            target="_blank"
+            rel="noreferrer"
+          >
+            מחשבות הלוואת וריבית
+          </a>
+        </div>
+
         <Loans />
       </div>
     </div>
